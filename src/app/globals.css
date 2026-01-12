@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+/* ==========================================
+   GOxT Design System - Global Styles
+   ========================================== */
+
+:root {
+  /* Primary Colors - GOxT Dark Navy (del logo "Moving Forward") */
+  --goxt-primary: #1E1E3F;
+  --goxt-primary-dark: #14142B;
+  --goxt-primary-light: #2D2D5A;
+  --goxt-primary-50: #EEEEF5;
+  --goxt-primary-100: #D4D4E8;
+  --goxt-primary-200: #A9A9D1;
+
+  /* Accent Colors - Orange/Coral for CTAs (más oscuro para mejor contraste) */
+  --goxt-accent: #EA580C;
+  /* Más oscuro que antes */
+  --goxt-accent-dark: #C2410C;
+  /* Hover state - aún más oscuro */
+  --goxt-accent-light: #F97316;
+  /* Estado normal original */
+  --goxt-accent-hover: #DC2626;
+  /* Rojo-naranja para hover */
+
+  /* Gradient Colors - Estilo Fluxie */
+  --goxt-gradient-orange-start: #EA580C;
+  --goxt-gradient-orange-end: #C2410C;
+  --goxt-gradient-purple-start: #8B5CF6;
+  --goxt-gradient-purple-end: #EC4899;
+
+  /* Surface Colors - Blue Tint (nuevo!) */
+  --goxt-surface-light: #f0f7ff;
+  /* Blue tint para fondos */
+  --goxt-surface-dark: #1f2937;
+  /* Dark mode surface */
+  --goxt-surface-alt: #e8f4ff;
+  /* Variante más intensa del blue tint */
+  --goxt-surface-card: #ffffff;
+  /* Cards siempre blancas */
+
+  /* Neutrals - Estilo CamionGO */
+  --goxt-gray-900: #111827;
+  --goxt-gray-800: #1F2937;
+  --goxt-gray-700: #374151;
+  --goxt-gray-600: #4B5563;
+  --goxt-gray-500: #6B7280;
+  --goxt-gray-400: #9CA3AF;
+  --goxt-gray-300: #D1D5DB;
+  --goxt-gray-200: #E5E7EB;
+  --goxt-gray-100: #F1F5F9;
+  --goxt-gray-50: #F8FAFC;
+  --goxt-white: #FFFFFF;
+
+  /* Semantic Colors */
+  --goxt-success: #10B981;
+  --goxt-warning: #F59E0B;
+  --goxt-error: #EF4444;
+  --goxt-info: #3B82F6;
+
+  /* Background & Foreground */
+  --background: #ffffff;
+  --foreground: #111827;
+
+  /* Gradients - Azul/Púrpura del logo GOxT con más fuerza */
+  --goxt-gradient-hero: linear-gradient(145deg, #E0E7FF 0%, #EDE9FE 30%, #FCE7F3 60%, #FFFFFF 100%);
+  --goxt-gradient-surface: linear-gradient(135deg, #EDE9FE 0%, #E0E7FF 50%, #FFFFFF 100%);
+  --goxt-gradient-primary: linear-gradient(135deg, #1E1E3F 0%, #2D2D5A 100%);
+  --goxt-gradient-accent: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+  --goxt-gradient-accent-hover: linear-gradient(135deg, #C2410C 0%, #9A3412 100%);
+
+  /* Shadows */
+  --goxt-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --goxt-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --goxt-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --goxt-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --goxt-shadow-glow: 0 20px 50px -12px rgba(234, 88, 12, 0.25);
+  /* Glow naranja */
+
+  /* Border Radius */
+  --goxt-radius-sm: 0.375rem;
+  --goxt-radius-md: 0.5rem;
+  --goxt-radius-lg: 0.75rem;
+  --goxt-radius-xl: 1rem;
+  --goxt-radius-2xl: 1.5rem;
+  --goxt-radius-full: 9999px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Fuentes - usando las nuevas variables */
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-handwritten: var(--font-handwritten);
+
+  /* GOxT Colors in Tailwind */
+  --color-goxt-primary: var(--goxt-primary);
+  --color-goxt-primary-dark: var(--goxt-primary-dark);
+  --color-goxt-primary-light: var(--goxt-primary-light);
+  --color-goxt-accent: var(--goxt-accent);
+  --color-goxt-accent-dark: var(--goxt-accent-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* ==========================================
+   Base Styles
+   ========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Typography - Estilo Odoo Elegante
+   ========================================== */
+
+h1,
+.heading-1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--goxt-gray-900);
+}
+
+h2,
+.heading-2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--goxt-gray-900);
+}
+
+h3,
+.heading-3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+  color: var(--goxt-gray-800);
+}
+
+h4,
+.heading-4 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--goxt-gray-800);
+}
+
+h5,
+h6 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Texto handwritten para acentos decorativos */
+.text-handwritten {
+  font-family: var(--font-handwritten), cursive;
+}
+
+/* Texto display (serif elegante) */
+.text-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+/* ==========================================
+   Utility Classes
+   ========================================== */
+
+.goxt-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .goxt-container {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .goxt-container {
+    padding: 0 4rem;
+  }
+}
+
+/* Gradient Text - Estilo Fluxie */
+.goxt-gradient-text {
+  background: linear-gradient(135deg, var(--goxt-primary) 0%, var(--goxt-primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding-right: 0.1em;
+  padding-left: 0.05em;
+  display: inline-block;
+}
+
+/* Gradiente Naranja vibrante para "Mejor control" */
+.goxt-gradient-accent-text {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #DC2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding-right: 0.1em;
+  padding-left: 0.05em;
+  display: inline-block;
+}
+
+/* Gradiente Púrpura/Rosa para variaciones */
+.goxt-gradient-purple-text {
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradiente Azul vibrante */
+.goxt-gradient-blue-text {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1D4ED8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Texto en color navy oscuro (primario) */
+.goxt-navy-text {
+  color: var(--goxt-primary);
+}
+
+/* Hero Background - Blue Tint */
+.goxt-hero-bg {
+  background: var(--goxt-gradient-hero);
+}
+
+/* Surface Background - Blue Tint para secciones */
+.goxt-surface-bg {
+  background: var(--goxt-surface-light);
+}
+
+/* Surface Gradient - Para secciones con más intensidad */
+.goxt-surface-gradient {
+  background: var(--goxt-gradient-surface);
+}
+
+/* Glassmorphism -> Navbar blanco sólido estilo CamionGO */
+.goxt-glass {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+}
+
+/* Button Styles */
+.goxt-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background: var(--goxt-gradient-primary);
+  border: none;
+  border-radius: var(--goxt-radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--goxt-shadow-md);
+}
+
+.goxt-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--goxt-shadow-lg);
+}
+
+.goxt-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background: var(--goxt-gradient-accent);
+  border: none;
+  border-radius: var(--goxt-radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--goxt-shadow-md), var(--goxt-shadow-glow);
+}
+
+.goxt-btn-accent:hover {
+  background: var(--goxt-gradient-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--goxt-shadow-lg), 0 20px 50px -12px rgba(194, 65, 12, 0.35);
+}
+
+.goxt-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--goxt-gray-700);
+  background: transparent;
+  border: 2px solid var(--goxt-gray-300);
+  border-radius: var(--goxt-radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.goxt-btn-secondary:hover {
+  border-color: var(--goxt-primary);
+  color: var(--goxt-primary);
+}
+
+/* Card Styles */
+.goxt-card {
+  background: white;
+  border-radius: var(--goxt-radius-xl);
+  padding: 2rem;
+  box-shadow: var(--goxt-shadow-md);
+  transition: all 0.3s ease;
+}
+
+.goxt-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--goxt-shadow-xl);
+}
+
+/* Section Spacing */
+.goxt-section {
+  padding: 5rem 0;
+}
+
+@media (min-width: 768px) {
+  .goxt-section {
+    padding: 7rem 0;
+  }
+}
+
+/* ==========================================
+   Animations
+   ========================================== */
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
