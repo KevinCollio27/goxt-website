@@ -42,7 +42,7 @@ const products: Product[] = [
             "Reportes y dashboards",
             "Multi-workspace",
         ],
-        screenshot: "/assets/Login CRM.png",
+        screenshot: "/assets/LoginCRM.png",
     },
     {
         id: "cargo",
@@ -64,7 +64,7 @@ const products: Product[] = [
             "Mantenimiento programado",
             "Documentación digital",
         ],
-        screenshot: "/assets/Login CARGO.png",
+        screenshot: "/assets/LoginCARGO.png",
     },
 ];
 
