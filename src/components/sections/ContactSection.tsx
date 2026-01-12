@@ -71,7 +71,7 @@ export function ContactSection() {
                         className="space-y-6"
                     >
                         <div className="bg-[var(--goxt-gray-50)] rounded-2xl p-8">
-                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-6">
+                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                 Información de contacto
                             </h3>
                             <div className="space-y-4">
@@ -97,7 +97,7 @@ export function ContactSection() {
 
                         {/* Why choose us */}
                         <div className="bg-[var(--goxt-gray-50)] rounded-2xl p-8">
-                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-4">
+                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                 ¿Por qué agendar una demo?
                             </h3>
                             <ul className="space-y-3">

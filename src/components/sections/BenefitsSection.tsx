@@ -31,7 +31,7 @@ const benefits: Benefit[] = [
     },
     {
         Icon: BarChart3,
-        title: "Pipeline Visual",
+        title: "Inteligente Pipeline Visual",
         description:
             "Tablero Kanban para visualizar todo tu embudo de ventas. Nunca pierdas de vista una oportunidad.",
         color: "text-green-600",
@@ -84,7 +84,7 @@ export function BenefitsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="goxt-card text-center group"
+                            className="goxt-card group"
                         >
                             <div
                                 className={`w-16 h-16 ${benefit.bgColor} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}
@@ -94,7 +94,7 @@ export function BenefitsSection() {
                                     strokeWidth={1.5}
                                 />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-3">
+                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-3" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                 {benefit.title}
                             </h3>
                             <p className="text-[var(--goxt-gray-600)]">{benefit.description}</p>

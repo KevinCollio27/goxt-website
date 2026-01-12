@@ -1,3 +1,4 @@
+import { BarChart, FileText, Fuel, ListTodo, MapPin, Truck, User, Wrench } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -9,52 +10,68 @@ export const metadata: Metadata = {
 
 const features = [
     {
-        icon: "🚛",
         title: "Gestión de Flotas",
         description:
             "Administra todos tus vehículos, documentación, vencimientos y estado operativo en un solo lugar.",
+        Icon: Truck,
+        color: "text-[var(--goxt-primary)]",
+        bg: "bg-blue-50",
     },
     {
-        icon: "📍",
-        title: "Tracking GPS en Tiempo Real",
+        title: "Tracking en Tiempo Real",
         description:
             "Monitorea la ubicación de tu flota en tiempo real. Geocercas, alertas y historial de recorridos.",
+        Icon: MapPin,
+        color: "text-green-600",
+        bg: "bg-green-50",
     },
     {
-        icon: "📋",
         title: "Órdenes de Transporte",
         description:
             "Crea, asigna y da seguimiento a órdenes de transporte. Desde la solicitud hasta la entrega.",
+        Icon: ListTodo,
+        color: "text-purple-600",
+        bg: "bg-purple-50",
     },
     {
-        icon: "⛽",
         title: "Control de Combustible",
         description:
             "Registra consumos, analiza rendimientos y detecta anomalías. Reduce costos de operación.",
+        Icon: Fuel,
+        color: "text-amber-600",
+        bg: "bg-amber-50",
     },
     {
-        icon: "🔧",
         title: "Mantenimiento Programado",
         description:
             "Alertas de mantenimiento preventivo. Historial de reparaciones y control de costos por vehículo.",
+        Icon: Wrench,
+        color: "text-slate-600",
+        bg: "bg-slate-100",
     },
     {
-        icon: "👤",
         title: "Gestión de Conductores",
         description:
             "Documentación, licencias, asignación de vehículos y evaluación de desempeño.",
+        Icon: User,
+        color: "text-cyan-600",
+        bg: "bg-cyan-50",
     },
     {
-        icon: "📄",
         title: "Documentación Digital",
         description:
             "Guías de despacho, manifiestos y toda la documentación necesaria en formato digital.",
+        Icon: FileText,
+        color: "text-rose-600",
+        bg: "bg-rose-50",
     },
     {
-        icon: "📊",
         title: "Reportes Operativos",
         description:
             "KPIs de eficiencia, utilización de flota, costos por km y análisis de rentabilidad.",
+        Icon: BarChart,
+        color: "text-indigo-600",
+        bg: "bg-indigo-50",
     },
 ];
 
@@ -67,11 +84,11 @@ export default function CargoPage() {
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="flex items-center justify-center gap-3 mb-6">
                             <span className="text-6xl">🚛</span>
-                            <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)]">
-                                GOxT Cargo
+                            <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)]" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                GOxT: <span className="goxt-gradient-accent-text">CARGO</span>
                             </h1>
                         </div>
-                        <p className="text-xl md:text-2xl font-medium text-[var(--goxt-accent)] mb-4">
+                        <p className="text-xl md:text-2xl font-medium text-[var(--goxt-primary)] mb-4">
                             Control total de tu flota y operaciones logísticas
                         </p>
                         <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
@@ -80,8 +97,8 @@ export default function CargoPage() {
                             plataforma.
                         </p>
                         <div className="flex flex-wrap gap-4 justify-center">
-                            <Link href="/contacto" className="goxt-btn-accent text-lg px-8 py-4">
-                                Solicitar Demo Gratuita
+                            <Link href="/contacto" className="goxt-btn-primary text-lg px-8 py-4">
+                                Solicitar Demo
                             </Link>
                             <a
                                 href="https://cargo.goxt.io"
@@ -131,8 +148,8 @@ export default function CargoPage() {
             <section className="goxt-section bg-[var(--goxt-gray-50)]">
                 <div className="goxt-container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4">
-                            Funcionalidades Principales
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                            Funcionalidades <span className="goxt-gradient-accent-text">Principales</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
                             Todo lo que necesitas para controlar tu operación logística de
@@ -146,8 +163,10 @@ export default function CargoPage() {
                                 key={feature.title}
                                 className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow"
                             >
-                                <span className="text-4xl block mb-4">{feature.icon}</span>
-                                <h3 className="text-lg font-bold text-[var(--goxt-gray-900)] mb-2">
+                                <div className={`w-14 h-14 ${feature.bg} rounded-xl flex items-center justify-center mb-4`}>
+                                    <feature.Icon className={`w-7 h-7 ${feature.color}`} strokeWidth={1.8} />
+                                </div>
+                                <h3 className="text-lg font-bold text-[var(--goxt-gray-900)] mb-2" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                     {feature.title}
                                 </h3>
                                 <p className="text-sm text-[var(--goxt-gray-600)]">
@@ -167,8 +186,8 @@ export default function CargoPage() {
                             <span className="inline-block px-4 py-1 bg-[var(--goxt-primary-100)] text-[var(--goxt-primary)] rounded-full text-sm font-medium mb-4">
                                 Integración
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6">
-                                Mejor cuando trabajan juntos
+                            <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                Mejor cuando trabajan <span className="goxt-gradient-accent-text">juntos</span>
                             </h2>
                             <p className="text-lg text-[var(--goxt-gray-600)] mb-6">
                                 GOxT Cargo se integra nativamente con GOxT CRM. Las
@@ -279,12 +298,12 @@ export default function CargoPage() {
             </section>
 
             {/* CTA */}
-            <section className="goxt-section bg-[var(--goxt-accent)]">
+            <section className="goxt-section">
                 <div className="goxt-container text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                        ¿Listo para tomar control de tu operación?
+                    <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                        ¿Listo para tomar el <span className="goxt-gradient-accent-text">control de tu operación</span>?
                     </h2>
-                    <p className="text-lg text-orange-100 mb-8 max-w-2xl mx-auto">
+                    <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
                         Agenda una demo personalizada y descubre cómo GOxT Cargo puede
                         ayudarte a optimizar tu flota.
                     </p>
@@ -297,7 +316,7 @@ export default function CargoPage() {
                         </Link>
                         <Link
                             href="/productos/crm"
-                            className="bg-white/20 hover:bg-white/30 text-white font-semibold px-8 py-4 rounded-full transition-colors"
+                            className="goxt-btn-secondary text-lg px-8 py-4"
                         >
                             Conocer GOxT CRM →
                         </Link>

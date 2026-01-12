@@ -1,3 +1,4 @@
+import { Kanban, FileText, Settings, Link2, Users, Calendar, BarChart3, Building2, Truck, Ship, Package, Check } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,82 +11,104 @@ export const metadata: Metadata = {
 
 const features = [
     {
-        icon: "📊",
         title: "Pipeline Visual Kanban",
         description:
             "Visualiza todas tus oportunidades en un tablero intuitivo. Arrastra y suelta entre etapas, asigna responsables y nunca pierdas una oportunidad.",
+        Icon: Kanban,
+        color: "text-[var(--goxt-primary)]",
+        bg: "bg-blue-50",
     },
     {
-        icon: "📝",
         title: "Cotizaciones Dinámicas",
         description:
             "Configura tus productos una vez y genera cotizaciones profesionales en segundos. Múltiples servicios, descuentos por línea, PDF listo para enviar.",
+        Icon: FileText,
+        color: "text-purple-600",
+        bg: "bg-purple-50",
     },
     {
-        icon: "🛠️",
-        title: "Productos 100% Configurables",
+        title: "Productos Configurables",
         description:
             "Crea productos con los campos exactos que necesitas: origen, destino, tipo de carga, peso, volumen. Sin código, sin desarrolladores.",
+        Icon: Settings,
+        color: "text-slate-600",
+        bg: "bg-slate-100",
     },
     {
-        icon: "🔗",
         title: "Integración con Cargo",
         description:
             "Conecta ventas con operaciones. Las cotizaciones aprobadas se convierten en órdenes de trabajo automáticamente.",
+        Icon: Link2,
+        color: "text-amber-600",
+        bg: "bg-amber-50",
     },
     {
-        icon: "👥",
         title: "Gestión de Contactos",
         description:
             "Centraliza toda la información de tus clientes. Contactos, organizaciones, historial de interacciones en un solo lugar.",
+        Icon: Users,
+        color: "text-cyan-600",
+        bg: "bg-cyan-50",
     },
     {
-        icon: "📅",
         title: "Actividades y Calendario",
         description:
             "Programa llamadas, reuniones y tareas. Sincroniza con Google Calendar. Nunca olvides un seguimiento.",
+        Icon: Calendar,
+        color: "text-green-600",
+        bg: "bg-green-50",
     },
     {
-        icon: "📈",
         title: "Reportes y Dashboards",
         description:
             "Visualiza métricas clave: pipeline por etapa, conversión, desempeño por vendedor. Dashboards personalizados con Metabase.",
+        Icon: BarChart3,
+        color: "text-rose-600",
+        bg: "bg-rose-50",
     },
     {
-        icon: "🏢",
-        title: "Multi-Workspace",
+        title: "Espacios Multi-Workspace",
         description:
             "Espacios separados por empresa o división. Cada workspace con su propia configuración, usuarios y datos aislados.",
+        Icon: Building2,
+        color: "text-indigo-600",
+        bg: "bg-indigo-50",
     },
 ];
 
 const useCases = [
     {
-        icon: "🚛",
         title: "Transporte Terrestre",
         items: [
             "Cotiza rutas con origen/destino desde mapa",
             "Integra tarifas por km o por zona",
             "Conecta con tu TMS para generar órdenes",
         ],
+        Icon: Truck,
+        color: "text-amber-600",
+        bg: "bg-amber-50",
     },
     {
-        icon: "🚢",
         title: "Transporte Marítimo",
         items: [
             "Campos específicos: nave, contenedor, puerto",
             "Múltiples servicios por cotización",
             "Integración con información de viajes",
         ],
+        Icon: Ship,
+        color: "text-blue-600",
+        bg: "bg-blue-50",
     },
     {
-        icon: "📦",
         title: "Operadores Logísticos",
         items: [
             "Cotiza almacenaje, picking, packing",
             "Campos de inventario y ubicaciones",
             "Tarifas por volumen o por operación",
         ],
+        Icon: Package,
+        color: "text-purple-600",
+        bg: "bg-purple-50",
     },
 ];
 
@@ -178,8 +201,10 @@ export default function CRMPage() {
                                 key={feature.title}
                                 className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow"
                             >
-                                <span className="text-4xl block mb-4">{feature.icon}</span>
-                                <h3 className="text-lg font-bold text-[var(--goxt-gray-900)] mb-2">
+                                <div className={`w-14 h-14 ${feature.bg} rounded-xl flex items-center justify-center mb-4`}>
+                                    <feature.Icon className={`w-7 h-7 ${feature.color}`} strokeWidth={1.8} />
+                                </div>
+                                <h3 className="text-lg font-bold text-[var(--goxt-gray-900)] mb-2" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                     {feature.title}
                                 </h3>
                                 <p className="text-sm text-[var(--goxt-gray-600)]">
@@ -207,8 +232,10 @@ export default function CRMPage() {
                     <div className="grid md:grid-cols-3 gap-8">
                         {useCases.map((useCase) => (
                             <div key={useCase.title} className="goxt-card">
-                                <span className="text-5xl block mb-4">{useCase.icon}</span>
-                                <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-4">
+                                <div className={`w-16 h-16 ${useCase.bg} rounded-xl flex items-center justify-center mb-4`}>
+                                    <useCase.Icon className={`w-8 h-8 ${useCase.color}`} strokeWidth={1.8} />
+                                </div>
+                                <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                     {useCase.title}
                                 </h3>
                                 <ul className="space-y-3">
@@ -217,19 +244,10 @@ export default function CRMPage() {
                                             key={item}
                                             className="flex items-start gap-2 text-[var(--goxt-gray-600)]"
                                         >
-                                            <svg
+                                            <Check
                                                 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
+                                                strokeWidth={2}
+                                            />
                                             {item}
                                         </li>
                                     ))}
@@ -244,7 +262,7 @@ export default function CRMPage() {
             <section className="goxt-section">
                 <div className="goxt-container text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                        ¿Listo para transformar tu proceso comercial?
+                        ¿Listo para transformar <span className="goxt-gradient-accent-text">tu proceso comercial</span>?
                     </h2>
                     <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
                         Agenda una demo personalizada y descubre cómo GOxT CRM puede
