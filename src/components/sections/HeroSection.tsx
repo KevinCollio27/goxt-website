@@ -95,7 +95,7 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
                     >
-                        <Link href="/contacto" className="goxt-btn-accent text-lg px-8 py-4">
+                        <Link href="/contacto" className="goxt-btn-primary text-lg px-8 py-4">
                             Solicitar Demo
                         </Link>
                         <Link href="/productos" className="goxt-btn-secondary text-lg px-8 py-4">

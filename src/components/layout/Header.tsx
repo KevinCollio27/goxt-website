@@ -118,7 +118,7 @@ export function Header() {
 
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-4">
-                    <Link href="/contacto" className="goxt-btn-accent">
+                    <Link href="/contacto" className="goxt-btn-primary">
                         Solicitar Demo
                     </Link>
                 </div>

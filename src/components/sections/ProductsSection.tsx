@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { Target, Truck, Check } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -23,7 +24,7 @@ interface Product {
 const products: Product[] = [
     {
         id: "crm",
-        name: "GOxT CRM",
+        name: "CRM",
         tagline: "De leads a clientes: gestiona todo el ciclo de ventas",
         description:
             "El CRM que habla el idioma de tu operación. Cotizaciones en minutos, seguimiento visual de oportunidades e integración con tu sistema operativo.",
@@ -41,11 +42,11 @@ const products: Product[] = [
             "Reportes y dashboards",
             "Multi-workspace",
         ],
-        screenshot: "/screenshots/crm-kanban.png",
+        screenshot: "/assets/Login CRM.png",
     },
     {
         id: "cargo",
-        name: "GOxT Cargo",
+        name: "CARGO",
         tagline: "Control total de tu flota y operaciones logísticas",
         description:
             "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",
@@ -63,7 +64,7 @@ const products: Product[] = [
             "Mantenimiento programado",
             "Documentación digital",
         ],
-        screenshot: "/screenshots/cargo-map.png",
+        screenshot: "/assets/Login CARGO.png",
     },
 ];
 
@@ -120,8 +121,8 @@ export function ProductsSection() {
                                     <div className={`w-12 h-12 ${product.iconBg} rounded-xl flex items-center justify-center`}>
                                         <product.Icon className={`w-6 h-6 ${product.iconColor}`} strokeWidth={1.5} />
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold text-[var(--goxt-gray-900)]">
-                                        {product.name}
+                                    <h3 className="text-2xl md:text-3xl font-bold text-[var(--goxt-gray-900)]" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                        GOxT: <span className="goxt-gradient-accent-text font-bold"> {product.name}</span>
                                     </h3>
                                 </div>
                                 <p className="text-lg font-medium text-[var(--goxt-primary)] mb-4">
@@ -149,20 +150,20 @@ export function ProductsSection() {
 
                                 {/* CTAs */}
                                 <div className="flex flex-wrap gap-4">
-                                    <Link
-                                        href={product.href}
-                                        className="goxt-btn-primary"
-                                    >
-                                        Conocer más
-                                    </Link>
                                     <a
                                         href={product.appUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="goxt-btn-primary"
+                                    >
+                                        Ir a {product.name}
+                                    </a>
+                                    <Link
+                                        href={product.href}
                                         className="goxt-btn-secondary"
                                     >
-                                        Ir a {product.name.split(" ")[1]}
-                                    </a>
+                                        Conocer más
+                                    </Link>
                                 </div>
                             </div>
 
@@ -186,16 +187,16 @@ export function ProductsSection() {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* Screenshot placeholder */}
-                                        <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                            <div className="text-center">
-                                                <div className={`w-20 h-20 ${product.iconBg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                                                    <product.Icon className={`w-10 h-10 ${product.iconColor}`} strokeWidth={1.5} />
-                                                </div>
-                                                <span className="text-gray-400 text-sm">
-                                                    Screenshot de {product.name}
-                                                </span>
-                                            </div>
+                                        {/* Screenshot */}
+                                        <div className="relative w-full">
+                                            <Image
+                                                src={product.screenshot}
+                                                alt={`Screenshot de ${product.name}`}
+                                                width={800}
+                                                height={600}
+                                                className="w-full h-auto object-contain"
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                            />
                                         </div>
                                     </div>
                                 </div>

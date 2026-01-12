@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const products = [
     {
         id: "crm",
-        name: "GOxT CRM",
+        name: "CRM",
         tagline: "De leads a clientes: gestiona todo el ciclo de ventas",
         description:
             "El CRM que habla el idioma de tu operación. Cotizaciones en minutos, seguimiento visual de oportunidades e integración con tu sistema operativo.",
@@ -20,7 +20,7 @@ const products = [
     },
     {
         id: "cargo",
-        name: "GOxT Cargo",
+        name: "CARGO",
         tagline: "Control total de tu flota y operaciones logísticas",
         description:
             "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",
@@ -36,8 +36,8 @@ export default function ProductosPage() {
             {/* Header */}
             <section className="py-20">
                 <div className="goxt-container text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)] mb-6">
-                        Nuestros Productos
+                    <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                        Nuestros <span className="goxt-gradient-accent-text">Productos</span>
                     </h1>
                     <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
                         Dos productos potentes diseñados para empresas de transporte y
@@ -60,8 +60,8 @@ export default function ProductosPage() {
                                 <div className="flex items-center gap-4 mb-4">
                                     <span className="text-5xl">{product.icon}</span>
                                     <div>
-                                        <h2 className="text-2xl font-bold text-[var(--goxt-gray-900)] group-hover:text-[var(--goxt-primary)] transition-colors">
-                                            {product.name}
+                                        <h2 className="text-2xl font-bold text-[var(--goxt-gray-900)] group-hover:text-[var(--goxt-primary)] transition-colors" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                            GOXT: <span className="goxt-gradient-accent-text">{product.name}</span>
                                         </h2>
                                         <p className="text-[var(--goxt-primary)] font-medium">
                                             {product.tagline}

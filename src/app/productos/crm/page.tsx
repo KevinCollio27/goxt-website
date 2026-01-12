@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -97,8 +98,8 @@ export default function CRMPage() {
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="flex items-center justify-center gap-3 mb-6">
                             <span className="text-6xl">🎯</span>
-                            <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)]">
-                                GOxT CRM
+                            <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)]" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                GOxT: <span className="goxt-gradient-accent-text">CRM</span>
                             </h1>
                         </div>
                         <p className="text-xl md:text-2xl font-medium text-[var(--goxt-primary)] mb-4">
@@ -109,17 +110,17 @@ export default function CRMPage() {
                             específicamente para empresas de transporte y logística.
                         </p>
                         <div className="flex flex-wrap gap-4 justify-center">
-                            <Link href="/contacto" className="goxt-btn-accent text-lg px-8 py-4">
-                                Solicitar Demo Gratuita
-                            </Link>
                             <a
                                 href="https://crm.goxt.io"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="goxt-btn-secondary text-lg px-8 py-4"
+                                className="goxt-btn-primary text-lg px-8 py-4"
                             >
                                 Iniciar Sesión
                             </a>
+                            <Link href="/contacto" className="goxt-btn-secondary text-lg px-8 py-4">
+                                Solicitar Demo
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -143,13 +144,15 @@ export default function CRMPage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                <div className="text-center">
-                                    <span className="text-8xl block mb-4">🎯</span>
-                                    <span className="text-gray-400">
-                                        Screenshot del Pipeline Kanban
-                                    </span>
-                                </div>
+                            <div className="relative w-full">
+                                <Image
+                                    src="/assets/Flujo CRM.png"
+                                    alt="Pipeline Kanban de GOxT CRM"
+                                    width={1200}
+                                    height={675}
+                                    className="w-full h-auto"
+                                    priority
+                                />
                             </div>
                         </div>
                     </div>
@@ -160,8 +163,8 @@ export default function CRMPage() {
             <section className="goxt-section bg-[var(--goxt-gray-50)]">
                 <div className="goxt-container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4">
-                            Funcionalidades Principales
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                            Funcionalidades <span className="goxt-gradient-accent-text">Principales</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
                             Todo lo que necesitas para gestionar tu proceso comercial de
@@ -192,8 +195,8 @@ export default function CRMPage() {
             <section className="goxt-section bg-white">
                 <div className="goxt-container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4">
-                            Casos de Uso por Industria
+                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                            Casos de Uso por <span className="goxt-gradient-accent-text">Industria</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
                             GOxT CRM se adapta a diferentes tipos de operaciones de
@@ -238,25 +241,25 @@ export default function CRMPage() {
             </section>
 
             {/* CTA */}
-            <section className="goxt-section bg-[var(--goxt-primary)]">
+            <section className="goxt-section">
                 <div className="goxt-container text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                         ¿Listo para transformar tu proceso comercial?
                     </h2>
-                    <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
+                    <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
                         Agenda una demo personalizada y descubre cómo GOxT CRM puede
                         ayudarte a cerrar más negocios.
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                         <Link
                             href="/contacto"
-                            className="goxt-btn-accent text-lg px-8 py-4"
+                            className="goxt-btn-primary text-lg px-8 py-4"
                         >
                             Solicitar Demo
                         </Link>
                         <Link
                             href="/productos/cargo"
-                            className="bg-white/20 hover:bg-white/30 text-white font-semibold px-8 py-4 rounded-full transition-colors"
+                            className="goxt-btn-secondary text-lg px-8 py-4"
                         >
                             Conocer GOxT Cargo →
                         </Link>

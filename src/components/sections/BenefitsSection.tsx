@@ -23,7 +23,7 @@ const benefits: Benefit[] = [
     },
     {
         Icon: Link2,
-        title: "Conectado con tu Operación",
+        title: "Conectado a tu Operación",
         description:
             "Integración nativa entre ventas y operaciones. De la cotización al viaje, sin doble digitación.",
         color: "text-blue-600",
@@ -60,7 +60,7 @@ export function BenefitsSection() {
                         className="text-3xl md:text-4xl font-bold mb-4"
                         style={{ fontFamily: "var(--font-handwritten), cursive" }}
                     >
-                        ¿Por qué elegir{" "}
+                        ¿Por qué elegir a {" "}
                         <span className="goxt-gradient-accent-text">GOxT</span>?
                     </motion.h2>
                     <motion.p
