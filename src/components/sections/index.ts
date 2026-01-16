@@ -3,3 +3,5 @@ export { StatsSection } from "./StatsSection";
 export { ProductsSection } from "./ProductsSection";
 export { BenefitsSection } from "./BenefitsSection";
 export { ContactSection } from "./ContactSection";
+export { SavingsCalculator } from "./SavingsCalculatorSection";
+export { FAQSection } from "./FAQSection";
