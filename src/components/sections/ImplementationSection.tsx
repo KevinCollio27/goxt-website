@@ -1,0 +1,337 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Calendar, Settings, Users, Rocket, CheckCircle } from "lucide-react";
+
+interface ImplementationStep {
+    week: number;
+    title: string;
+    description: string;
+    color: string;
+    bgColor: string;
+    Icon: React.ComponentType<{ className?: string }>;
+    tasks: string[];
+    deliverables: string[];
+}
+
+const implementationSteps: ImplementationStep[] = [
+    {
+        week: 1,
+        title: "Diagnóstico",
+        description: "Entendemos tu operación actual para diseñar la solución perfecta",
+        color: "text-blue-600",
+        bgColor: "bg-blue-50",
+        Icon: Calendar,
+        tasks: [
+            "Análisis de procesos actuales",
+            "Identificación de puntos críticos",
+            "Mapeo de flujos de trabajo",
+            "Entrevistas con equipos clave"
+        ],
+        deliverables: [
+            "Documento de diagnóstico detallado",
+            "Plan de migración personalizado",
+            "Objetivos claros de implementación",
+            "Cronograma de trabajo"
+        ]
+    },
+    {
+        week: 2,
+        title: "Configuración",
+        description: "Adaptamos GOxT a tus procesos específicos sin tocar código",
+        color: "text-purple-600",
+        bgColor: "bg-purple-50",
+        Icon: Settings,
+        tasks: [
+            "Personalización de productos y campos",
+            "Configuración de pipelines de ventas",
+            "Integración con sistemas existentes",
+            "Configuración de roles y permisos"
+        ],
+        deliverables: [
+            "GOxT completamente configurado",
+            "Integraciones funcionando",
+            "Flujos de trabajo validados",
+            "Usuarios de prueba creados"
+        ]
+    },
+    {
+        week: 3,
+        title: "Capacitación",
+        description: "Entrenamos a todo tu equipo para un uso efectivo desde el día 1",
+        color: "text-green-600",
+        bgColor: "bg-green-50",
+        Icon: Users,
+        tasks: [
+            "Entrenamiento a administradores",
+            "Talleres para equipos comerciales",
+            "Sesiones prácticas para operaciones",
+            "Capacitación en reportes y dashboards"
+        ],
+        deliverables: [
+            "Equipo certificado en GOxT",
+            "Manuales personalizados",
+            "Videos tutoriales específicos",
+            "Plan de soporte continuo"
+        ]
+    },
+    {
+        week: 4,
+        title: "Go Live",
+        description: "Implementación controlada con soporte total durante la transición",
+        color: "text-orange-600",
+        bgColor: "bg-orange-50",
+        Icon: Rocket,
+        tasks: [
+            "Migración segura de datos",
+            "Activación de todos los usuarios",
+            "Acompañamiento inicial en vivo",
+            "Monitoreo de primera semana"
+        ],
+        deliverables: [
+            "Sistema en producción",
+            "Datos históricos migrados",
+            "Soporte 24/7 activado",
+            "Plan de optimización continua"
+        ]
+    }
+];
+
+export function ImplementationSection() {
+    return (
+        <section className="goxt-section bg-gradient-to-b from-white to-blue-50/20">
+            <div className="goxt-container">
+                {/* Header */}
+                <div className="text-center mb-16">
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="inline-block px-4 py-1 bg-[var(--goxt-primary-100)] text-[var(--goxt-primary)] rounded-full text-sm font-medium mb-4"
+                    >
+                        Implementación sin dolor
+                    </motion.span>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-3xl md:text-4xl font-bold mb-4 text-[var(--goxt-gray-900)]"
+                        style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                    >
+                        Implementación en{" "}
+                        <span className="goxt-gradient-accent-text font-bold">4 semanas</span>
+                    </motion.h2>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-lg text-[var(--goxt-gray-600)] max-w-3xl mx-auto"
+                    >
+                        Un proceso estructurado y probado con más de 500 empresas. Sin sorpresas, sin
+                        retrasos, sin estrés.
+                    </motion.p>
+                </div>
+
+                {/* Timeline - Desktop */}
+                <div className="hidden lg:block relative">
+                    {/* Linea de tiempo */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-green-500"></div>
+
+                    {implementationSteps.map((step, index) => {
+                        const isEven = index % 2 === 0;
+
+                        return (
+                            <motion.div
+                                key={step.week}
+                                initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.6, delay: index * 0.15 }}
+                                className={`flex items-center mb-12 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
+                            >
+                                {/* Contenido */}
+                                <div className={`w-1/2 ${isEven ? 'pr-16 text-right' : 'pl-16'}`}>
+                                    <div className="inline-flex items-center gap-3 mb-3">
+                                        <span className={`text-sm font-bold ${step.color} bg-white px-3 py-1 rounded-full border`}>
+                                            Semana {step.week}
+                                        </span>
+                                        <h3 className="text-2xl font-bold text-[var(--goxt-gray-900)]">
+                                            {step.title}
+                                        </h3>
+                                    </div>
+
+                                    <p className="text-[var(--goxt-gray-600)] mb-4">
+                                        {step.description}
+                                    </p>
+
+                                    <div className={`grid grid-cols-2 gap-4 ${isEven ? 'justify-end' : 'justify-start'}`}>
+                                        <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                            <div className="text-sm font-semibold text-gray-500 mb-2">TAREAS</div>
+                                            <ul className="space-y-2">
+                                                {step.tasks.map((task, idx) => (
+                                                    <li key={idx} className="flex items-start gap-2 text-sm">
+                                                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                        <span className="text-gray-700">{task}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                            <div className="text-sm font-semibold text-gray-500 mb-2">ENTREGABLES</div>
+                                            <ul className="space-y-2">
+                                                {step.deliverables.map((deliverable, idx) => (
+                                                    <li key={idx} className="flex items-start gap-2 text-sm">
+                                                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                        <span className="text-gray-700">{deliverable}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Icono en el centro */}
+                                <div className="relative flex-shrink-0 w-16 h-16">
+                                    <div className={`absolute inset-0 ${step.bgColor} rounded-full`}></div>
+                                    <div className="relative w-16 h-16 rounded-full border-4 border-white flex items-center justify-center">
+                                        <step.Icon className={`w-8 h-8 ${step.color}`} />
+                                    </div>
+                                </div>
+
+                                {/* Espacio vacío para alineación */}
+                                <div className="w-1/2"></div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+
+                {/* Timeline - Mobile */}
+                <div className="lg:hidden space-y-8">
+                    {implementationSteps.map((step, index) => (
+                        <motion.div
+                            key={step.week}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm"
+                        >
+                            <div className="flex items-start gap-4 mb-4">
+                                <div className={`flex-shrink-0 w-12 h-12 ${step.bgColor} rounded-xl flex items-center justify-center`}>
+                                    <step.Icon className={`w-6 h-6 ${step.color}`} />
+                                </div>
+                                <div>
+                                    <div className="inline-flex items-center gap-2 mb-1">
+                                        <span className={`text-xs font-bold ${step.color} bg-white px-2 py-1 rounded border`}>
+                                            Semana {step.week}
+                                        </span>
+                                        <h3 className="text-xl font-bold text-[var(--goxt-gray-900)]">
+                                            {step.title}
+                                        </h3>
+                                    </div>
+                                    <p className="text-[var(--goxt-gray-600)] text-sm">
+                                        {step.description}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-4">
+                                <div className="bg-gray-50 rounded-xl p-4">
+                                    <div className="text-sm font-semibold text-gray-500 mb-2">TAREAS PRINCIPALES</div>
+                                    <ul className="space-y-2">
+                                        {step.tasks.map((task, idx) => (
+                                            <li key={idx} className="flex items-start gap-2 text-sm">
+                                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                <span className="text-gray-700">{task}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="bg-gray-50 rounded-xl p-4">
+                                    <div className="text-sm font-semibold text-gray-500 mb-2">ENTREGABLES</div>
+                                    <ul className="space-y-2">
+                                        {step.deliverables.map((deliverable, idx) => (
+                                            <li key={idx} className="flex items-start gap-2 text-sm">
+                                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                <span className="text-gray-700">{deliverable}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Stats y CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6 }}
+                    className="mt-16"
+                >
+                    <div className="bg-gradient-to-r from-[var(--goxt-primary)] to-blue-700 rounded-2xl p-8 text-white">
+                        <div className="grid md:grid-cols-3 gap-8 mb-8">
+                            <div className="text-center">
+                                <div className="text-3xl font-bold mb-2">100%</div>
+                                <div className="text-sm opacity-90">Implementaciones exitosas</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold mb-2">4</div>
+                                <div className="text-sm opacity-90">Semanas promedio de implementación</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold mb-2">24/7</div>
+                                <div className="text-sm opacity-90">Soporte durante implementación</div>
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            <h3 className="text-xl font-bold mb-4">
+                                ¿Preocupado por la transición?
+                            </h3>
+                            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+                                Te guiamos paso a paso y garantizamos que estarás operando en tiempo récord.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <a
+                                    href="/contacto"
+                                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-[var(--goxt-primary)] px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg"
+                                >
+                                    <Calendar className="w-5 h-5" />
+                                    Agendar consulta de implementación
+                                </a>
+                                <a
+                                    href="/nosotros"
+                                    className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg"
+                                >
+                                    Conocer al equipo de implementación
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Nota adicional */}
+                    <div className="text-center mt-8">
+                        <div className="inline-flex items-center gap-2 bg-yellow-50 text-yellow-700 px-4 py-2 rounded-lg text-sm">
+                            <CheckCircle className="w-4 h-4" />
+                            <span>
+                                <strong>Sin costo de configuración</strong> •{" "}
+                                <strong>Migración de datos gratuita</strong> •{" "}
+                                <strong>Capacitación incluida</strong>
+                            </span>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+}

@@ -6,3 +6,4 @@ export { ContactSection } from "./ContactSection";
 export { SavingsCalculator } from "./SavingsCalculatorSection";
 export { FAQSection } from "./FAQSection";
 export { ComparisonSection } from "./ComparisonSection";
+export { ImplementationSection } from "./ImplementationSection";
