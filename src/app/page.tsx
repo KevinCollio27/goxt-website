@@ -3,6 +3,7 @@ import {
   ProductsSection,
   BenefitsSection,
   ContactSection,
+  ComparisonSection,
 } from "@/components/sections";
 
 export default function HomePage() {
@@ -11,6 +12,7 @@ export default function HomePage() {
       <HeroSection />
       <ProductsSection />
       <BenefitsSection />
+      <ComparisonSection />
       <ContactSection />
     </>
   );
