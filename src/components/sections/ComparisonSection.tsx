@@ -13,60 +13,60 @@ interface ComparisonItem {
 
 const comparisonData: ComparisonItem[] = [
     {
-        feature: "Diseñado específicamente para transporte",
+        feature: "Diseñado para transporte",
         goxt: true,
         genericCrm: false,
         excel: false,
-        explanation: "GOxT entiende términos como 'fletes', 'toneladas', 'palets', etc."
+        explanation: "GOxT entiende términos como 'fletes', 'toneladas', 'origen/destino' nativamente."
     },
     {
-        feature: "Integración nativa ventas-operaciones",
+        feature: "Conversión Cotización -> Orden",
         goxt: true,
         genericCrm: false,
         excel: false,
-        explanation: "De la cotización al viaje sin doble digitación"
+        explanation: "Flujo automático ventas-operaciones sin doble digitación."
     },
     {
-        feature: "Cotizaciones automáticas con productos dinámicos",
+        feature: "Campos Logísticos Dinámicos",
         goxt: true,
         genericCrm: "Limitado",
         excel: false,
-        explanation: "Crea productos con campos específicos de transporte"
+        explanation: "Configura peso, volumen, tipo de carga por cliente/producto."
     },
     {
-        feature: "Soporte especializado en español",
+        feature: "Gestión de Documentación Vial",
         goxt: true,
-        genericCrm: "Internacional",
-        excel: false,
-        explanation: "Equipo que entiende tu contexto local y regulaciones"
+        genericCrm: false,
+        excel: "Manual",
+        explanation: "Guías, manifiestos y documentación de conductores centralizada."
     },
     {
-        feature: "Personalización sin código",
+        feature: "Alertas de Flota y Choferes",
         goxt: true,
         genericCrm: "Requiere desarrollo",
-        excel: false,
-        explanation: "Adapta flujos a tus procesos sin programar"
+        excel: "Manual",
+        explanation: "Vencimientos de licencias, revisiones y mantenimientos."
     },
     {
-        feature: "Multi-workspace para diferentes áreas",
+        feature: "Rentabilidad Real por Viaje.",
         goxt: true,
-        genericCrm: "Premium",
-        excel: false,
-        explanation: "Separa ventas, operaciones, contabilidad en un solo lugar"
+        genericCrm: "Genéricos",
+        excel: "Complejo",
+        explanation: "Cruce automático de ingresos (Ventas) vs. costos operativos (Cargo)."
     },
     {
         feature: "Integración con GPS y telemetría",
         goxt: true,
         genericCrm: false,
         excel: false,
-        explanation: "Conecta con Geotab, Samsara y otros sistemas de tracking"
+        explanation: "Conexión nativa con sistemas de tracking (Geotab, Samsara)."
     },
     {
-        feature: "Reportes especializados para transporte",
+        feature: "Multimoneda y Tarifarios",
         goxt: true,
-        genericCrm: "Genéricos",
-        excel: "Manuales",
-        explanation: "KPIs específicos como costo por kilómetro, utilización de flota, etc."
+        genericCrm: "Premium",
+        excel: "Manual",
+        explanation: "Gestión de tarifas por zona, km o toneladas."
     }
 ];
 

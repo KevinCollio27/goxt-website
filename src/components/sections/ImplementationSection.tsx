@@ -17,82 +17,82 @@ interface ImplementationStep {
 const implementationSteps: ImplementationStep[] = [
     {
         week: 1,
-        title: "Diagnóstico",
-        description: "Entendemos tu operación actual para diseñar la solución perfecta",
+        title: "Conexión y Configuración",
+        description: "Configurar la base de GOxT para tu operación específica de transporte.",
         color: "text-blue-600",
         bgColor: "bg-blue-50",
         Icon: Calendar,
         tasks: [
-            "Análisis de procesos actuales",
-            "Identificación de puntos críticos",
-            "Mapeo de flujos de trabajo",
-            "Entrevistas con equipos clave"
+            "Crear cuenta empresarial y configurar datos básicos",
+            "Definir tipos de transporte y unidades de medida",
+            "Configurar plantillas de cotización con logo empresarial",
+            "Conectar correo corporativo para envíos automáticos"
         ],
         deliverables: [
-            "Documento de diagnóstico detallado",
-            "Plan de migración personalizado",
-            "Objetivos claros de implementación",
-            "Cronograma de trabajo"
+            "Cuenta GOxT activa con dominio empresarial",
+            "Catalogo inicial de servicios configurado",
+            "Plantillas de cotización profesional listas",
+            "Sistema de correo verificado y funcional"
         ]
     },
     {
         week: 2,
-        title: "Configuración",
-        description: "Adaptamos GOxT a tus procesos específicos sin tocar código",
+        title: "Importación de Datos",
+        description: "Migrar tu información actual a GOxT sin pérdida de datos.",
         color: "text-purple-600",
         bgColor: "bg-purple-50",
         Icon: Settings,
         tasks: [
-            "Personalización de productos y campos",
-            "Configuración de pipelines de ventas",
-            "Integración con sistemas existentes",
-            "Configuración de roles y permisos"
+            "Importar clientes y contactos desde archivos Excel",
+            "Cargar vehículos de flota con sus características",
+            "Migrar servicios y tarifas actuales",
+            "Validar integridad de datos migrados"
         ],
         deliverables: [
-            "GOxT completamente configurado",
-            "Integraciones funcionando",
-            "Flujos de trabajo validados",
-            "Usuarios de prueba creados"
+            "Base de clientes completa en GOxT CRM",
+            "Flota vehicular cargada en GOxT Cargo",
+            "Catalogo de servicios con precios migrado",
+            "Reporte de migración exitosa"
         ]
     },
     {
         week: 3,
-        title: "Capacitación",
-        description: "Entrenamos a todo tu equipo para un uso efectivo desde el día 1",
+        title: "Equipos y Permisos",
+        description: "Configurar acceso seguro para cada rol en tu operación.",
         color: "text-green-600",
         bgColor: "bg-green-50",
         Icon: Users,
         tasks: [
-            "Entrenamiento a administradores",
-            "Talleres para equipos comerciales",
-            "Sesiones prácticas para operaciones",
-            "Capacitación en reportes y dashboards"
+            "Crear perfiles por rol (Ventas, Operaciones, Gerencia)",
+            "Invitar equipo comercial y operativo",
+            "Configurar permisos de acceso específicos",
+            "Realizar capacitación inicial por equipo"
         ],
         deliverables: [
-            "Equipo certificado en GOxT",
-            "Manuales personalizados",
-            "Videos tutoriales específicos",
-            "Plan de soporte continuo"
+            "Todos los usuarios con acceso activo",
+            "Matriz de permisos configurada",
+            "Capacitación básica completada",
+            "Soporte inicial de 1 semana activo"
         ]
     },
     {
         week: 4,
-        title: "Go Live",
-        description: "Implementación controlada con soporte total durante la transición",
+        title: "Go Live Inmediato",
+        description: "Operar al 100% con GOxT desde el primer día.",
         color: "text-orange-600",
         bgColor: "bg-orange-50",
         Icon: Rocket,
         tasks: [
-            "Migración segura de datos",
-            "Activación de todos los usuarios",
-            "Acompañamiento inicial en vivo",
-            "Monitoreo de primera semana"
+            "Generar primera cotización oficial con GOxT CRM",
+            "Crear órdenes de transporte desde cotizaciones aprobadas",
+            "Operar rutas con seguimiento en tiempo real",
+            "Generar facturación automática desde servicios"
         ],
         deliverables: [
-            "Sistema en producción",
-            "Datos históricos migrados",
-            "Soporte 24/7 activado",
-            "Plan de optimización continua"
+            "Primera cotización generada y enviada",
+            "Proceso cotización→operación validado",
+            "Dashboard operativo en tiempo real",
+            "Soporte premium activo para continuidad"
         ]
     }
 ];
@@ -121,7 +121,7 @@ export function ImplementationSection() {
                         style={{ fontFamily: "var(--font-handwritten), cursive" }}
                     >
                         Implementación en{" "}
-                        <span className="goxt-gradient-accent-text font-bold">4 semanas</span>
+                        <span className="goxt-gradient-accent-text font-bold">4 pasos</span>
                     </motion.h2>
 
                     <motion.p
@@ -131,7 +131,7 @@ export function ImplementationSection() {
                         transition={{ delay: 0.2 }}
                         className="text-lg text-[var(--goxt-gray-600)] max-w-3xl mx-auto"
                     >
-                        Un proceso estructurado y probado con más de 500 empresas. Sin sorpresas, sin
+                        Un proceso completado con tan solo unos "clics" sin sorpresas, sin
                         retrasos, sin estrés.
                     </motion.p>
                 </div>
@@ -157,7 +157,7 @@ export function ImplementationSection() {
                                 <div className={`w-1/2 ${isEven ? 'pr-16 text-right' : 'pl-16'}`}>
                                     <div className="inline-flex items-center gap-3 mb-3">
                                         <span className={`text-sm font-bold ${step.color} bg-white px-3 py-1 rounded-full border`}>
-                                            Semana {step.week}
+                                            Paso {step.week}
                                         </span>
                                         <h3 className="text-2xl font-bold text-[var(--goxt-gray-900)]">
                                             {step.title}
@@ -228,7 +228,7 @@ export function ImplementationSection() {
                                 <div>
                                     <div className="inline-flex items-center gap-2 mb-1">
                                         <span className={`text-xs font-bold ${step.color} bg-white px-2 py-1 rounded border`}>
-                                            Semana {step.week}
+                                            Paso {step.week}
                                         </span>
                                         <h3 className="text-xl font-bold text-[var(--goxt-gray-900)]">
                                             {step.title}
@@ -281,11 +281,11 @@ export function ImplementationSection() {
                         <div className="grid md:grid-cols-3 gap-8 mb-8">
                             <div className="text-center">
                                 <div className="text-3xl font-bold mb-2">100%</div>
-                                <div className="text-sm opacity-90">Implementaciones exitosas</div>
+                                <div className="text-sm opacity-90">De Confiabilidad</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold mb-2">4</div>
-                                <div className="text-sm opacity-90">Semanas promedio de implementación</div>
+                                <div className="text-sm opacity-90">Pasos de implementación</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-3xl font-bold mb-2">24/7</div>
@@ -316,18 +316,6 @@ export function ImplementationSection() {
                                     Conocer al equipo de implementación
                                 </a>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Nota adicional */}
-                    <div className="text-center mt-8">
-                        <div className="inline-flex items-center gap-2 bg-yellow-50 text-yellow-700 px-4 py-2 rounded-lg text-sm">
-                            <CheckCircle className="w-4 h-4" />
-                            <span>
-                                <strong>Sin costo de configuración</strong> •{" "}
-                                <strong>Migración de datos gratuita</strong> •{" "}
-                                <strong>Capacitación incluida</strong>
-                            </span>
                         </div>
                     </div>
                 </motion.div>
