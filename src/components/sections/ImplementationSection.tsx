@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Calendar, Settings, Users, Rocket, CheckCircle } from "lucide-react";
 
 interface ImplementationStep {
-    week: number;
+    step: number;
     title: string;
     description: string;
     color: string;
@@ -16,7 +16,7 @@ interface ImplementationStep {
 
 const implementationSteps: ImplementationStep[] = [
     {
-        week: 1,
+        step: 1,
         title: "Conexión y Configuración",
         description: "Configurar la base de GOxT para tu operación específica de transporte.",
         color: "text-blue-600",
@@ -36,7 +36,7 @@ const implementationSteps: ImplementationStep[] = [
         ]
     },
     {
-        week: 2,
+        step: 2,
         title: "Importación de Datos",
         description: "Migrar tu información actual a GOxT sin pérdida de datos.",
         color: "text-purple-600",
@@ -56,7 +56,7 @@ const implementationSteps: ImplementationStep[] = [
         ]
     },
     {
-        week: 3,
+        step: 3,
         title: "Equipos y Permisos",
         description: "Configurar acceso seguro para cada rol en tu operación.",
         color: "text-green-600",
@@ -76,7 +76,7 @@ const implementationSteps: ImplementationStep[] = [
         ]
     },
     {
-        week: 4,
+        step: 4,
         title: "Go Live Inmediato",
         description: "Operar al 100% con GOxT desde el primer día.",
         color: "text-orange-600",
@@ -146,7 +146,7 @@ export function ImplementationSection() {
 
                         return (
                             <motion.div
-                                key={step.week}
+                                key={step.step}
                                 initial={{ opacity: 0, x: isEven ? -50 : 50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
@@ -157,7 +157,7 @@ export function ImplementationSection() {
                                 <div className={`w-1/2 ${isEven ? 'pr-16 text-right' : 'pl-16'}`}>
                                     <div className="inline-flex items-center gap-3 mb-3">
                                         <span className={`text-sm font-bold ${step.color} bg-white px-3 py-1 rounded-full border`}>
-                                            Paso {step.week}
+                                            Paso {step.step}
                                         </span>
                                         <h3 className="text-2xl font-bold text-[var(--goxt-gray-900)]">
                                             {step.title}
@@ -214,7 +214,7 @@ export function ImplementationSection() {
                 <div className="lg:hidden space-y-8">
                     {implementationSteps.map((step, index) => (
                         <motion.div
-                            key={step.week}
+                            key={step.step}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -228,7 +228,7 @@ export function ImplementationSection() {
                                 <div>
                                     <div className="inline-flex items-center gap-2 mb-1">
                                         <span className={`text-xs font-bold ${step.color} bg-white px-2 py-1 rounded border`}>
-                                            Paso {step.week}
+                                            Paso {step.step}
                                         </span>
                                         <h3 className="text-xl font-bold text-[var(--goxt-gray-900)]">
                                             {step.title}

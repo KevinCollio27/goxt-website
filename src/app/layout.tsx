@@ -3,6 +3,7 @@ import { Inter, Caveat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 
 // Fuente principal para body text
 const inter = Inter({
@@ -72,6 +73,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} antialiased`}>
         <Header />
         <main>{children}</main>
