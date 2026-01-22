@@ -46,8 +46,8 @@ const socialLinks = [
 
 export function Footer() {
     return (
-        <footer className="bg-[var(--goxt-gray-900)] text-white">
-            <div className="goxt-container py-12">
+        <footer className="bg-[#0f172a] text-white">
+            <div className="goxt-container py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Logo y descripción */}
                     <div className="lg:col-span-2">
@@ -60,7 +60,7 @@ export function Footer() {
                                 className="h-12 w-auto brightness-0 invert"
                             />
                         </Link>
-                        <p className="text-gray-400 mb-6">
+                        <p className="mb-6 max-w-sm">
                             Soluciones tecnológicas especializadas para transporte y logística.
                             Transformamos tus operaciones con software intuitivo y poderoso.
                         </p>
@@ -73,7 +73,7 @@ export function Footer() {
                                     href={social.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-400 hover:text-white transition-colors p-2 rounded-full bg-gray-800 hover:bg-gray-700"
+                                    className="text-white/60 hover:text-white transition-colors p-2 rounded-full bg-white/5 hover:bg-white/10"
                                     aria-label={social.name}
                                 >
                                     {social.icon}
@@ -93,11 +93,11 @@ export function Footer() {
                                         href={app.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 rounded-lg transition-colors"
+                                        className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-lg transition-colors border border-white/10"
                                     >
                                         <span className="text-lg">{icon}</span>
                                         <div className="text-left">
-                                            <div className="text-xs text-gray-400">Acceder a</div>
+                                            <div className="text-[10px] uppercase tracking-wider text-blue-200/50">Acceder a</div>
                                             <div className="font-semibold">GOxT {app.name}</div>
                                         </div>
                                     </a>
@@ -108,13 +108,13 @@ export function Footer() {
 
                     {/* Enlaces rápidos */}
                     <div>
-                        <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-4">GOxT</h3>
+                        <h3 className="text-sm tracking-widest mb-6 text-white">Plataforma</h3>
                         <ul className="space-y-3">
                             {footerLinks.productos.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-400 hover:text-white transition-colors"
+                                        className="hover:text-white transition-colors text-sm"
                                     >
                                         {link.name}
                                     </Link>
@@ -125,13 +125,13 @@ export function Footer() {
 
                     {/* Empresa */}
                     <div>
-                        <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-4">Empresa</h3>
+                        <h3 className="text-sm tracking-widest mb-6 text-white">Compañía</h3>
                         <ul className="space-y-3">
                             {footerLinks.empresa.map((link) => (
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-400 hover:text-white transition-colors"
+                                        className="hover:text-white transition-colors text-sm"
                                     >
                                         {link.name}
                                     </Link>
@@ -142,24 +142,24 @@ export function Footer() {
                 </div>
 
                 {/* Línea divisoria */}
-                <div className="border-t border-gray-800 my-8"></div>
+                <div className="border-t border-white/10 my-8"></div>
 
                 {/* Footer inferior */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-gray-500 text-sm">
-                        © {new Date().getFullYear()} GOxT. Hecho para transformar la logística.
+                    <p className="text-blue-100/40 text-sm">
+                        © {new Date().getFullYear()} GOxT. Todos los derechos reservados.
                     </p>
                     <div className="flex gap-6">
                         {footerLinks.legal.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-gray-400 hover:text-white text-sm transition-colors"
+                                className="text-blue-100/40 hover:text-white text-sm transition-colors"
                             >
                                 {link.name}
                             </Link>
                         ))}
-                        <Link href="/cookies" className="text-gray-400 hover:text-white text-sm transition-colors">
+                        <Link href="/cookies" className="text-blue-100/40 hover:text-white text-sm transition-colors">
                             Cookies
                         </Link>
                     </div>

@@ -167,7 +167,7 @@ export default function NosotrosPage() {
                             <div className="w-2 h-2 bg-[var(--goxt-primary)] rounded-full"></div>
                             Por qué elegirnos
                         </div>
-                        <h2 className="text-4xl font-bold text-[var(--goxt-gray-900)] mb-4">
+                        <h2 className="text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                             Lo que nos hace <span className="text-[var(--goxt-primary)]">diferentes</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)]">
@@ -186,7 +186,7 @@ export default function NosotrosPage() {
                                         <span className="text-2xl">{item.icon}</span>
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-3">
+                                        <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-3" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                             {item.titulo}
                                         </h3>
                                         <p className="text-[var(--goxt-gray-600)]">
@@ -208,7 +208,7 @@ export default function NosotrosPage() {
                             <div className="w-2 h-2 bg-[var(--goxt-accent)] rounded-full"></div>
                             Nuestros valores
                         </div>
-                        <h2 className="text-4xl font-bold text-[var(--goxt-gray-900)] mb-4">
+                        <h2 className="text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                             Pilares de nuestra <span className="text-[var(--goxt-accent)]">cultura</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)]">
@@ -229,7 +229,7 @@ export default function NosotrosPage() {
                                             {valor.icon}
                                         </div>
                                     </div>
-                                    <h3 className="font-bold text-[var(--goxt-gray-900)] mb-3 text-lg">
+                                    <h3 className="font-bold text-[var(--goxt-gray-900)] mb-3 text-lg" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                         {valor.title}
                                     </h3>
                                 </div>
@@ -249,7 +249,7 @@ export default function NosotrosPage() {
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-gradient-to-r from-[var(--goxt-accent)] to-blue-800 rounded-2xl p-12 text-white text-center relative overflow-hidden">
                             <div className="relative">
-                                <h2 className="text-3xl font-bold text-white mb-6">
+                                <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                                     ¿Listo para transformar tu operación logística?
                                 </h2>
                                 <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
