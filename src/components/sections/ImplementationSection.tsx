@@ -1,15 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, Settings, Users, Rocket, CheckCircle } from "lucide-react";
+import { Calendar, Settings, Users, Rocket, Check } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface ImplementationStep {
     step: number;
     title: string;
     description: string;
-    color: string;
-    bgColor: string;
-    Icon: React.ComponentType<{ className?: string }>;
+    Icon: LucideIcon;
     tasks: string[];
     deliverables: string[];
 }
@@ -19,8 +18,6 @@ const implementationSteps: ImplementationStep[] = [
         step: 1,
         title: "Conexión y Configuración",
         description: "Configurar la base de GOxT para tu operación específica de transporte.",
-        color: "text-blue-600",
-        bgColor: "bg-blue-50",
         Icon: Calendar,
         tasks: [
             "Crear cuenta empresarial y configurar datos básicos",
@@ -39,8 +36,6 @@ const implementationSteps: ImplementationStep[] = [
         step: 2,
         title: "Importación de Datos",
         description: "Migrar tu información actual a GOxT sin pérdida de datos.",
-        color: "text-purple-600",
-        bgColor: "bg-purple-50",
         Icon: Settings,
         tasks: [
             "Importar clientes y contactos desde archivos Excel",
@@ -59,8 +54,6 @@ const implementationSteps: ImplementationStep[] = [
         step: 3,
         title: "Equipos y Permisos",
         description: "Configurar acceso seguro para cada rol en tu operación.",
-        color: "text-green-600",
-        bgColor: "bg-green-50",
         Icon: Users,
         tasks: [
             "Crear perfiles por rol (Ventas, Operaciones, Gerencia)",
@@ -79,8 +72,6 @@ const implementationSteps: ImplementationStep[] = [
         step: 4,
         title: "Go Live Inmediato",
         description: "Operar al 100% con GOxT desde el primer día.",
-        color: "text-orange-600",
-        bgColor: "bg-orange-50",
         Icon: Rocket,
         tasks: [
             "Generar primera cotización oficial con GOxT CRM",
@@ -99,15 +90,20 @@ const implementationSteps: ImplementationStep[] = [
 
 export function ImplementationSection() {
     return (
-        <section className="goxt-section bg-gradient-to-b from-white to-blue-50/20">
+        <section className="goxt-section" style={{ background: 'var(--goxt-surface-alt)' }}>
             <div className="goxt-container">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-24">
                     <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-block px-4 py-1 bg-[var(--goxt-primary-100)] text-[var(--goxt-primary)] rounded-full text-sm font-medium mb-4"
+                        className="inline-block px-5 py-2 rounded-full text-sm font-semibold mb-6"
+                        style={{
+                            background: 'var(--goxt-surface-card)',
+                            color: 'var(--goxt-primary)',
+                            border: '1px solid var(--goxt-gray-200)',
+                        }}
                     >
                         Implementación sin dolor
                     </motion.span>
@@ -117,11 +113,13 @@ export function ImplementationSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-4xl font-bold mb-4 text-[var(--goxt-gray-900)]"
-                        style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+                        style={{
+                            fontFamily: "var(--font-display), serif",
+                            color: 'var(--text-primary)'
+                        }}
                     >
-                        Implementación en{" "}
-                        <span className="goxt-gradient-accent-text font-bold">4 pasos</span>
+                        Implementación en <span className="goxt-gradient-accent-text" style={{ fontFamily: "var(--font-handwritten), cursive" }}>4 pasos</span>
                     </motion.h2>
 
                     <motion.p
@@ -129,191 +127,214 @@ export function ImplementationSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg text-[var(--goxt-gray-600)] max-w-3xl mx-auto"
+                        className="text-lg md:text-xl max-w-2xl mx-auto"
+                        style={{ color: 'var(--text-secondary)' }}
                     >
-                        Un proceso completado con tan solo unos "clics" sin sorpresas, sin
-                        retrasos, sin estrés.
+                        Un proceso completado con tan solo unos "clics", sin retrasos y con total transparencia.
                     </motion.p>
                 </div>
 
-                {/* Timeline - Desktop */}
-                <div className="hidden lg:block relative">
-                    {/* Linea de tiempo */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-green-500"></div>
+                {/* Timeline Container */}
+                <div className="relative max-w-6xl mx-auto">
+                    {/* Linea Central de Tiempo */}
+                    <div
+                        className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full opacity-20 hidden lg:block"
+                        style={{ background: 'var(--goxt-midnight)' }}
+                    />
 
                     {implementationSteps.map((step, index) => {
                         const isEven = index % 2 === 0;
 
                         return (
-                            <motion.div
-                                key={step.step}
-                                initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.6, delay: index * 0.15 }}
-                                className={`flex items-center mb-12 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
-                            >
-                                {/* Contenido */}
-                                <div className={`w-1/2 ${isEven ? 'pr-16 text-right' : 'pl-16'}`}>
-                                    <div className="inline-flex items-center gap-3 mb-3">
-                                        <span className={`text-sm font-bold ${step.color} bg-white px-3 py-1 rounded-full border`}>
-                                            Paso {step.step}
-                                        </span>
-                                        <h3 className="text-2xl font-bold text-[var(--goxt-gray-900)]">
-                                            {step.title}
-                                        </h3>
+                            <div key={step.step} className="relative mb-24 last:mb-0">
+                                {/* Desktop Layout */}
+                                <div className={`hidden lg:flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
+                                    {/* Contenido (lado izquierdo o derecho) */}
+                                    <motion.div
+                                        initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true, margin: "-100px" }}
+                                        transition={{ duration: 0.8, ease: "circOut" }}
+                                        className="w-1/2"
+                                    >
+                                        <div className={`${isEven ? 'pr-20 text-right' : 'pl-20'}`}>
+                                            <div className={`flex items-center gap-4 mb-6 ${isEven ? 'justify-end' : 'justify-start'}`}>
+                                                <span
+                                                    className="text-3xl font-bold"
+                                                    style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-accent)' }}
+                                                >
+                                                    Paso {step.step}
+                                                </span>
+                                                <h3 className="text-3xl font-bold text-slate-800">{step.title}</h3>
+                                            </div>
+
+                                            <p className="text-slate-500 mb-8 max-w-md ml-auto mr-0">
+                                                {step.description}
+                                            </p>
+
+                                            <div className="grid grid-cols-2 gap-6">
+                                                {/* Card Tareas */}
+                                                <div className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-50 text-left">
+                                                    <div className="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-4">Tareas Principales</div>
+                                                    <ul className="space-y-3">
+                                                        {step.tasks.map((task, idx) => (
+                                                            <li key={idx} className="flex items-start gap-3">
+                                                                <div
+                                                                    className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                                                                    style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}
+                                                                >
+                                                                    <Check className="w-3 h-3" strokeWidth={4} />
+                                                                </div>
+                                                                <span className="text-xs font-medium text-slate-600 leading-tight">{task}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                {/* Card Entregables */}
+                                                <div className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-50 text-left">
+                                                    <div className="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-4">Entregables</div>
+                                                    <ul className="space-y-3">
+                                                        {step.deliverables.map((deliverable, idx) => (
+                                                            <li key={idx} className="flex items-start gap-3">
+                                                                <div
+                                                                    className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                                                                    style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}
+                                                                >
+                                                                    <Check className="w-3 h-3" strokeWidth={4} />
+                                                                </div>
+                                                                <span className="text-xs font-medium text-slate-600 leading-tight">{deliverable}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+
+                                    {/* Icono Central */}
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 z-20">
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            whileInView={{ scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.2 }}
+                                            className="w-16 h-16 rounded-full flex items-center justify-center border-[8px] border-white shadow-xl"
+                                            style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}
+                                        >
+                                            <step.Icon className="w-6 h-6" strokeWidth={1.5} />
+                                        </motion.div>
                                     </div>
 
-                                    <p className="text-[var(--goxt-gray-600)] mb-4">
-                                        {step.description}
-                                    </p>
-
-                                    <div className={`grid grid-cols-2 gap-4 ${isEven ? 'justify-end' : 'justify-start'}`}>
-                                        <div className="bg-white rounded-xl p-4 border border-gray-200">
-                                            <div className="text-sm font-semibold text-gray-500 mb-2">TAREAS</div>
-                                            <ul className="space-y-2">
-                                                {step.tasks.map((task, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-sm">
-                                                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                                        <span className="text-gray-700">{task}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-
-                                        <div className="bg-white rounded-xl p-4 border border-gray-200">
-                                            <div className="text-sm font-semibold text-gray-500 mb-2">ENTREGABLES</div>
-                                            <ul className="space-y-2">
-                                                {step.deliverables.map((deliverable, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-sm">
-                                                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                                        <span className="text-gray-700">{deliverable}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <div className="w-1/2"></div>
                                 </div>
 
-                                {/* Icono en el centro */}
-                                <div className="relative flex-shrink-0 w-16 h-16">
-                                    <div className={`absolute inset-0 ${step.bgColor} rounded-full`}></div>
-                                    <div className="relative w-16 h-16 rounded-full border-4 border-white flex items-center justify-center">
-                                        <step.Icon className={`w-8 h-8 ${step.color}`} />
-                                    </div>
-                                </div>
+                                {/* Mobile Layout */}
+                                <div className="lg:hidden">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-50"
+                                    >
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <div
+                                                className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                                                style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}
+                                            >
+                                                <step.Icon className="w-6 h-6" />
+                                            </div>
+                                            <div>
+                                                <span className="text-sm font-bold block" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-accent)' }}>Paso {step.step}</span>
+                                                <h3 className="text-xl font-bold text-slate-800">{step.title}</h3>
+                                            </div>
+                                        </div>
 
-                                {/* Espacio vacío para alineación */}
-                                <div className="w-1/2"></div>
-                            </motion.div>
+                                        <div className="grid gap-6">
+                                            <div className="space-y-4">
+                                                <div className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Tareas Principales</div>
+                                                <ul className="space-y-3">
+                                                    {step.tasks.map((task, idx) => (
+                                                        <li key={idx} className="flex items-start gap-3">
+                                                            <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}>
+                                                                <Check className="w-3 h-3" strokeWidth={4} />
+                                                            </div>
+                                                            <span className="text-sm text-slate-600">{task}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div className="space-y-4">
+                                                <div className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Entregables</div>
+                                                <ul className="space-y-3">
+                                                    {step.deliverables.map((deliverable, idx) => (
+                                                        <li key={idx} className="flex items-start gap-3">
+                                                            <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: 'var(--goxt-midnight)', color: 'var(--goxt-cream)' }}>
+                                                                <Check className="w-3 h-3" strokeWidth={4} />
+                                                            </div>
+                                                            <span className="text-sm text-slate-600">{deliverable}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            </div>
                         );
                     })}
                 </div>
 
-                {/* Timeline - Mobile */}
-                <div className="lg:hidden space-y-8">
-                    {implementationSteps.map((step, index) => (
-                        <motion.div
-                            key={step.step}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm"
-                        >
-                            <div className="flex items-start gap-4 mb-4">
-                                <div className={`flex-shrink-0 w-12 h-12 ${step.bgColor} rounded-xl flex items-center justify-center`}>
-                                    <step.Icon className={`w-6 h-6 ${step.color}`} />
-                                </div>
-                                <div>
-                                    <div className="inline-flex items-center gap-2 mb-1">
-                                        <span className={`text-xs font-bold ${step.color} bg-white px-2 py-1 rounded border`}>
-                                            Paso {step.step}
-                                        </span>
-                                        <h3 className="text-xl font-bold text-[var(--goxt-gray-900)]">
-                                            {step.title}
-                                        </h3>
-                                    </div>
-                                    <p className="text-[var(--goxt-gray-600)] text-sm">
-                                        {step.description}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 gap-4">
-                                <div className="bg-gray-50 rounded-xl p-4">
-                                    <div className="text-sm font-semibold text-gray-500 mb-2">TAREAS PRINCIPALES</div>
-                                    <ul className="space-y-2">
-                                        {step.tasks.map((task, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-sm">
-                                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                                <span className="text-gray-700">{task}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div className="bg-gray-50 rounded-xl p-4">
-                                    <div className="text-sm font-semibold text-gray-500 mb-2">ENTREGABLES</div>
-                                    <ul className="space-y-2">
-                                        {step.deliverables.map((deliverable, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-sm">
-                                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                                <span className="text-gray-700">{deliverable}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Stats y CTA */}
+                {/* Trust Footer Section */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.6 }}
-                    className="mt-16"
+                    className="mt-32 rounded-[3.5rem] p-1 shadow-2xl"
+                    style={{ background: 'white' }}
                 >
-                    <div className="bg-gradient-to-r from-[var(--goxt-primary)] to-blue-700 rounded-2xl p-8 text-white">
-                        <div className="grid md:grid-cols-3 gap-8 mb-8">
-                            <div className="text-center">
-                                <div className="text-3xl font-bold mb-2">100%</div>
-                                <div className="text-sm opacity-90">De Confiabilidad</div>
+                    <div
+                        className="rounded-[3.4rem] p-12 md:p-16 text-center relative overflow-hidden"
+                        style={{ background: 'var(--goxt-midnight)' }}
+                    >
+                        {/* Stats Grids */}
+                        <div className="grid md:grid-cols-3 gap-12 mb-16 max-w-4xl mx-auto">
+                            <div className="group">
+                                <div className="text-4xl md:text-5xl font-bold mb-2" style={{ color: 'var(--goxt-cream)' }}>100%</div>
+                                <div className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400 group-hover:text-slate-300 transition-colors">Confiabilidad</div>
                             </div>
-                            <div className="text-center">
-                                <div className="text-3xl font-bold mb-2">4</div>
-                                <div className="text-sm opacity-90">Pasos de implementación</div>
+                            <div className="group">
+                                <div className="text-4xl md:text-5xl font-bold mb-2" style={{ color: 'var(--goxt-cream)' }}>4</div>
+                                <div className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400 group-hover:text-slate-300 transition-colors">Pasos Ágiles</div>
                             </div>
-                            <div className="text-center">
-                                <div className="text-3xl font-bold mb-2">24/7</div>
-                                <div className="text-sm opacity-90">Soporte durante implementación</div>
+                            <div className="group">
+                                <div className="text-4xl md:text-5xl font-bold mb-2" style={{ color: 'var(--goxt-cream)' }}>24/7</div>
+                                <div className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400 group-hover:text-slate-300 transition-colors">Soporte Operativo</div>
                             </div>
                         </div>
 
-                        <div className="text-center">
-                            <h3 className="text-xl font-bold mb-4">
-                                ¿Preocupado por la transición?
+                        <div className="max-w-3xl mx-auto relative z-10">
+                            <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+                                ¿Te preocupa el tiempo de transición?
                             </h3>
-                            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                                Te guiamos paso a paso y garantizamos que estarás operando en tiempo récord.
+                            <p className="text-slate-300 mb-10 text-lg md:text-xl">
+                                Nuestro equipo experto te acompaña en cada paso para asegurar un lanzamiento impecable.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <div className="flex flex-col sm:flex-row gap-6 justify-center">
                                 <a
                                     href="/contacto"
-                                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-[var(--goxt-primary)] px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg"
+                                    className="goxt-btn-primary text-xl px-12 py-5"
+                                    style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
                                 >
-                                    <Calendar className="w-5 h-5" />
-                                    Agendar consulta de implementación
+                                    Agendar consulta gratuita
                                 </a>
                                 <a
                                     href="/nosotros"
-                                    className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg"
+                                    className="goxt-btn-secondary text-xl px-12 py-5 border-white/20 text-white hover:border-cream hover:text-cream"
+                                    style={{ background: 'transparent' }}
                                 >
-                                    Conocer al equipo de implementación
+                                    Conocer equipo
                                 </a>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, X, Minus } from "lucide-react";
+import { Check, X } from "lucide-react";
 
 interface ComparisonItem {
     feature: string;
@@ -72,45 +72,63 @@ const comparisonData: ComparisonItem[] = [
 
 export function ComparisonSection() {
     const columns = [
-        { id: 'goxt', name: 'GOxT', color: 'bg-blue-50', textColor: 'text-[var(--goxt-primary)]', accentColor: 'border-[var(--goxt-primary)]' },
-        { id: 'genericCrm', name: 'CRM Genérico', color: 'bg-gray-50', textColor: 'text-gray-600', accentColor: 'border-gray-300' },
-        { id: 'excel', name: 'Excel/Sheets', color: 'bg-gray-50', textColor: 'text-gray-600', accentColor: 'border-gray-300' }
+        { id: 'goxt', name: 'GOxT', isFeatured: true },
+        { id: 'genericCrm', name: 'CRM Genérico', isFeatured: false },
+        { id: 'excel', name: 'Excel/Sheets', isFeatured: false }
     ];
 
-    const renderValue = (value: boolean | string) => {
+    const renderValue = (value: boolean | string, isGoxt: boolean) => {
         if (value === true) {
             return (
-                <div className="inline-flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
-                    <Check className="w-5 h-5 text-green-600" strokeWidth={2.5} />
+                <div
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-full"
+                    style={{
+                        background: isGoxt ? 'var(--goxt-midnight)' : 'var(--goxt-gray-100)',
+                        color: isGoxt ? 'var(--goxt-cream)' : 'var(--goxt-gray-400)'
+                    }}
+                >
+                    <Check className="w-5 h-5" strokeWidth={3} />
                 </div>
             );
         }
 
         if (value === false) {
             return (
-                <div className="inline-flex items-center justify-center w-8 h-8 bg-red-100 rounded-full">
-                    <X className="w-5 h-5 text-red-500" strokeWidth={2.5} />
+                <div className="inline-flex items-center justify-center w-8 h-8 bg-gray-50 rounded-full">
+                    <X className="w-5 h-5 text-gray-300" strokeWidth={2.5} />
                 </div>
             );
         }
 
         return (
-            <span className="text-sm font-medium text-gray-500 px-2 py-1 bg-gray-100 rounded">
+            <span
+                className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border"
+                style={{
+                    color: 'var(--text-secondary)',
+                    background: 'var(--goxt-surface-alt)',
+                    borderColor: 'var(--goxt-gray-200)'
+                }}
+            >
                 {value}
             </span>
         );
     };
 
     return (
-        <section className="goxt-section bg-[var(--goxt-gray-50)]">
+        <section className="goxt-section" style={{ background: 'var(--goxt-surface-alt)' }}>
             <div className="goxt-container">
                 {/* Header */}
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                     <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-block px-4 py-1 bg-[var(--goxt-primary-100)] text-[var(--goxt-primary)] rounded-full text-sm font-medium mb-4"
+                        className="inline-block px-5 py-2 rounded-full text-sm font-semibold mb-6"
+                        style={{
+                            background: 'var(--goxt-surface-card)',
+                            color: 'var(--goxt-primary)',
+                            border: '1px solid var(--goxt-gray-200)',
+                        }}
                     >
                         Diferenciación competitiva
                     </motion.span>
@@ -120,11 +138,13 @@ export function ComparisonSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-4xl font-bold mb-4 text-[var(--goxt-gray-900)]"
-                        style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                        className="text-4xl md:text-5xl font-bold mb-6"
+                        style={{
+                            fontFamily: "var(--font-handwritten), cursive",
+                            color: 'var(--text-primary)'
+                        }}
                     >
-                        ¿Por qué{" "}
-                        <span className="goxt-gradient-accent-text font-bold">elegir GOxT</span> sobre otras opciones?
+                        ¿Por qué <span className="goxt-gradient-accent-text">elegir GOxT</span> sobre otras opciones?
                     </motion.h2>
 
                     <motion.p
@@ -132,81 +152,51 @@ export function ComparisonSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg text-[var(--goxt-gray-600)] max-w-3xl mx-auto"
+                        className="text-lg md:text-xl max-w-3xl mx-auto"
+                        style={{ color: 'var(--text-secondary)' }}
                     >
                         Especializado para transporte vs. soluciones genéricas. Compara y decide.
                     </motion.p>
                 </div>
 
-                {/* Comparison Table - Mobile */}
-                <div className="lg:hidden space-y-6">
-                    {comparisonData.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
-                            className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm"
-                        >
-                            <h3 className="font-bold text-[var(--goxt-gray-900)] mb-4 text-lg">
-                                {item.feature}
-                            </h3>
-
-                            <div className="space-y-3 mb-4">
-                                <div className="flex items-center justify-between">
-                                    <span className="font-medium text-gray-600">GOxT</span>
-                                    <div>{renderValue(item.goxt)}</div>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <span className="font-medium text-gray-600">CRM Genérico</span>
-                                    <div>{renderValue(item.genericCrm)}</div>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <span className="font-medium text-gray-600">Excel/Sheets</span>
-                                    <div>{renderValue(item.excel)}</div>
-                                </div>
-                            </div>
-
-                            <div className="text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
-                                {item.explanation}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Comparison Table - Desktop */}
-                <div className="hidden lg:block overflow-x-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
-                    >
-                        <table className="w-full">
+                {/* Comparison Table Container */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100"
+                    style={{ boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.1)' }}
+                >
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
                             <thead>
-                                <tr className="border-b border-gray-200">
-                                    <th className="text-left py-6 px-8 font-semibold text-[var(--goxt-gray-700)] bg-gray-50 min-w-[300px]">
+                                <tr>
+                                    <th className="text-left py-8 px-10 font-bold text-sm uppercase tracking-widest text-slate-400 bg-slate-50/50 min-w-[280px]">
                                         Característica
                                     </th>
                                     {columns.map((col) => (
                                         <th
                                             key={col.id}
-                                            className={`text-center py-6 px-4 font-semibold ${col.textColor} border-l ${col.accentColor} min-w-[200px]`}
+                                            className={`text-center py-8 px-6 min-w-[180px] relative ${col.isFeatured ? 'z-10' : ''}`}
+                                            style={{
+                                                background: col.isFeatured ? 'var(--goxt-midnight)' : 'transparent',
+                                                color: col.isFeatured ? 'var(--goxt-cream)' : 'var(--goxt-primary)'
+                                            }}
                                         >
                                             <div className="flex flex-col items-center gap-2">
-                                                <span className="text-xl font-bold">{col.name}</span>
-                                                {col.id === 'goxt' && (
-                                                    <span className="text-xs px-2 py-1 bg-[var(--goxt-primary)] text-white rounded-full">
+                                                <span className={`text-xl font-bold ${col.isFeatured ? 'text-[var(--goxt-cream)]' : ''}`}>{col.name}</span>
+                                                {col.isFeatured && (
+                                                    <span
+                                                        className="text-[10px] px-3 py-1 rounded-full font-bold tracking-tighter"
+                                                        style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
+                                                    >
                                                         RECOMENDADO
                                                     </span>
                                                 )}
                                             </div>
                                         </th>
                                     ))}
-                                    <th className="text-left py-6 px-8 font-semibold text-[var(--goxt-gray-700)] bg-gray-50 min-w-[250px]">
+                                    <th className="text-left py-8 px-10 font-bold text-sm uppercase tracking-widest text-slate-400 bg-slate-50/50 min-w-[300px]">
                                         ¿Qué significa?
                                     </th>
                                 </tr>
@@ -220,71 +210,85 @@ export function ComparisonSection() {
                                         whileInView={{ opacity: 1 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: index * 0.05 }}
-                                        className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-gray-50/50' : ''}`}
+                                        className="group border-b border-gray-50 last:border-0 hover:bg-slate-50/50 transition-colors"
                                     >
-                                        <td className="py-5 px-8 font-medium text-[var(--goxt-gray-900)]">
+                                        <td className="py-6 px-10 font-bold text-slate-700">
                                             {item.feature}
                                         </td>
 
-                                        <td className="text-center py-5 px-4 border-l border-[var(--goxt-primary)]">
-                                            <div className="flex justify-center">
-                                                {renderValue(item.goxt)}
+                                        {/* Featured Column (GOxT) */}
+                                        <td className="text-center py-6 px-6 bg-slate-50/20">
+                                            <div className="flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                                                {renderValue(item.goxt, true)}
                                             </div>
                                         </td>
 
-                                        <td className="text-center py-5 px-4 border-l border-gray-200">
-                                            <div className="flex justify-center">
-                                                {renderValue(item.genericCrm)}
+                                        {/* Other Columns */}
+                                        <td className="text-center py-6 px-6">
+                                            <div className="flex justify-center opacity-60 group-hover:opacity-100 transition-opacity">
+                                                {renderValue(item.genericCrm, false)}
                                             </div>
                                         </td>
 
-                                        <td className="text-center py-5 px-4 border-l border-gray-200">
-                                            <div className="flex justify-center">
-                                                {renderValue(item.excel)}
+                                        <td className="text-center py-6 px-6">
+                                            <div className="flex justify-center opacity-60 group-hover:opacity-100 transition-opacity">
+                                                {renderValue(item.excel, false)}
                                             </div>
                                         </td>
 
-                                        <td className="py-5 px-8 text-gray-500 text-sm">
+                                        <td className="py-6 px-10 text-sm italic leading-relaxed text-slate-400 group-hover:text-slate-600 transition-colors">
                                             {item.explanation}
                                         </td>
                                     </motion.tr>
                                 ))}
                             </tbody>
                         </table>
-                    </motion.div>
-                </div>
+                    </div>
+                </motion.div>
 
-                {/* CTA */}
+                {/* CTA / Summary Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
-                    className="text-center mt-12"
+                    className="mt-20 p-12 rounded-[2rem] text-center relative overflow-hidden"
+                    style={{ background: 'var(--goxt-midnight)' }}
                 >
-                    <div className="inline-block bg-gradient-to-r from-[var(--goxt-primary)] to-blue-700 text-white px-6 py-4 rounded-xl mb-6">
-                        <div className="text-lg font-bold">¿Sigues usando soluciones genéricas?</div>
-                        <div className="text-sm opacity-90">Descubre la diferencia de una solución especializada</div>
-                    </div>
+                    {/* Background decorativo sutil */}
+                    <div
+                        className="absolute top-0 right-0 w-64 h-64 opacity-5 pointer-events-none"
+                        style={{ background: 'var(--goxt-cream)', filter: 'blur(80px)', borderRadius: '100%' }}
+                    />
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a
-                            href="/contacto"
-                            className="goxt-btn-primary text-lg px-8 py-3"
+                    <div className="relative z-10">
+                        <h3
+                            className="text-2xl md:text-3xl font-bold mb-4"
+                            style={{ color: 'var(--goxt-cream)' }}
                         >
-                            Agendar demo comparativa
-                        </a>
-                        <a
-                            href="/precios"
-                            className="goxt-btn-secondary text-lg px-8 py-3"
-                        >
-                            Ver precios competitivos
-                        </a>
-                    </div>
+                            ¿Sigues estancado en procesos manuales?
+                        </h3>
+                        <p className="text-slate-400 max-w-2xl mx-auto mb-10 text-lg">
+                            No pierdas más tiempo navegando entre Excels y CRMs genéricos. Empieza hoy con la solución diseñada para tu éxito operativo.
+                        </p>
 
-                    <p className="text-sm text-gray-500 mt-6">
-                        Compara características, no solo precios. Solicita un análisis personalizado de tus procesos.
-                    </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a
+                                href="/contacto"
+                                className="goxt-btn-primary text-xl px-10 py-5"
+                                style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
+                            >
+                                Agendar demo gratuita
+                            </a>
+                            <a
+                                href="/precios"
+                                className="goxt-btn-secondary text-xl px-10 py-5 border-slate-700 text-slate-300 hover:border-cream hover:text-cream"
+                                style={{ borderColor: 'rgba(212, 185, 150, 0.2)' }}
+                            >
+                                Ver planes
+                            </a>
+                        </div>
+                    </div>
                 </motion.div>
             </div>
         </section>

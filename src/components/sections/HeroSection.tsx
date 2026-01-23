@@ -10,7 +10,6 @@ interface Stat {
     label: string;
     description: string;
     Icon: LucideIcon;
-    color: string;
 }
 
 const stats: Stat[] = [
@@ -19,34 +18,35 @@ const stats: Stat[] = [
         label: "Empresas",
         description: "confían en GOxT",
         Icon: Building2,
-        color: "text-blue-500",
     },
     {
         value: "$2M+",
         label: "Gestionados",
         description: "en cotizaciones",
         Icon: DollarSign,
-        color: "text-green-500",
     },
     {
         value: "30%",
         label: "Ahorro",
         description: "en tiempo de cotización",
         Icon: Clock,
-        color: "text-orange-500",
     },
     {
         value: "24/7",
         label: "Soporte",
         description: "disponible siempre",
         Icon: HeadphonesIcon,
-        color: "text-purple-500",
     },
 ];
 
 export function HeroSection() {
     return (
-        <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16">
+        <section
+            className="relative min-h-screen flex flex-col justify-center pt-20 pb-16"
+            style={{
+                background: 'var(--goxt-gradient-hero)'
+            }}
+        >
             <div className="goxt-container relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Badge */}
@@ -54,15 +54,25 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+                        style={{
+                            background: 'var(--goxt-surface-card)',
+                            border: '1px solid var(--goxt-accent)',
+                        }}
                     >
-                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                        <span className="text-sm font-medium text-gray-600">
+                        <span
+                            className="w-2 h-2 rounded-full animate-pulse"
+                            style={{ background: 'var(--goxt-accent)' }}
+                        />
+                        <span
+                            className="text-sm font-medium"
+                            style={{ color: 'var(--text-secondary)' }}
+                        >
                             La suite para transporte y logística
                         </span>
                     </motion.div>
 
-                    {/* Headline - Más grande estilo Odoo */}
+                    {/* Headline */}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -70,10 +80,24 @@ export function HeroSection() {
                         className="text-5xl md:text-7xl lg:text-8xl mb-6 leading-[1.1]"
                         style={{ fontFamily: "var(--font-handwritten), cursive" }}
                     >
-                        <span className="text-[var(--goxt-primary)] font-bold">Más clientes.</span>{" "}
-                        <span className="goxt-gradient-accent-text font-bold">Mejor control.</span>
+                        <span
+                            className="font-bold"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            Más clientes.
+                        </span>{" "}
+                        <span
+                            className="goxt-gradient-accent-text font-bold"
+                        >
+                            Mejor control.
+                        </span>
                         <br />
-                        <span className="text-[var(--goxt-primary)] font-bold">Menos problemas.</span>
+                        <span
+                            className="font-bold"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            Menos problemas.
+                        </span>
                     </motion.h1>
 
                     {/* Subtitle */}
@@ -81,7 +105,8 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-lg md:text-xl text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto"
+                        className="text-lg md:text-xl mb-8 max-w-2xl mx-auto"
+                        style={{ color: 'var(--text-secondary)' }}
                     >
                         Todo lo que necesitas para gestionar clientes, cotizaciones, flotas
                         y operaciones en una sola plataforma diseñada para empresas de
@@ -95,21 +120,27 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
                     >
-                        <Link href="/contacto" className="goxt-btn-primary text-lg px-8 py-4">
+                        <Link
+                            href="/contacto"
+                            className="goxt-btn-primary text-lg px-8 py-4"
+                        >
                             Solicitar Demo
                         </Link>
-                        <Link href="/productos" className="goxt-btn-secondary text-lg px-8 py-4">
+                        <Link
+                            href="/productos"
+                            className="goxt-btn-secondary text-lg px-8 py-4"
+                        >
                             Explorar Productos
                         </Link>
                     </motion.div>
                 </div>
 
-                {/* Stats integradas en el Hero */}
+                {/* Stats Cards */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto"
+                    className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
                 >
                     {stats.map((stat, index) => (
                         <motion.div
@@ -117,18 +148,43 @@ export function HeroSection() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                            className="text-center"
+                            className="bg-white rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                                boxShadow: 'var(--goxt-shadow-md)',
+                            }}
                         >
-                            <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white shadow-sm mb-3 ${stat.color}`}>
-                                <stat.Icon className="w-6 h-6" strokeWidth={1.5} />
+                            {/* Icon con fondo Midnight */}
+                            <div
+                                className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-4"
+                                style={{
+                                    background: 'var(--goxt-midnight)',
+                                    color: 'var(--goxt-cream)'
+                                }}
+                            >
+                                <stat.Icon className="w-7 h-7" strokeWidth={1.5} />
                             </div>
-                            <div className="text-2xl md:text-3xl font-bold text-[var(--goxt-gray-900)] mb-1">
+
+                            {/* Value */}
+                            <div
+                                className="text-3xl md:text-4xl font-bold mb-2"
+                                style={{ color: 'var(--text-primary)' }}
+                            >
                                 {stat.value}
                             </div>
-                            <div className="font-semibold text-[var(--goxt-gray-700)]">
+
+                            {/* Label */}
+                            <div
+                                className="font-semibold text-base mb-1"
+                                style={{ color: 'var(--text-secondary)' }}
+                            >
                                 {stat.label}
                             </div>
-                            <div className="text-sm text-[var(--goxt-gray-500)]">
+
+                            {/* Description */}
+                            <div
+                                className="text-sm"
+                                style={{ color: 'var(--text-muted)' }}
+                            >
                                 {stat.description}
                             </div>
                         </motion.div>

@@ -2,55 +2,57 @@
 
 /* ==========================================
    GOxT Design System - Global Styles
+   MIDNIGHT/CREAM PALETTE
    ========================================== */
 
 :root {
-  /* Primary Colors - GOxT Dark Navy (del logo "Moving Forward") */
-  --goxt-primary: #1E1E3F;
-  --goxt-primary-dark: #14142B;
-  --goxt-primary-light: #2D2D5A;
-  --goxt-primary-50: #EEEEF5;
-  --goxt-primary-100: #D4D4E8;
-  --goxt-primary-200: #A9A9D1;
+  /* Primary Colors - Midnight */
+  --goxt-midnight: #0F172A;
+  --goxt-midnight-light: #1E293B;
+  --goxt-midnight-dark: #020617;
 
-  /* Accent Colors - Orange/Coral for CTAs (más oscuro para mejor contraste) */
-  --goxt-accent: #EA580C;
-  /* Más oscuro que antes */
-  --goxt-accent-dark: #C2410C;
-  /* Hover state - aún más oscuro */
-  --goxt-accent-light: #F97316;
-  /* Estado normal original */
-  --goxt-accent-hover: #DC2626;
-  /* Rojo-naranja para hover */
+  /* Accent Colors - Cream/Gold */
+  --goxt-cream: #D4B996;
+  --goxt-cream-light: #E5D4BB;
+  --goxt-cream-dark: #B89968;
+  --goxt-gold: #C9A961;
 
-  /* Gradient Colors - Estilo Fluxie */
-  --goxt-gradient-orange-start: #EA580C;
-  --goxt-gradient-orange-end: #C2410C;
-  --goxt-gradient-purple-start: #8B5CF6;
-  --goxt-gradient-purple-end: #EC4899;
+  /* Primary & Accent (Main Usage) */
+  --goxt-primary: #0F172A;
+  --goxt-primary-dark: #020617;
+  --goxt-primary-light: #1E293B;
 
-  /* Surface Colors - Blue Tint (nuevo!) */
-  --goxt-surface-light: #f0f7ff;
-  /* Blue tint para fondos */
-  --goxt-surface-dark: #1f2937;
-  /* Dark mode surface */
-  --goxt-surface-alt: #e8f4ff;
-  /* Variante más intensa del blue tint */
-  --goxt-surface-card: #ffffff;
-  /* Cards siempre blancas */
+  --goxt-accent: #D4B996;
+  --goxt-accent-dark: #B89968;
+  --goxt-accent-light: #E5D4BB;
+  --goxt-accent-hover: #C9A961;
 
-  /* Neutrals - Estilo CamionGO */
-  --goxt-gray-900: #111827;
-  --goxt-gray-800: #1F2937;
-  --goxt-gray-700: #374151;
-  --goxt-gray-600: #4B5563;
-  --goxt-gray-500: #6B7280;
-  --goxt-gray-400: #9CA3AF;
-  --goxt-gray-300: #D1D5DB;
-  --goxt-gray-200: #E5E7EB;
+  /* Neutrals - Slate Scale */
+  --goxt-gray-900: #0F172A;
+  --goxt-gray-800: #1E293B;
+  --goxt-gray-700: #334155;
+  --goxt-gray-600: #475569;
+  --goxt-gray-500: #64748B;
+  --goxt-gray-400: #94A3B8;
+  --goxt-gray-300: #CBD5E1;
+  --goxt-gray-200: #E2E8F0;
   --goxt-gray-100: #F1F5F9;
   --goxt-gray-50: #F8FAFC;
   --goxt-white: #FFFFFF;
+
+  /* Surface Colors */
+  --goxt-surface-light: #F8FAFC;
+  --goxt-surface-card: #FFFFFF;
+  --goxt-surface-alt: #F1F5F9;
+
+  /* Background & Foreground */
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+
+  /* Text Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
 
   /* Semantic Colors */
   --goxt-success: #10B981;
@@ -58,24 +60,18 @@
   --goxt-error: #EF4444;
   --goxt-info: #3B82F6;
 
-  /* Background & Foreground */
-  --background: #ffffff;
-  --foreground: #111827;
-
-  /* Gradients - Azul/Púrpura del logo GOxT con más fuerza */
-  --goxt-gradient-hero: linear-gradient(145deg, #E0E7FF 0%, #EDE9FE 30%, #FCE7F3 60%, #FFFFFF 100%);
-  --goxt-gradient-surface: linear-gradient(135deg, #EDE9FE 0%, #E0E7FF 50%, #FFFFFF 100%);
-  --goxt-gradient-primary: linear-gradient(135deg, #1E1E3F 0%, #2D2D5A 100%);
-  --goxt-gradient-accent: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
-  --goxt-gradient-accent-hover: linear-gradient(135deg, #C2410C 0%, #9A3412 100%);
+  /* Gradients */
+  --goxt-gradient-hero: linear-gradient(145deg, #F8FAFC 0%, #FFFFFF 50%, #F1F5F9 100%);
+  --goxt-gradient-primary: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  --goxt-gradient-accent: linear-gradient(135deg, #D4B996 0%, #B89968 100%);
+  --goxt-gradient-accent-hover: linear-gradient(135deg, #C9A961 0%, #B89968 100%);
 
   /* Shadows */
-  --goxt-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --goxt-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --goxt-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --goxt-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --goxt-shadow-glow: 0 20px 50px -12px rgba(234, 88, 12, 0.25);
-  /* Glow naranja */
+  --goxt-shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --goxt-shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.1);
+  --goxt-shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.15), 0 4px 6px -4px rgb(15 23 42 / 0.1);
+  --goxt-shadow-xl: 0 20px 25px -5px rgb(15 23 42 / 0.2), 0 8px 10px -6px rgb(15 23 42 / 0.1);
+  --goxt-shadow-glow: 0 20px 50px -12px rgba(212, 185, 150, 0.35);
 
   /* Border Radius */
   --goxt-radius-sm: 0.375rem;
@@ -90,7 +86,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Fuentes - usando las nuevas variables */
+  /* Fuentes */
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
   --font-handwritten: var(--font-handwritten);
@@ -130,7 +126,7 @@ body {
 }
 
 /* ==========================================
-   Typography - Estilo Odoo Elegante
+   Typography
    ========================================== */
 
 h1,
@@ -211,7 +207,7 @@ h6 {
   }
 }
 
-/* Gradient Text - Estilo Fluxie */
+/* Gradient Text */
 .goxt-gradient-text {
   background: linear-gradient(135deg, var(--goxt-primary) 0%, var(--goxt-primary-light) 100%);
   -webkit-background-clip: text;
@@ -222,9 +218,9 @@ h6 {
   display: inline-block;
 }
 
-/* Gradiente Naranja vibrante para "Mejor control" */
+/* Gradiente Cream/Dorado para acentos */
 .goxt-gradient-accent-text {
-  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #DC2626 100%);
+  background: var(--goxt-gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -233,47 +229,26 @@ h6 {
   display: inline-block;
 }
 
-/* Gradiente Púrpura/Rosa para variaciones */
-.goxt-gradient-purple-text {
-  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #EC4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Gradiente Azul vibrante */
-.goxt-gradient-blue-text {
-  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1D4ED8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Texto en color navy oscuro (primario) */
-.goxt-navy-text {
+/* Texto en color midnight oscuro (primario) */
+.goxt-midnight-text {
   color: var(--goxt-primary);
 }
 
-/* Hero Background - Blue Tint */
+/* Hero Background */
 .goxt-hero-bg {
   background: var(--goxt-gradient-hero);
 }
 
-/* Surface Background - Blue Tint para secciones */
+/* Surface Background */
 .goxt-surface-bg {
   background: var(--goxt-surface-light);
 }
 
-/* Surface Gradient - Para secciones con más intensidad */
-.goxt-surface-gradient {
-  background: var(--goxt-gradient-surface);
-}
-
-/* Glassmorphism -> Navbar blanco sólido estilo CamionGO */
+/* Navbar */
 .goxt-glass {
-  background: #FFFFFF;
-  border-bottom: 1px solid #E5E7EB;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+  background: var(--goxt-surface-card);
+  border-bottom: 1px solid var(--goxt-gray-200);
+  box-shadow: var(--goxt-shadow-sm);
 }
 
 /* Button Styles */
@@ -284,7 +259,7 @@ h6 {
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   font-size: 1rem;
-  color: white;
+  color: var(--goxt-cream);
   background: var(--goxt-gradient-primary);
   border: none;
   border-radius: var(--goxt-radius-full);
@@ -317,7 +292,7 @@ h6 {
 .goxt-btn-accent:hover {
   background: var(--goxt-gradient-accent-hover);
   transform: translateY(-2px);
-  box-shadow: var(--goxt-shadow-lg), 0 20px 50px -12px rgba(194, 65, 12, 0.35);
+  box-shadow: var(--goxt-shadow-lg), 0 20px 50px -12px rgba(201, 169, 97, 0.4);
 }
 
 .goxt-btn-secondary {
@@ -409,11 +384,11 @@ h6 {
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 20px rgba(212, 185, 150, 0.3);
   }
 
   50% {
-    box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 40px rgba(212, 185, 150, 0.5);
   }
 }
 
