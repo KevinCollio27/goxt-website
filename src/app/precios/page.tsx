@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { SavingsCalculator, FAQSection } from "@/components/sections";
+import ConcentricCircles from "@/components/ui/ConcentricCircles";
 
 export default function PreciosPage() {
     const [productView, setProductView] = useState<"crm" | "cargo">("crm");
@@ -211,6 +212,7 @@ export default function PreciosPage() {
 
     return (
         <div className="pt-24">
+            <ConcentricCircles />
             {/* Header */}
             <section className="py-20">
                 <div className="goxt-container text-center">

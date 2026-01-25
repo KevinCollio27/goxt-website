@@ -4,6 +4,7 @@ import { Kanban, FileText, Settings, Link2, Users, Calendar, BarChart3, Building
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import ConnectingLines from "@/components/ui/ConnectingLines";
 
 const floatingAnimation: Variants = {
     initial: { y: 0 },
@@ -114,6 +115,7 @@ const useCases = [
 export default function CRMPage() {
     return (
         <div className="pt-24 min-h-screen bg-[var(--goxt-surface-alt)]">
+            <ConnectingLines />
             {/* Hero Section - Premium Living Design */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden py-20">
                 {/* Background Animated Blobs */}

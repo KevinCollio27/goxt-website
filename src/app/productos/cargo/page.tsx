@@ -1,6 +1,7 @@
 import { BarChart, FileText, Fuel, ListTodo, MapPin, Truck, User, Wrench } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
+import ConnectingLines from "@/components/ui/ConnectingLines";
 
 export const metadata: Metadata = {
     title: "GOxT Cargo - Control de Flotas y Operaciones Logísticas",
@@ -78,6 +79,7 @@ const features = [
 export default function CargoPage() {
     return (
         <div className="pt-24">
+            <ConnectingLines />
             {/* Hero */}
             <section className="py-20">
                 <div className="goxt-container">

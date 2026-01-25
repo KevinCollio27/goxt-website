@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import FloatingBubbles from "@/components/ui/FloatingBubbles";
 
 export const metadata: Metadata = {
     title: "Productos",
@@ -33,6 +34,7 @@ const products = [
 export default function ProductosPage() {
     return (
         <div className="pt-24">
+            <FloatingBubbles />
             {/* Header */}
             <section className="py-20">
                 <div className="goxt-container text-center">

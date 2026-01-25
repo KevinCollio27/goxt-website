@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Building2, DollarSign, Clock, HeadphonesIcon } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import UnderlinedText from "@/components/ui/UnderlinedText";
+import InteractiveParticles from "@/components/ui/InteractiveParticles";
 
 interface Stat {
     value: string;
@@ -48,6 +49,7 @@ export function HeroSection() {
                 background: 'var(--goxt-gradient-hero)'
             }}
         >
+            <InteractiveParticles />
             <div className="goxt-container relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Badge */}
