@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Zap, Link2, BarChart3, Settings2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import CircledText from "@/components/ui/CircledText";
+import HighlightText from "@/components/ui/HighlightText";
 
 interface Benefit {
     Icon: LucideIcon;
@@ -59,15 +61,17 @@ export function BenefitsSection() {
                         }}
                     >
                         ¿Por qué elegir a {" "}
-                        <span
-                            className="font-bold text-5xl md:text-6xl"
-                            style={{
-                                fontFamily: "var(--font-handwritten), cursive",
-                                color: 'var(--goxt-accent)'
-                            }}
-                        >
-                            GOxT
-                        </span>?
+                        <CircledText color="var(--goxt-accent)" delay={0.5}>
+                            <span
+                                className="font-bold text-5xl md:text-6xl"
+                                style={{
+                                    fontFamily: "var(--font-handwritten), cursive",
+                                    color: 'var(--goxt-accent)'
+                                }}
+                            >
+                                GOxT
+                            </span>
+                        </CircledText>?
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -78,7 +82,7 @@ export function BenefitsSection() {
                         style={{ color: 'var(--text-secondary)' }}
                     >
                         Diseñado específicamente para empresas de transporte y logística.
-                        Resolvemos los problemas que otros CRM no entienden.
+                        Resolvemos los problemas que <HighlightText color="var(--goxt-accent)" delay={0.5}>otros CRM</HighlightText> no entienden.
                     </motion.p>
                 </div>
 
@@ -91,14 +95,17 @@ export function BenefitsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="relative bg-white rounded-3xl p-8 text-center transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-gray-50"
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            className="relative bg-white rounded-3xl p-8 text-center transition-all duration-300 border border-gray-50"
                             style={{
                                 boxShadow: 'var(--goxt-shadow-lg)',
                             }}
                         >
-                            {/* Icon Container con estilo Midnight/Cream */}
-                            <div
-                                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-8 transition-transform duration-500 group-hover:rotate-12"
+                            {/* Icon Container con estilo Midnight/Cream y rotación en hover */}
+                            <motion.div
+                                whileHover={{ rotate: 360 }}
+                                transition={{ duration: 0.6 }}
+                                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-8"
                                 style={{
                                     background: 'var(--goxt-midnight)',
                                     color: 'var(--goxt-cream)',
@@ -109,7 +116,7 @@ export function BenefitsSection() {
                                     className="w-7 h-7"
                                     strokeWidth={1.5}
                                 />
-                            </div>
+                            </motion.div>
 
                             {/* Title con parte handwritten */}
                             <h3

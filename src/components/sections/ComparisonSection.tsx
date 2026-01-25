@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import UnderlinedText from "@/components/ui/UnderlinedText";
 
 interface ComparisonItem {
     feature: string;
@@ -155,7 +156,7 @@ export function ComparisonSection() {
                         className="text-lg md:text-xl max-w-3xl mx-auto"
                         style={{ color: 'var(--text-secondary)' }}
                     >
-                        Especializado para transporte vs. soluciones genéricas. Compara y decide.
+                        Especializado para transporte <UnderlinedText delay={1.2}>GOxT vs. soluciones genéricas</UnderlinedText>. Compara y decide.
                     </motion.p>
                 </div>
 

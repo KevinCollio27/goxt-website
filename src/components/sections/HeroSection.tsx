@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Building2, DollarSign, Clock, HeadphonesIcon } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import UnderlinedText from "@/components/ui/UnderlinedText";
 
 interface Stat {
     value: string;
@@ -72,7 +73,7 @@ export function HeroSection() {
                         </span>
                     </motion.div>
 
-                    {/* Headline */}
+                    {/* Headline con animaciones*/}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -108,9 +109,11 @@ export function HeroSection() {
                         className="text-lg md:text-xl mb-8 max-w-2xl mx-auto"
                         style={{ color: 'var(--text-secondary)' }}
                     >
-                        Todo lo que necesitas para gestionar clientes, cotizaciones, flotas
-                        y operaciones en una sola plataforma diseñada para empresas de
-                        transporte.
+                        <span>Todo lo que necesitas para gestionar clientes, cotizaciones, flotas y operaciones en una sola </span>
+                        <UnderlinedText delay={1.2}>
+                            plataforma
+                        </UnderlinedText>
+                        <span> diseñada para empresas de transporte.</span>
                     </motion.p>
 
                     {/* CTAs */}

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Calendar, Settings, Users, Rocket, Check } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import CircledText from "../ui/CircledText";
 
 interface ImplementationStep {
     step: number;
@@ -119,7 +120,7 @@ export function ImplementationSection() {
                             color: 'var(--text-primary)'
                         }}
                     >
-                        Implementación en <span className="goxt-gradient-accent-text" style={{ fontFamily: "var(--font-handwritten), cursive" }}>4 pasos</span>
+                        Implementación en <CircledText><span className="goxt-gradient-accent-text" style={{ fontFamily: "var(--font-handwritten), cursive" }}>4 pasos</span></CircledText>
                     </motion.h2>
 
                     <motion.p
