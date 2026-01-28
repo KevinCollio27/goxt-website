@@ -1,4 +1,4 @@
-"use client"; // Necesitas agregar esto al inicio para usar hooks y animaciones
+"use client";
 
 import { BarChart, FileText, Fuel, ListTodo, MapPin, Truck, User, Wrench, Check, BarChart3 } from "lucide-react";
 import { motion, Variants } from "framer-motion";
@@ -6,7 +6,6 @@ import Link from "next/link";
 import ConnectingLines from "@/components/ui/ConnectingLines";
 import Image from 'next/image';
 
-// Definir las animaciones flotantes
 const floatingAnimation: Variants = {
     initial: { y: 0 },
     animate: {
@@ -189,14 +188,12 @@ export default function CargoPage() {
                 </div>
             </section>
 
-            {/* Screenshot con animaciones flotantes - CORREGIDO */}
+            {/* Screenshot con animaciones flotantes */}
             <section className="py-16 bg-white">
                 <div className="goxt-container">
                     <div className="relative max-w-5xl mx-auto">
                         {/* Fondo con blur */}
                         <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 rounded-2xl blur-2xl" />
-
-                        {/* Elemento flotante izquierdo - FUERA del contenedor del dashboard */}
                         <motion.div
                             variants={floatingAnimation}
                             initial="initial"
@@ -214,8 +211,6 @@ export default function CargoPage() {
                             <div className="text-lg font-bold text-green-600">Tiempo Real</div>
                             <div className="text-xs text-slate-500">Monitoreo en vivo</div>
                         </motion.div>
-
-                        {/* Elemento flotante derecho - FUERA del contenedor del dashboard */}
                         <motion.div
                             variants={floatingAnimationDelayed}
                             initial="initial"
@@ -241,7 +236,6 @@ export default function CargoPage() {
                             </div>
                         </motion.div>
 
-                        {/* Dashboard SOLO - sin los elementos flotantes dentro */}
                         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 z-20">
                             <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
                                 <div className="flex gap-1.5">
