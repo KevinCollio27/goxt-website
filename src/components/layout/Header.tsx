@@ -27,6 +27,7 @@ const navigation = [
         ],
     },
     { name: "Precios", href: "/precios" },
+    { name: "Chat IA", href: "/chat-ia" },
     { name: "Blog", href: "/blog" },
     { name: "Nosotros", href: "/nosotros" },
     { name: "Contacto", href: "/contacto" },
