@@ -7,12 +7,48 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+// URLs de login de los productos
+const PRODUCT_URLS = {
+    CRM: "https://crm.goxt.io/",
+    CARGO: "https://cargo.goxt.io/",
+    DEMO_REQUEST: "https://goxt.io/demo",
+    PRICING: "https://goxt.io/precios"
+};
+
 // Interfaz para información en caché
 interface CachedDocs {
     pricing: string;
     crm: string;
     timestamp: number;
 }
+
+// Interfaz para datos del lead
+interface LeadData {
+    name: string;
+    email: string;
+    company?: string;
+    productInterest: string;
+    message?: string;
+    phone?: string;
+    fleetSize?: string;
+    currentSoftware?: string;
+    collectedAt: Date;
+}
+
+// Estado de la conversación
+interface ConversationState {
+    isCollectingDemoData: boolean;
+    currentStep: number;
+    collectedData: Partial<LeadData>;
+    detectedInterest: {
+        crm: boolean;
+        cargo: boolean;
+        wantsTrial: boolean;
+        wantsLogin: boolean;
+    };
+}
+
+const conversationStates = new Map<string, ConversationState>();
 
 // Caché simple
 let docsCache: CachedDocs | null = null;
@@ -28,7 +64,6 @@ function getCachedDocs(): CachedDocs {
 
     console.log("Actualizando caché de documentos...");
 
-    // Busca archivos en varias ubicaciones posibles
     const possiblePaths = [
         path.join(process.cwd(), 'docs'),
         path.join(process.cwd(), 'src', 'docs'),
@@ -57,7 +92,6 @@ function getCachedDocs(): CachedDocs {
         }
     }
 
-    // Fallback si no se encuentran
     if (!pricingContent) {
         pricingContent = "Información de precios no disponible. Contacta al equipo de ventas.";
     }
@@ -66,8 +100,7 @@ function getCachedDocs(): CachedDocs {
         crmContent = "Información detallada del CRM no disponible. Solicita una demo para más información.";
     }
 
-    // Limitar tamaño para no exceder tokens
-    const maxLength = 4000; // Aprox 8000 tokens
+    const maxLength = 4000;
     if (pricingContent.length > maxLength) {
         pricingContent = pricingContent.substring(0, maxLength) + "... [información truncada por tamaño]";
     }
@@ -85,189 +118,572 @@ function getCachedDocs(): CachedDocs {
     return docsCache;
 }
 
-// Analizar el prompt del usuario para determinar qué información necesita
-function analyzeQuery(userMessage: string): { needsPricing: boolean; needsCRM: boolean } {
+// Analizar interés del usuario
+function analyzeUserInterest(userMessage: string, conversationHistory: string[] = []): {
+    wantsDemo: boolean;
+    wantsTrial: boolean;
+    wantsLogin: boolean;
+    interestedInCRM: boolean;
+    interestedInCargo: boolean;
+} {
     const message = userMessage.toLowerCase();
+    const fullConversation = [...conversationHistory, message].join(' ').toLowerCase();
 
-    // Palabras clave para precios
-    const pricingKeywords = [
-        'precio', 'costo', 'valor', 'tarifa', 'plan', 'mensual', 'anual',
-        'cuánto cuesta', 'pago', 'suscripción', 'licencia', 'costos',
-        'precios', 'inversión', 'presupuesto'
+    // Detectar interés en DEMO
+    const demoKeywords = [
+        'demo', 'demostración', 'prueba', 'probar', 'agendar',
+        'cita', 'reunión', 'contactar', 'solicitar', 'quiero una demo',
+        'necesito demo', 'programar demo', 'me interesa una demo',
+        'quiero ver', 'mostrar', 'presentación'
     ];
+    const wantsDemo = demoKeywords.some(keyword => message.includes(keyword));
 
-    // Palabras clave para CRM
+    // Detectar interés en TRIAL o LOGIN
+    const trialKeywords = [
+        'probar', 'prueba', 'test', 'ensayar', 'usar',
+        'acceder', 'ingresar', 'entrar', 'login', 'iniciar sesión',
+        'registrarme', 'cuenta', 'trial', 'prueba gratuita'
+    ];
+    const wantsTrial = trialKeywords.some(keyword => message.includes(keyword));
+
+    // Detectar interés específico en LOGIN
+    const loginKeywords = [
+        'login', 'iniciar sesión', 'entrar', 'acceder',
+        'cómo ingreso', 'dónde me registro', 'quiero entrar',
+        'acceso', 'credenciales', 'usuario y contraseña'
+    ];
+    const wantsLogin = loginKeywords.some(keyword => message.includes(keyword));
+
+    // Detectar interés en CRM
     const crmKeywords = [
         'crm', 'clientes', 'cotización', 'cotizaciones', 'ventas',
         'comercial', 'prospectos', 'oportunidades', 'lead', 'leads',
-        'facturación', 'factura', 'seguimiento', 'pipeline', 'venta',
-        'característica', 'función', 'módulo', 'qué hace', 'cómo funciona'
+        'facturación', 'factura', 'seguimiento', 'pipeline', 'venta'
     ];
+    const interestedInCRM = crmKeywords.some(keyword => fullConversation.includes(keyword));
 
-    const needsPricing = pricingKeywords.some(keyword => message.includes(keyword));
-    const needsCRM = crmKeywords.some(keyword => message.includes(keyword));
+    // Detectar interés en Cargo
+    const cargoKeywords = [
+        'cargo', 'flota', 'flotas', 'transporte', 'logística',
+        'operaciones', 'rutas', 'gps', 'seguimiento', 'conductores',
+        'vehículos', 'mantenimiento', 'combustible', 'carga'
+    ];
+    const interestedInCargo = cargoKeywords.some(keyword => fullConversation.includes(keyword));
 
-    // Si no detectamos nada específico, mostramos todo
-    if (!needsPricing && !needsCRM) {
-        return { needsPricing: true, needsCRM: true };
-    }
-
-    return { needsPricing, needsCRM };
+    return {
+        wantsDemo,
+        wantsTrial,
+        wantsLogin,
+        interestedInCRM,
+        interestedInCargo
+    };
 }
 
-// Función para determinar si es un lead calificado
-function isQualifiedLead(userMessage: string, conversationHistory: string[]): boolean {
-    const message = userMessage.toLowerCase();
-
-    // Señales de interés alto
-    const highInterestSignals = [
-        'demo', 'prueba', 'probar', 'implementar', 'contratar', 'comprar',
-        'quiero', 'necesito', 'urgente', 'inmediato', 'hoy', 'rápido',
-        'mi empresa', 'tenemos', 'actualmente usamos', 'estamos buscando'
-    ];
-
-    // Señales de búsqueda de información (interés medio)
-    const mediumInterestSignals = [
-        'características', 'funciones', 'beneficios', 'ventajas',
-        'comparar', 'diferencias', 'opiniones', 'experiencias',
-        'cómo funciona', 'para qué sirve'
-    ];
-
-    const hasHighInterest = highInterestSignals.some(signal => message.includes(signal));
-    const hasMediumInterest = mediumInterestSignals.some(signal => message.includes(signal));
-
-    // Si tiene interés alto o es la tercera pregunta o más
-    return hasHighInterest || (hasMediumInterest && conversationHistory.length >= 2);
+// Iniciar proceso de demo
+function startDemoCollection(sessionId: string): ConversationState {
+    const conversationState: ConversationState = {
+        isCollectingDemoData: true,
+        currentStep: 0,
+        collectedData: {},
+        detectedInterest: {
+            crm: false,
+            cargo: false,
+            wantsTrial: false,
+            wantsLogin: false
+        }
+    };
+    conversationStates.set(sessionId, conversationState);
+    return conversationState;
 }
 
-// Construir prompt dinámico basado en la consulta con estrategia de ventas
-function buildDynamicSystemPrompt(userMessage: string, conversationHistory: string[] = []): string {
-    const docs = getCachedDocs();
-    const { needsPricing, needsCRM } = analyzeQuery(userMessage);
-    const isQualified = isQualifiedLead(userMessage, conversationHistory);
+// Procesar paso de demo
+function processDemoStep(sessionId: string, userInput: string, currentStep: number) {
+    const conversationState = conversationStates.get(sessionId);
+    if (!conversationState) return { nextStep: 0, isComplete: false };
 
-    let contextSections = [];
-
-    if (needsPricing) {
-        contextSections.push(`=== INFORMACIÓN DE PRECIOS Y PLANES ===
-${docs.pricing}
-=== FIN PRECIOS ===`);
+    // Guardar dato según el paso actual
+    const steps = ['name', 'email', 'company', 'productInterest', 'phone', 'fleetSize', 'currentSoftware'];
+    if (currentStep < steps.length) {
+        const field = steps[currentStep] as keyof Omit<LeadData, 'collectedAt' | 'message'>;
+        conversationState.collectedData[field] = userInput.trim();
     }
 
-    if (needsCRM) {
-        contextSections.push(`=== INFORMACIÓN DETALLADA DEL CRM ===
-${docs.crm}
-=== FIN CRM ===`);
+    const nextStep = currentStep + 1;
+    const isComplete = nextStep >= steps.length;
+
+    if (!isComplete) {
+        conversationState.currentStep = nextStep;
     }
 
-    // Si no se necesita nada específico, mostrar información general
-    if (contextSections.length === 0) {
-        contextSections.push(`=== INFORMACIÓN GENERAL GOxT ===
-GOxT ofrece dos productos principales para transporte y logística:
-1. GOxT CRM - Sistema de gestión comercial
-2. GOxT Cargo - Sistema de control de flotas
+    conversationStates.set(sessionId, conversationState);
+    return { nextStep, isComplete };
+}
 
-Para precios específicos, consulta la sección de precios.
-Para detalles técnicos del CRM, pregunta por características específicas.
-=== FIN INFORMACIÓN GENERAL ===`);
+// Enviar lead a la API
+async function submitLeadToAPI(leadData: LeadData): Promise<{ success: boolean; error?: string }> {
+    try {
+        const response = await fetch(`http://localhost:3000/api/leads`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...leadData,
+                collectedAt: leadData.collectedAt.toISOString()
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            return { success: false, error: error.error || 'Error desconocido' };
+        }
+
+        return { success: true };
+    } catch (error) {
+        console.error('Error submitting lead:', error);
+        return { success: false, error: 'Error de conexión' };
+    }
+}
+
+// Obtener respuesta con enlaces de login
+function getLoginResponse(interest: {
+    interestedInCRM: boolean;
+    interestedInCargo: boolean;
+    wantsTrial: boolean;
+}): string {
+    let response = "¡Perfecto! Te puedo ayudar con eso:\n\n";
+
+    if (interest.wantsTrial) {
+        response += "Actualmente ofrecemos una **demo personalizada** en lugar de un trial autogestionado. Esto nos permite:\n";
+        response += "• Mostrarte exactamente cómo funciona en TU operación\n";
+        response += "• Responder todas tus preguntas en vivo\n";
+        response += "• Configurar todo según tus necesidades\n\n";
+        response += "¿Te gustaría agendar una demo personalizada?\n\n";
     }
 
-    const context = contextSections.join('\n\n');
+    if (interest.interestedInCRM && interest.interestedInCargo) {
+        response += "**Para ambos productos:**\n";
+        response += `• 📊 GOxT CRM: ${PRODUCT_URLS.CRM}\n`;
+        response += `• 🚛 GOxT Cargo: ${PRODUCT_URLS.CARGO}\n\n`;
+        response += "**¿Ya tienes cuenta?**\n";
+        response += "Puedes iniciar sesión en los enlaces de arriba.\n";
+        response += "**¿Eres nuevo?** Te recomiendo solicitar una demo primero para ver todo el potencial.\n\n";
+        response += "¿Te interesa solicitar una demo o ya tienes cuenta y necesitas acceso?";
 
-    // ESTRATEGIA DE VENTAS BASADA EN EL PERFIL DEL LEAD
-    let salesStrategy = '';
-    if (isQualified) {
-        salesStrategy = `ESTRATEGIA DE VENTAS (LEAD CALIFICADO):
-- Este usuario muestra ALTO INTERÉS
-- Sé DIRECTIVO y PROACTIVO
-- OFRECE DEMO INMEDIATA
-- PIDE INFORMACIÓN DE CONTACTO
-- MENCIONA BENEFICIOS DE IMPLEMENTACIÓN RÁPIDA
-- Usa frases como: "Perfecto, para tu caso específico..."
-- Termina con: "¿En qué horario te viene bien para la demo?"`;
+    } else if (interest.interestedInCRM) {
+        response += "**Para GOxT CRM:**\n";
+        response += `📊 Accede aquí: ${PRODUCT_URLS.CRM}\n\n`;
+        response += "**Si ya tienes cuenta:** Usa el enlace de arriba.\n";
+        response += "**Si eres nuevo:** Te recomiendo primero una demo para ver cómo optimiza tus cotizaciones y ventas.\n\n";
+        response += "¿Quieres solicitar la demo o necesitas ayuda con el acceso?";
+
+    } else if (interest.interestedInCargo) {
+        response += "**Para GOxT Cargo:**\n";
+        response += `🚛 Accede aquí: ${PRODUCT_URLS.CARGO}\n\n`;
+        response += "**Si ya tienes cuenta:** Usa el enlace de arriba.\n";
+        response += "**Si eres nuevo:** Te recomiendo primero una demo para ver cómo optimiza tu flota.\n\n";
+        response += "¿Quieres solicitar la demo o necesitas ayuda con el acceso?";
+    }
+
+    return response;
+}
+
+// Prompt para proceso de demo
+function getDemoPrompt(currentStep: number, collectedData: Partial<LeadData> = {}) {
+    const steps = [
+        {
+            question: "nombre completo",
+            field: "name",
+            explanation: "para personalizar tu experiencia y dirigirte correctamente"
+        },
+        {
+            question: "correo electrónico",
+            field: "email",
+            explanation: "para enviarte los detalles de la demo y materiales"
+        },
+        {
+            question: "nombre de tu empresa",
+            field: "company",
+            explanation: "para entender mejor tu contexto (este campo es opcional, puedes decir 'prefiero no decirlo')"
+        },
+        {
+            question: "producto de interés",
+            field: "productInterest",
+            explanation: "¿te interesa CRM, Cargo, o ambos? Así enfocamos la demo en lo que necesitas"
+        },
+        {
+            question: "teléfono de contacto",
+            field: "phone",
+            explanation: "por si necesitamos contactarte (opcional, puedes decir 'no quiero compartirlo')"
+        },
+        {
+            question: "tamaño aproximado de tu flota",
+            field: "fleetSize",
+            explanation: "para mostrarte cómo GOxT escala según tu operación (opcional)"
+        },
+        {
+            question: "software actual que utilizas",
+            field: "currentSoftware",
+            explanation: "para explicarte la migración y beneficios específicos (opcional, si no usas ninguno solo dilo)"
+        }
+    ];
+
+    const step = steps[currentStep];
+    const collectedFields = Object.keys(collectedData).length;
+
+    return `Eres GOXY, asistente de GOxT que está ayudando a un usuario a SOLICITAR UNA DEMO.
+
+ESTADO DEL PROCESO (${collectedFields + 1}/7 datos):
+
+DATOS RECOPILADOS:
+${Object.entries(collectedData)
+            .filter(([_, v]) => v)
+            .map(([k, v]) => `✓ ${k}: ${v}`)
+            .join('\n') || 'Aún sin datos.'}
+
+PASO ACTUAL (${currentStep + 1}/7):
+Necesitas recopilar: ${step.question}
+
+INSTRUCCIONES CRÍTICAS:
+1. Sé CONVERSACIONAL y AMABLE, no como un formulario
+2. PIDE SOLO este dato: "${step.question}"
+3. EXPLICA brevemente: "${step.explanation}"
+4. Si es campo opcional, MENCIONA que puede omitirlo
+5. NO preguntes múltiples cosas a la vez
+6. NO pidas datos que ya tienes
+
+EJEMPLO DE RESPUESTA IDEAL:
+"¡Perfecto! Ahora necesito tu ${step.question} ${step.explanation}. ¿Cuál es tu ${step.question}?"
+
+SI EL USUARIO PREGUNTA OTRA COSA:
+Responde MUY BREVEMENTE y luego retoma: "Por cierto, necesitaría tu ${step.question} para continuar."
+
+SI EL DATO PARECE INVÁLIDO (ej: email sin @):
+"Hmm, ese ${step.question} no parece correcto. ¿Podrías verificarlo?"
+
+TONO: Profesional pero cálido, como un vendedor experto ayudando a un cliente.
+
+RESPONDE EN ESPAÑOL.`;
+}
+
+// Prompt para confirmación de envío
+function getConfirmationPrompt(leadData: LeadData, submitResult: { success: boolean; error?: string }) {
+    if (submitResult.success) {
+        // Determinar qué login recomendar
+        const productLower = leadData.productInterest.toLowerCase();
+        let loginInfo = "";
+
+        if (productLower.includes('crm') && productLower.includes('cargo')) {
+            loginInfo = `\n\n**Cuando necesites acceder:**\n• GOxT CRM: ${PRODUCT_URLS.CRM}\n• GOxT Cargo: ${PRODUCT_URLS.CARGO}`;
+        } else if (productLower.includes('crm')) {
+            loginInfo = `\n\n**Cuando necesites acceder a GOxT CRM:** ${PRODUCT_URLS.CRM}`;
+        } else if (productLower.includes('cargo')) {
+            loginInfo = `\n\n**Cuando necesites acceder a GOxT Cargo:** ${PRODUCT_URLS.CARGO}`;
+        }
+
+        return `Eres GOXY y acabas de COMPLETAR exitosamente la solicitud de demo del usuario.
+
+DATOS CAPTURADOS:
+- Nombre: ${leadData.name}
+- Email: ${leadData.email}
+- Empresa: ${leadData.company || 'No especificada'}
+- Producto: ${leadData.productInterest}
+- Teléfono: ${leadData.phone || 'No especificado'}
+- Flota: ${leadData.fleetSize || 'No especificada'}
+- Software actual: ${leadData.currentSoftware || 'No especificado'}
+
+INSTRUCCIONES:
+1. CONFIRMA que su solicitud fue enviada exitosamente
+2. Dile que el equipo se pondrá en contacto en menos de 24 horas
+3. ${loginInfo ? 'Proporciona la información de login:' : ''}
+4. Pregunta si tiene alguna otra duda mientras tanto
+5. Mantén un tono ENTUSIASTA y PROFESIONAL
+
+RESPONSE FORMAT:
+"¡Listo, ${leadData.name}! 🎉 Tu solicitud de demo para ${leadData.productInterest} ha sido enviada exitosamente. 
+
+Nuestro equipo se pondrá en contacto contigo a ${leadData.email} en las próximas 24 horas para coordinar la mejor fecha y hora.${loginInfo}
+
+Mientras tanto, ¿hay algo más que quieras saber sobre GOxT?"
+
+RESPONDE EN ESPAÑOL con mucho ENTUSIASMO.`;
     } else {
-        salesStrategy = `ESTRATEGIA DE VENTAS (LEAD EN PROSPECCIÓN):
-- Este usuario está BUSCANDO INFORMACIÓN
-- Sé EDUCATIVO pero VENDEDOR
-- DESTACA 2-3 BENEFICIOS CLAVE
-- NO des toda la información de una vez
-- GENERA CURIOSIDAD con frases como: "Lo mejor es que lo veas en acción..."
-- TERMINA con una LLAMADA A ACCIÓN SUAVE
-- Usa: "Para ver exactamente cómo se adapta a tus necesidades..."`;
+        return `Eres GOXY y hubo un ERROR al enviar la solicitud de demo.
+
+ERROR: ${submitResult.error}
+
+INSTRUCCIONES:
+1. DISCULPATE profesionalmente
+2. Ofrece alternativa: que te contacte por email a contacto@goxt.io
+3. Mantén tono CALMADO y SERVICIAL
+
+RESPONDE EN ESPAÑOL de forma EMPÁTICA.`;
     }
+}
 
-    return `Eres GOXY, el AGENTE DE VENTAS virtual de GOxT. Tu MISIÓN es CONVERTIR consultas en DEMOS y VENTAS.
+// Prompt normal con detección de interés
+function getNormalPrompt(
+    userMessage: string,
+    conversationHistory: string[] = [],
+    interest: ReturnType<typeof analyzeUserInterest>
+) {
+    const docs = getCachedDocs();
 
-TU ROL:
-- Eres un VENDEDOR EXPERTO en software para transporte
-- Tu objetivo es AGENDAR DEMOS y CAPTURAR LEADS
-- Estrategia: "Dale suficiente para interesar, pero no tanto para que no necesite la demo"
+    const detectedCRM = interest.interestedInCRM;
+    const detectedCargo = interest.interestedInCargo;
+    const wantsLogin = interest.wantsLogin;
+    const wantsTrial = interest.wantsTrial;
+
+    // Base prompt
+    let systemPrompt = `Eres GOXY, asistente virtual de GOxT especializado en software para transporte y logística.
 
 CONTEXTO DISPONIBLE:
-${context}
+=== INFORMACIÓN DE PRECIOS ===
+${docs.pricing}
+=== FIN PRECIOS ===
 
-${salesStrategy}
+=== INFORMACIÓN DEL CRM ===
+${docs.crm}
+=== FIN CRM ===
 
-TÉCNICAS DE VENTA OBLIGATORIAS:
-1. REGLA DEL 80/20: Da el 80% de la respuesta, reserva el 20% para la demo
-2. PREGUNTAS DE DESCUBRIMIENTO: Incluye al menos 1 pregunta para conocer su negocio
-3. BENEFICIOS SOBRE CARACTERÍSTICAS: Siempre menciona cómo ayuda a SU NEGOCIO
-4. PRUEBA SOCIAL: Menciona que "+500 empresas" confían en GOxT
-5. URGENCIA SUAVE: "Las empresas que implementan ahora ahorran 30% en tiempo"
+DETECTADO EN CONVERSACIÓN:
+${detectedCRM ? '• Usuario muestra interés en CRM\n' : ''}
+${detectedCargo ? '• Usuario muestra interés en Cargo\n' : ''}
+${wantsLogin ? '• Usuario quiere acceder/login\n' : ''}
+${wantsTrial ? '• Usuario quiere probar el sistema\n' : ''}
 
-RESPUESTAS PROHIBIDAS:
-- ❌ NO des manuales técnicos completos
-- ❌ NO enumeres TODAS las funciones
-- ❌ NO seas solo un "chat de preguntas frecuentes"
-- ❌ NO termines sin llamada a acción
+URLS IMPORTANTES (úsalos cuando sea relevante, pero NO los repitas textualmente):
+• GOxT CRM Login: ${PRODUCT_URLS.CRM}
+• GOxT Cargo Login: ${PRODUCT_URLS.CARGO}
+• Solicitar Demo: ${PRODUCT_URLS.DEMO_REQUEST}
+• Ver precios: ${PRODUCT_URLS.PRICING}
 
-FORMATO DE RESPUESTA IDEAL:
-1. RESPUESTA INFORMATIVA (60%): Responde la pregunta con información útil
-2. VALOR AÑADIDO (20%): Añade un beneficio o dato relevante extra
-3. LLAMADA A ACCIÓN (20%): Invita a demo/contacto con motivo específico
+TU ESTRATEGIA:`;
 
-EJEMPLOS DE LLAMADAS A ACCIÓN:
-- "Para que veas EXACTAMENTE cómo funciona en tu tipo de transporte..."
-- "La demo personalizada te mostrará el AHORRO ESPECÍFICO para tu empresa..."
-- "¿Te gustaría AGENDAR 15 minutos para mostrarte el sistema en vivo?"
-- "Nuestro equipo puede hacer un ANÁLISIS GRATIS de tu operación actual..."
+    if (wantsLogin) {
+        systemPrompt += `
+USUARIO QUIERE LOGIN/ACCESO:
+1. Si pregunta específicamente por CRM o Cargo, da el link correspondiente
+2. Si no especifica, pregunta: "¿Para qué producto necesitas acceso: CRM, Cargo o ambos?"
+3. Si es nuevo usuario, sugiere demo primero
+4. SIEMPRE proporciona los links cuando sea relevante
 
-SI NO SABES ALGO:
-"Ese detalle técnico lo revisamos en la demo personalizada. ¿Te interesa agendar?"
+EJEMPLOS:
+Usuario: "¿Cómo ingreso al CRM?"
+Tú: "Para acceder a GOxT CRM: ${PRODUCT_URLS.CRM}"
+Usuario: "Quiero entrar al sistema"
+Tú: "¿Te refieres a GOxT CRM (${PRODUCT_URLS.CRM}) o GOxT Cargo (${PRODUCT_URLS.CARGO})? ¿O ambos?"`;
 
-RESPONDE SIEMPRE EN ESPAÑOL con tono AMABLE pero SEGURO.`;
+    } else if (wantsTrial) {
+        systemPrompt += `
+USUARIO QUIERE PROBAR/PRUEBA:
+1. Explícale que ofrecemos demo personalizada en lugar de trial autogestionado
+2. Destaca ventajas: configuración personalizada, respuesta a dudas en vivo
+3. Ofrece agendar demo inmediatamente
+4. Si insiste en trial, menciona que el equipo evaluará su caso
+
+EJEMPLO:
+"Actualmente ofrecemos demos personalizadas para que veas exactamente cómo funciona en TU operación. ¿Te gustaría agendar 15 minutos para mostrarte todo?"`;
+
+    } else if (detectedCRM || detectedCargo) {
+        systemPrompt += `
+USUARIO INTERESADO EN PRODUCTOS ESPECÍFICOS:
+1. Responde su pregunta de forma ÚTIL
+2. Destaca 1-2 BENEFICIOS clave del producto que le interesa
+3. Termina ofreciendo DEMO personalizada O link de login si parece ser usuario existente
+
+EJEMPLOS:
+Usuario pregunta sobre CRM:
+"GOxT CRM optimiza cotizaciones en 3 minutos y organiza tus clientes. ¿Ya eres usuario? Puedes acceder en: ${PRODUCT_URLS.CRM} ¿O prefieres una demo personalizada?"
+
+Usuario pregunta sobre Cargo:
+"GOxT Cargo reduce costos de flota con seguimiento GPS en tiempo real. ¿Ya lo usas? Accede en: ${PRODUCT_URLS.CARGO} ¿O te interesa ver una demo?"`;
+
+    } else {
+        systemPrompt += `
+CONVERSACIÓN GENERAL:
+1. Responde preguntas de forma CLARA y ÚTIL
+2. Detecta señales de interés en productos específicos
+3. Si menciona "probar", "usar", "acceder", "login" → ofrece links
+4. Si menciona "demo", "ver", "mostrar" → ofrece demo
+5. SIEMPRE termina con opción clara: demo o login según contexto
+
+OBJETIVO FINAL:
+Guiar al usuario hacia DEMO (para nuevos) o LOGIN (para existentes) según su interés detectado.
+
+TONO:
+Amigable, servicial, pero directo al punto.`;
+    }
+
+    systemPrompt += `
+
+RESPONDE EN ESPAÑOL con tono PROFESIONAL y AMIGABLE.`;
+
+    return systemPrompt;
 }
 
 export async function POST(req: Request) {
     try {
-        const { messages } = await req.json();
+        const { messages, sessionId } = await req.json();
 
-        // Obtener el último mensaje del usuario
         const lastUserMessage = messages
             .filter((msg: any) => msg.role === 'user')
             .pop()?.content || '';
 
-        // Extraer historial de conversación (solo mensajes del usuario)
         const conversationHistory = messages
             .filter((msg: any) => msg.role === 'user')
+            .slice(0, -1) // Excluir el último mensaje
             .map((msg: any) => msg.content);
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: [
-                {
-                    role: "system",
-                    content: buildDynamicSystemPrompt(lastUserMessage, conversationHistory),
-                },
-                ...messages,
-            ],
-            temperature: 0.8, // Un poco más creativo para ventas
-            max_tokens: 800, // Respuestas más concisas
-        });
+        // Obtener o crear sessionId
+        const currentSessionId = sessionId || `chat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-        const assistantMessage = completion.choices[0]?.message?.content || "Lo siento, no pude generar una respuesta.";
+        // Verificar estado de conversación actual
+        let conversationState = conversationStates.get(currentSessionId);
 
-        return NextResponse.json({ message: assistantMessage });
+        // Analizar interés del usuario
+        const interest = analyzeUserInterest(lastUserMessage, conversationHistory);
+
+        // Actualizar estado de interés
+        if (conversationState) {
+            conversationState.detectedInterest = {
+                crm: conversationState.detectedInterest.crm || interest.interestedInCRM,
+                cargo: conversationState.detectedInterest.cargo || interest.interestedInCargo,
+                wantsTrial: conversationState.detectedInterest.wantsTrial || interest.wantsTrial,
+                wantsLogin: conversationState.detectedInterest.wantsLogin || interest.wantsLogin
+            };
+        }
+
+        // Si el usuario quiere demo y no estamos en proceso, iniciar
+        if (interest.wantsDemo && !conversationState?.isCollectingDemoData) {
+            conversationState = startDemoCollection(currentSessionId);
+
+            // Transferir interés detectado
+            if (conversationState) {
+                conversationState.detectedInterest = {
+                    crm: interest.interestedInCRM,
+                    cargo: interest.interestedInCargo,
+                    wantsTrial: interest.wantsTrial,
+                    wantsLogin: interest.wantsLogin
+                };
+            }
+        }
+
+        // Si estamos en proceso de demo
+        if (conversationState?.isCollectingDemoData) {
+            const { nextStep, isComplete } = processDemoStep(
+                currentSessionId,
+                lastUserMessage,
+                conversationState.currentStep
+            );
+
+            // Si completamos todos los pasos, enviar a API
+            if (isComplete && conversationState.collectedData.name && conversationState.collectedData.email) {
+                const leadData: LeadData = {
+                    name: conversationState.collectedData.name,
+                    email: conversationState.collectedData.email,
+                    company: conversationState.collectedData.company,
+                    productInterest: conversationState.collectedData.productInterest || 'general',
+                    phone: conversationState.collectedData.phone,
+                    fleetSize: conversationState.collectedData.fleetSize,
+                    currentSoftware: conversationState.collectedData.currentSoftware,
+                    message: `Demo solicitada vía Chat IA. Flota: ${conversationState.collectedData.fleetSize || 'N/A'}, Software: ${conversationState.collectedData.currentSoftware || 'N/A'}`,
+                    collectedAt: new Date()
+                };
+
+                const submitResult = await submitLeadToAPI(leadData);
+
+                // Generar mensaje de confirmación
+                const systemPrompt = getConfirmationPrompt(leadData, submitResult);
+
+                const completion = await openai.chat.completions.create({
+                    model: "gpt-4o-mini",
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        { role: "user", content: "Confirma el envío de mi solicitud" }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 300,
+                });
+
+                const response = completion.choices[0]?.message?.content ||
+                    "¡Solicitud enviada! Nos contactaremos pronto.";
+
+                // Limpiar estado
+                conversationStates.delete(currentSessionId);
+
+                return NextResponse.json({
+                    message: response,
+                    sessionId: currentSessionId,
+                    isCollectingDemo: false,
+                    demoComplete: true,
+                    submitSuccess: submitResult.success
+                });
+
+            } else {
+                // Continuar con el siguiente paso
+                const systemPrompt = getDemoPrompt(
+                    conversationState.currentStep,
+                    conversationState.collectedData
+                );
+
+                const completion = await openai.chat.completions.create({
+                    model: "gpt-4o-mini",
+                    messages: [
+                        { role: "system", content: systemPrompt },
+                        ...messages,
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 300,
+                });
+
+                const response = completion.choices[0]?.message?.content ||
+                    "Por favor, proporciona la información solicitada.";
+
+                return NextResponse.json({
+                    message: response,
+                    sessionId: currentSessionId,
+                    isCollectingDemo: true,
+                    demoStep: nextStep,
+                    demoComplete: false
+                });
+            }
+
+        } else {
+            // Si el usuario quiere login/trial y NO está en demo, dar respuesta directa
+            if ((interest.wantsLogin || interest.wantsTrial) && !interest.wantsDemo) {
+                const loginResponse = getLoginResponse(interest);
+
+                return NextResponse.json({
+                    message: loginResponse,
+                    sessionId: currentSessionId,
+                    isCollectingDemo: false,
+                    interestDetected: interest
+                });
+            }
+
+            // Conversación normal con detección de interés
+            const systemPrompt = getNormalPrompt(lastUserMessage, conversationHistory, interest);
+
+            const completion = await openai.chat.completions.create({
+                model: "gpt-4o-mini",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    ...messages,
+                ],
+                temperature: 0.8,
+                max_tokens: 500,
+            });
+
+            const response = completion.choices[0]?.message?.content ||
+                "Lo siento, no pude generar una respuesta.";
+
+            return NextResponse.json({
+                message: response,
+                sessionId: currentSessionId,
+                isCollectingDemo: false,
+                interestDetected: interest
+            });
+        }
+
     } catch (error) {
         console.error("Error en API de chat:", error);
         return NextResponse.json(

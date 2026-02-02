@@ -13,20 +13,55 @@ export function ChatPage() {
     const [messages, setMessages] = useState<Message[]>([
         {
             role: "assistant",
-            content: "¡Hola! Soy el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
+            content: "¡Hola! Soy GOXY, el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
         },
     ]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [sessionId, setSessionId] = useState<string>("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Control para saber si debemos hacer scroll
+    const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
+
+    // Función para hacer scroll solo si es necesario
+    const scrollToBottomIfNeeded = () => {
+        if (!shouldScrollToBottom) return;
+
+        setTimeout(() => {
+            messagesEndRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "end"
+            });
+        }, 100);
     };
 
+    // Solo hacer scroll cuando se agregan nuevos mensajes
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+        scrollToBottomIfNeeded();
+    }, [messages]); // Se ejecuta cuando cambian los mensajes
+
+    // Detectar si el usuario está scrolleando manualmente
+    const handleScroll = () => {
+        if (!messagesContainerRef.current) return;
+
+        const container = messagesContainerRef.current;
+        const isAtBottom =
+            container.scrollHeight - container.scrollTop - container.clientHeight < 50;
+
+        // Solo hacer scroll automático si está cerca del fondo
+        setShouldScrollToBottom(isAtBottom);
+    };
+
+    // Inicializar el listener de scroll
+    useEffect(() => {
+        const container = messagesContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll);
+            return () => container.removeEventListener('scroll', handleScroll);
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,6 +72,9 @@ export function ChatPage() {
         setInput("");
         setIsLoading(true);
 
+        // Forzar scroll cuando el usuario envía un mensaje
+        setShouldScrollToBottom(true);
+
         try {
             const response = await fetch("/api/chat", {
                 method: "POST",
@@ -45,6 +83,7 @@ export function ChatPage() {
                 },
                 body: JSON.stringify({
                     messages: [...messages, userMessage],
+                    sessionId: sessionId || undefined,
                 }),
             });
 
@@ -53,11 +92,21 @@ export function ChatPage() {
             }
 
             const data = await response.json();
+
+            // Guardar sessionId si es nuevo
+            if (data.sessionId && !sessionId) {
+                setSessionId(data.sessionId);
+            }
+
             const assistantMessage: Message = {
                 role: "assistant",
                 content: data.message,
             };
             setMessages((prev) => [...prev, assistantMessage]);
+
+            // Forzar scroll cuando llega respuesta
+            setShouldScrollToBottom(true);
+
         } catch (error) {
             console.error("Error:", error);
             setMessages((prev) => [
@@ -67,8 +116,17 @@ export function ChatPage() {
                     content: "Lo siento, hubo un error. Por favor intenta de nuevo.",
                 },
             ]);
+            setShouldScrollToBottom(true);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    // Función para manejar Enter en el input
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e as any);
         }
     };
 
@@ -112,8 +170,11 @@ export function ChatPage() {
                     className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden"
                     style={{ height: "calc(100vh - 400px)", minHeight: "500px" }}
                 >
-                    {/* Messages */}
-                    <div className="h-[calc(100%-80px)] overflow-y-auto p-6 space-y-6">
+                    {/* Messages Container con ref para scroll */}
+                    <div
+                        ref={messagesContainerRef}
+                        className="h-[calc(100%-80px)] overflow-y-auto p-6 space-y-6"
+                    >
                         {messages.map((message, index) => (
                             <motion.div
                                 key={index}
@@ -178,6 +239,7 @@ export function ChatPage() {
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
                                 placeholder="Escribe tu mensaje aquí..."
                                 className="flex-1 px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--goxt-primary)] focus:border-transparent bg-white"
                                 disabled={isLoading}
