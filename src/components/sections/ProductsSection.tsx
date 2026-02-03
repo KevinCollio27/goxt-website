@@ -179,7 +179,7 @@ export function ProductsSection() {
                                             <h3
                                                 className="text-3xl md:text-4xl font-bold"
                                                 style={{
-                                                    fontFamily: "var(--font-handwritten), cursive",
+                                                    fontFamily: "'Pacifico', cursive",
                                                     color: 'var(--text-primary)'
                                                 }}
                                             >

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2, Trash2 } from "lucide-react";
+import { useChatPersistence } from "@/hooks/useChatPersistence";
 
 interface Message {
     role: "user" | "assistant";
@@ -15,12 +16,8 @@ interface AIChatProps {
 }
 
 export function AIChat({ isOpen, onClose }: AIChatProps) {
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            role: "assistant",
-            content: "¡Hola! Soy el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
-        },
-    ]);
+    // Usar hook personalizado para persistencia
+    const { messages, sessionId, setMessages, setSessionId, clearChat } = useChatPersistence();
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -50,6 +47,7 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                 },
                 body: JSON.stringify({
                     messages: [...messages, userMessage],
+                    sessionId: sessionId || undefined,
                 }),
             });
 
@@ -58,6 +56,12 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
             }
 
             const data = await response.json();
+
+            // Guardar sessionId si es nuevo
+            if (data.sessionId && !sessionId) {
+                setSessionId(data.sessionId);
+            }
+
             const assistantMessage: Message = {
                 role: "assistant",
                 content: data.message,

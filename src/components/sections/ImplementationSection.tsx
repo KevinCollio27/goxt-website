@@ -330,13 +330,13 @@ export function ImplementationSection() {
                                 >
                                     Agendar consulta gratuita
                                 </a>
-                                <a
+                                {/*<a
                                     href="/nosotros"
                                     className="goxt-btn-secondary text-xl px-12 py-5 border-white/20 text-white hover:border-cream hover:text-cream"
                                     style={{ background: 'transparent' }}
                                 >
                                     Conocer equipo
-                                </a>
+                                </a>*/}
                             </div>
                         </div>
                     </div>

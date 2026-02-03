@@ -2,23 +2,33 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Send, Loader2, Bot, User } from "lucide-react";
+import { Send, Loader2, Bot, User, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { useChatPersistence } from "@/hooks/useChatPersistence";
 
 interface Message {
     role: "user" | "assistant";
     content: string;
 }
-
+const features = [
+    {
+        name: "Pregunta sobre GOxT CRM",
+        icon: "/assets/Logo_CRM_Blanco.png",
+    },
+    {
+        name: "Conoce GOxT Cargo",
+        icon: "/assets/Logo_cargo_Blanco.png",
+    },
+    {
+        name: "Solicita información personalizada",
+        icon: "/assets/Logo-FondoBlanco.png",
+    },
+];
 export function ChatPage() {
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            role: "assistant",
-            content: "¡Hola! Soy GOXY, el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
-        },
-    ]);
+    // Usar hook personalizado para persistencia
+    const { messages, sessionId, setMessages, setSessionId, clearChat } = useChatPersistence();
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [sessionId, setSessionId] = useState<string>("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -144,13 +154,25 @@ export function ChatPage() {
                             <Bot className="w-8 h-8 text-white" />
                         </div>
                     </motion.div>
+                    {/* Headline con animaciones*/}
                     <motion.h1
-                        initial={{ opacity: 0, y: -20 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-bold mb-4"
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="text-5xl md:text-7xl lg:text-8xl mb-6 leading-[1.1]"
+                        style={{ fontFamily: "var(--font-handwritten), cursive" }}
                     >
-                        Chat con <span className="goxt-gradient-text">Asistente IA</span>
+                        <span
+                            className="font-bold"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            Chat con
+                        </span>{" "}
+                        <span
+                            className="goxt-gradient-accent-text font-bold"
+                        >
+                            Asistente IA.
+                        </span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: -20 }}
@@ -158,7 +180,7 @@ export function ChatPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-gray-600"
                     >
-                        Pregúntame sobre los productos y servicios de GOxT
+                        Pregúntame sobre los productos y servicios de GOxT.
                     </motion.p>
                 </div>
 
@@ -252,6 +274,13 @@ export function ChatPage() {
                                 <Send className="w-5 h-5" />
                                 <span className="hidden sm:inline">Enviar</span>
                             </button>
+                            <button
+                                onClick={clearChat}
+                                className="ml-4 p-3 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                title="Limpiar conversación"
+                            >
+                                <Trash2 className="w-5 h-5" />
+                            </button>
                         </div>
                     </form>
                 </motion.div>
@@ -263,18 +292,20 @@ export function ChatPage() {
                     transition={{ delay: 0.4 }}
                     className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8"
                 >
-                    <div className="bg-white p-4 rounded-xl border border-gray-200 text-center">
-                        <div className="text-2xl mb-2">🎯</div>
-                        <p className="text-sm text-gray-600">Pregunta sobre GOxT CRM</p>
-                    </div>
-                    <div className="bg-white p-4 rounded-xl border border-gray-200 text-center">
-                        <div className="text-2xl mb-2">🚛</div>
-                        <p className="text-sm text-gray-600">Conoce GOxT Cargo</p>
-                    </div>
-                    <div className="bg-white p-4 rounded-xl border border-gray-200 text-center">
-                        <div className="text-2xl mb-2">💡</div>
-                        <p className="text-sm text-gray-600">Solicita información personalizada</p>
-                    </div>
+                    {features.map((feature, index) => (
+                        <div key={index} className="bg-white p-4 rounded-xl border border-gray-200 text-center">
+                            <div className="flex justify-center mb-2">
+                                <Image
+                                    src={feature.icon}
+                                    alt={feature.name}
+                                    width={60}
+                                    height={60}
+                                    className="w-12 h-12 object-contain"
+                                />
+                            </div>
+                            <p className="text-sm text-gray-600">{feature.name}</p>
+                        </div>
+                    ))}
                 </motion.div>
             </div>
         </div>

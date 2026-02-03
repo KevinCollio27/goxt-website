@@ -11,13 +11,11 @@ const openai = new OpenAI({
 const PRODUCT_URLS = {
     CRM: "https://crm.goxt.io/",
     CARGO: "https://cargo.goxt.io/",
-    DEMO_REQUEST: "https://goxt.io/demo",
-    PRICING: "https://goxt.io/precios"
+    DEMO_REQUEST: "https://goxt.io/contacto" // Cambiado a página de contacto
 };
 
 // Interfaz para información en caché
 interface CachedDocs {
-    pricing: string;
     crm: string;
     timestamp: number;
 }
@@ -54,7 +52,7 @@ const conversationStates = new Map<string, ConversationState>();
 let docsCache: CachedDocs | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
 
-// Leer y cachear documentos
+// Leer y cachear documentos (SOLO CRM ahora)
 function getCachedDocs(): CachedDocs {
     const now = Date.now();
 
@@ -70,19 +68,12 @@ function getCachedDocs(): CachedDocs {
         path.join(process.cwd()),
     ];
 
-    let pricingContent = '';
     let crmContent = '';
 
     for (const basePath of possiblePaths) {
-        const pricingPath = path.join(basePath, 'GOXT_PRICING_STRATEGY.md');
         const crmPath = path.join(basePath, 'GOXT_CRM_RESUMEN_COMPLETO.md');
 
         try {
-            if (fs.existsSync(pricingPath) && !pricingContent) {
-                pricingContent = fs.readFileSync(pricingPath, 'utf-8');
-                console.log(`Encontrado pricing en: ${pricingPath}`);
-            }
-
             if (fs.existsSync(crmPath) && !crmContent) {
                 crmContent = fs.readFileSync(crmPath, 'utf-8');
                 console.log(`Encontrado CRM en: ${crmPath}`);
@@ -92,25 +83,16 @@ function getCachedDocs(): CachedDocs {
         }
     }
 
-    if (!pricingContent) {
-        pricingContent = "Información de precios no disponible. Contacta al equipo de ventas.";
-    }
-
     if (!crmContent) {
         crmContent = "Información detallada del CRM no disponible. Solicita una demo para más información.";
     }
 
     const maxLength = 4000;
-    if (pricingContent.length > maxLength) {
-        pricingContent = pricingContent.substring(0, maxLength) + "... [información truncada por tamaño]";
-    }
-
     if (crmContent.length > maxLength) {
         crmContent = crmContent.substring(0, maxLength) + "... [información truncada por tamaño]";
     }
 
     docsCache = {
-        pricing: pricingContent,
         crm: crmContent,
         timestamp: now
     };
@@ -125,6 +107,7 @@ function analyzeUserInterest(userMessage: string, conversationHistory: string[] 
     wantsLogin: boolean;
     interestedInCRM: boolean;
     interestedInCargo: boolean;
+    askingAboutPricing: boolean; // Nueva: detectar preguntas sobre precios
 } {
     const message = userMessage.toLowerCase();
     const fullConversation = [...conversationHistory, message].join(' ').toLowerCase();
@@ -170,12 +153,22 @@ function analyzeUserInterest(userMessage: string, conversationHistory: string[] 
     ];
     const interestedInCargo = cargoKeywords.some(keyword => fullConversation.includes(keyword));
 
+    // Detectar preguntas sobre PRECIOS (NUEVO)
+    const pricingKeywords = [
+        'precio', 'precios', 'costo', 'costos', 'cuánto cuesta',
+        'tarifa', 'tarifas', 'valor', 'valores', 'plan', 'planes',
+        'pago', 'mensualidad', 'anualidad', 'subscription', 'suscripción',
+        'gratis', 'gratuito', 'barato', 'caro', 'económico'
+    ];
+    const askingAboutPricing = pricingKeywords.some(keyword => message.includes(keyword));
+
     return {
         wantsDemo,
         wantsTrial,
         wantsLogin,
         interestedInCRM,
-        interestedInCargo
+        interestedInCargo,
+        askingAboutPricing
     };
 }
 
@@ -286,6 +279,37 @@ function getLoginResponse(interest: {
     return response;
 }
 
+// Respuesta para preguntas sobre precios (NUEVA FUNCIÓN)
+function getPricingResponse(): string {
+    return `**¡Excelente pregunta!** 
+
+En GOxT entendemos que cada empresa de transporte y logística tiene necesidades únicas. Por eso:
+
+🎯 **Nuestro enfoque personalizado:**
+• Precios escalables según el tamaño de tu operación
+• Planes adaptados a tus necesidades específicas
+• Sin cargos ocultos ni sorpresas
+
+📊 **Valor que ofrecemos:**
+• Ahorro de tiempo en cotizaciones (de horas a minutos)
+• Reducción de costos operativos de flota
+• Incremento en conversión de ventas
+• Control completo de tus operaciones
+
+👥 **Proceso transparente:**
+1. **Demo personalizada** - Te mostramos cómo funciona en TU operación
+2. **Propuesta adaptada** - Creamos un plan que se ajuste a tus necesidades
+3. **Implementación guiada** - Te acompañamos en todo el proceso
+
+💡 **¿Por qué preferimos una demo antes de hablar de números?**
+Porque queremos asegurarnos de que:
+• Entiendas TODO el valor que recibirás
+• Veas cómo se adapta EXACTAMENTE a lo que necesitas
+• Sepas que estás invirtiendo en una solución que realmente funciona para ti
+
+¿Te gustaría agendar una **demo personalizada y sin compromiso** para que nuestro equipo pueda conocerte mejor y crear una propuesta que se ajuste perfectamente a lo que necesitas?`;
+}
+
 // Prompt para proceso de demo
 function getDemoPrompt(currentStep: number, collectedData: Partial<LeadData> = {}) {
     const steps = [
@@ -329,7 +353,7 @@ function getDemoPrompt(currentStep: number, collectedData: Partial<LeadData> = {
     const step = steps[currentStep];
     const collectedFields = Object.keys(collectedData).length;
 
-    return `Eres GOXY, asistente de GOxT que está ayudando a un usuario a SOLICITAR UNA DEMO.
+    return `Eres el agente IA de GOxT, que está ayudando a un usuario a SOLICITAR UNA DEMO.
 
 ESTADO DEL PROCESO (${collectedFields + 1}/7 datos):
 
@@ -379,7 +403,7 @@ function getConfirmationPrompt(leadData: LeadData, submitResult: { success: bool
             loginInfo = `\n\n**Cuando necesites acceder a GOxT Cargo:** ${PRODUCT_URLS.CARGO}`;
         }
 
-        return `Eres GOXY y acabas de COMPLETAR exitosamente la solicitud de demo del usuario.
+        return `Eres el agente IA de GOxT y acabas de COMPLETAR exitosamente la solicitud de demo del usuario.
 
 DATOS CAPTURADOS:
 - Nombre: ${leadData.name}
@@ -406,7 +430,7 @@ Mientras tanto, ¿hay algo más que quieras saber sobre GOxT?"
 
 RESPONDE EN ESPAÑOL con mucho ENTUSIASMO.`;
     } else {
-        return `Eres GOXY y hubo un ERROR al enviar la solicitud de demo.
+        return `Eres el agente IA de GOxT y hubo un ERROR al enviar la solicitud de demo.
 
 ERROR: ${submitResult.error}
 
@@ -431,15 +455,46 @@ function getNormalPrompt(
     const detectedCargo = interest.interestedInCargo;
     const wantsLogin = interest.wantsLogin;
     const wantsTrial = interest.wantsTrial;
+    const askingAboutPricing = interest.askingAboutPricing;
 
-    // Base prompt
-    let systemPrompt = `Eres GOXY, asistente virtual de GOxT especializado en software para transporte y logística.
+    // Si pregunta sobre precios, usar respuesta especial
+    if (askingAboutPricing) {
+        return `Eres el agente IA de GOxT especializado en software para transporte y logística.
+
+DETECTADO: El usuario está preguntando sobre PRECIOS.
+
+INSTRUCCIONES CRÍTICAS:
+1. NO INVENTES precios, planes o tarifas
+2. NO hagas referencia a un archivo de precios (ya no existe)
+3. Explica POR QUÉ preferimos hacer una demo primero
+4. Destaca el VALOR y BENEFICIOS que recibirá
+5. Motívalo a solicitar una demo personalizada
+6. Sé TRANSPARENTE y PROFESIONAL
+7. Crea INTERÉS en conocer su operación
+
+TONO:
+• Entusiasta pero profesional
+• Valórico (habla del valor, no del precio)
+• Persuasivo pero honesto
+• Orientado a soluciones
+
+ESTRATEGIA DE RESPUESTA:
+1. Agradece la pregunta
+2. Explica nuestro enfoque personalizado
+3. Destaca los beneficios y valor
+4. Explica POR QUÉ una demo primero es mejor para él/ella
+5. Invita a agendar demo sin compromiso
+
+EJEMPLO DE RESPUESTA:
+"¡Excelente pregunta! En GOxT creamos planes personalizados porque cada empresa de transporte es única. Preferimos mostrarte primero todo el valor que recibirás en una demo, para luego crear una propuesta que se ajuste exactamente a tus necesidades. ¿Te gustaría agendar una demo para que veas cómo podemos optimizar tu operación?"
+
+RESPONDE EN ESPAÑOL de forma CONVINCENTE y MOTIVADORA.`;
+    }
+
+    // Base prompt para conversación normal
+    let systemPrompt = `Eres el agente IA de GOxT especializado en software para transporte y logística.
 
 CONTEXTO DISPONIBLE:
-=== INFORMACIÓN DE PRECIOS ===
-${docs.pricing}
-=== FIN PRECIOS ===
-
 === INFORMACIÓN DEL CRM ===
 ${docs.crm}
 === FIN CRM ===
@@ -454,7 +509,6 @@ URLS IMPORTANTES (úsalos cuando sea relevante, pero NO los repitas textualmente
 • GOxT CRM Login: ${PRODUCT_URLS.CRM}
 • GOxT Cargo Login: ${PRODUCT_URLS.CARGO}
 • Solicitar Demo: ${PRODUCT_URLS.DEMO_REQUEST}
-• Ver precios: ${PRODUCT_URLS.PRICING}
 
 TU ESTRATEGIA:`;
 
@@ -648,6 +702,19 @@ export async function POST(req: Request) {
             }
 
         } else {
+            // Si el usuario pregunta sobre PRECIOS, dar respuesta especial
+            if (interest.askingAboutPricing) {
+                const pricingResponse = getPricingResponse();
+
+                return NextResponse.json({
+                    message: pricingResponse,
+                    sessionId: currentSessionId,
+                    isCollectingDemo: false,
+                    interestDetected: interest,
+                    isPricingQuestion: true
+                });
+            }
+
             // Si el usuario quiere login/trial y NO está en demo, dar respuesta directa
             if ((interest.wantsLogin || interest.wantsTrial) && !interest.wantsDemo) {
                 const loginResponse = getLoginResponse(interest);
