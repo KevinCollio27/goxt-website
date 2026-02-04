@@ -4,233 +4,222 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AIChat } from "../ui/AIChat";
-import { useChat } from "@/context/ChatContext";
 
 const navigation = [
+    { name: "Inicio", href: "/" },
     {
-        name: "Inicio",
-        href: "/",
-        icon: (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    stroke="var(--goxt-cream)"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-            </svg>
-        )
+        name: "Productos",
+        href: "/productos",
+        submenu: [
+            {
+                name: "GOxT CRM",
+                href: "/productos/crm",
+                description: "Gestión comercial y cotizaciones",
+                icon: "🎯",
+            },
+            {
+                name: "GOxT Cargo",
+                href: "/productos/cargo",
+                description: "Control de flotas y operaciones",
+                icon: "🚛",
+            },
+        ],
     },
-    {
-        name: "Chat IA",
-        href: "/chat-ia",
-        icon: (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    stroke="var(--goxt-cream)"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                />
-            </svg>
-        )
-    },
-    {
-        name: "Contacto",
-        href: "/contacto",
-        icon: (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    stroke="var(--goxt-cream)"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-            </svg>
-        )
-    },
+    { name: "Precios", href: "/precios" },
+    /*{ name: "Blog", href: "/blog" },*/
+    { name: "Chat IA", href: "/chat-ia" },
+    { name: "Nosotros", href: "/nosotros" },
+    { name: "Contacto", href: "/contacto" },
 ];
 
 export function Header() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const { isChatOpen, setChatOpen } = useChat();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
     return (
-        <>
-            {/* Botón de toggle fijo*/}
-            <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="fixed top-6 left-6 z-50 p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 border-2 border-gray-100"
-                aria-label="Toggle menu"
-            >
-                <svg
-                    className="w-6 h-6 text-gray-700"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    {sidebarOpen ? (
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    ) : (
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 6h16M4 12h16M4 18h16"
-                        />
-                    )}
-                </svg>
-            </button>
-
-            {/* Overlay oscuro cuando el sidebar está abierto */}
-            <AnimatePresence>
-                {sidebarOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        onClick={() => setSidebarOpen(false)}
-                        className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+        <header className="fixed top-0 left-0 right-0 z-50 goxt-glass">
+            <nav className="goxt-container flex items-center justify-between py-4">
+                {/* Logo */}
+                <Link href="/" className="flex items-center">
+                    <Image
+                        src="/assets/Logo-FondoBlanco.png"
+                        alt="GOxT - Moving Forward"
+                        width={160}
+                        height={54}
+                        className="h-12 md:h-18 w-auto"
+                        priority
                     />
-                )}
-            </AnimatePresence>
+                </Link>
 
-            {/* Sidebar lateral izquierdo */}
-            <AnimatePresence>
-                {sidebarOpen && (
-                    <motion.aside
-                        initial={{ x: -320 }}
-                        animate={{ x: 0 }}
-                        exit={{ x: -320 }}
-                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 overflow-y-auto"
-                    >
-                        {/* Header del Sidebar */}
-                        <div className="p-6 border-b border-gray-100">
+                {/* Desktop Navigation */}
+                <div className="hidden lg:flex items-center gap-8">
+                    {navigation.map((item) => (
+                        <div
+                            key={item.name}
+                            className="relative"
+                            onMouseEnter={() => item.submenu && setActiveSubmenu(item.name)}
+                            onMouseLeave={() => setActiveSubmenu(null)}
+                        >
                             <Link
-                                href="/"
-                                className="flex items-center justify-center"
-                                onClick={() => setSidebarOpen(false)}
+                                href={item.href}
+                                className="text-gray-700 hover:text-[var(--goxt-primary)] transition-colors font-medium flex items-center gap-1"
                             >
-                                <Image
-                                    src="/assets/Logo-FondoBlanco.png"
-                                    alt="GOxT - Moving Forward"
-                                    width={200}
-                                    height={55}
-                                    className="h-12 md:h-14 w-auto"
-                                    priority
-                                />
+                                {item.name}
+                                {item.submenu && (
+                                    <svg
+                                        className={`w-4 h-4 transition-transform ${activeSubmenu === item.name ? "rotate-180" : ""}`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                )}
                             </Link>
-                        </div>
 
-                        {/* Navegación vertical */}
-                        <nav className="p-4 space-y-2">
-                            {navigation.map((item, index) => (
-                                <motion.div
-                                    key={item.name}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                >
+                            {/* Submenu */}
+                            <AnimatePresence>
+                                {item.submenu && activeSubmenu === item.name && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden"
+                                    >
+                                        <div className="p-2">
+                                            {item.submenu.map((subitem) => (
+                                                <Link
+                                                    key={subitem.name}
+                                                    href={subitem.href}
+                                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                                                >
+                                                    <span className="text-2xl">{subitem.icon}</span>
+                                                    <div>
+                                                        <div className="font-semibold text-gray-900 group-hover:text-[var(--goxt-primary)]">
+                                                            {subitem.name}
+                                                        </div>
+                                                        <div className="text-sm text-gray-500">
+                                                            {subitem.description}
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    ))}
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="hidden lg:flex items-center gap-4">
+                    <Link href="/contacto" className="goxt-btn-primary">
+                        Solicitar Demo
+                    </Link>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <button
+                    type="button"
+                    className="lg:hidden p-2 text-gray-700"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                    <span className="sr-only">Abrir menú</span>
+                    {mobileMenuOpen ? (
+                        <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    ) : (
+                        <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
+                        </svg>
+                    )}
+                </button>
+            </nav>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="lg:hidden bg-white border-t border-gray-100"
+                    >
+                        <div className="goxt-container py-4 space-y-2">
+                            {navigation.map((item) => (
+                                <div key={item.name}>
                                     <Link
                                         href={item.href}
-                                        onClick={() => setSidebarOpen(false)}
-                                        className="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-[var(--goxt-primary)] transition-all duration-300 group"
+                                        className="block py-3 text-gray-700 hover:text-[var(--goxt-primary)] font-medium"
+                                        onClick={() => setMobileMenuOpen(false)}
                                     >
-                                        <span className="text-2xl group-hover:scale-110 transition-transform">
-                                            {item.icon}
-                                        </span>
-                                        <span className="font-semibold text-lg">
-                                            {item.name}
-                                        </span>
+                                        {item.name}
                                     </Link>
-                                </motion.div>
+                                    {item.submenu && (
+                                        <div className="pl-4 space-y-2">
+                                            {item.submenu.map((subitem) => (
+                                                <Link
+                                                    key={subitem.name}
+                                                    href={subitem.href}
+                                                    className="flex items-center gap-2 py-2 text-gray-600 hover:text-[var(--goxt-primary)]"
+                                                    onClick={() => setMobileMenuOpen(false)}
+                                                >
+                                                    <span>{subitem.icon}</span>
+                                                    <span>{subitem.name}</span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             ))}
-                        </nav>
-
-                        {/* Separador */}
-                        <div className="mx-4 my-6 border-t border-gray-200" />
-
-                        {/* Botones de acción */}
-                        <div className="px-4 space-y-3">
-                            <motion.button
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                                onClick={() => {
-                                    setSidebarOpen(false);
-                                    setChatOpen(true);
-                                }}
-                                className="w-full px-6 py-3 border-2 border-[var(--goxt-primary)] text-[var(--goxt-primary)] rounded-full font-semibold hover:bg-[var(--goxt-primary)] hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
-                            >
-                                <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                                    />
-                                </svg>
-                                ChatBot IA
-                            </motion.button>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                            >
-                                <Link
-                                    href="/contacto"
-                                    onClick={() => setSidebarOpen(false)}
-                                    className="block w-full goxt-btn-primary text-center"
-                                >
-                                    Solicitar Demo
-                                </Link>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 }}
-                            >
+                            <div className="pt-4 space-y-3 border-t border-gray-100">
                                 <Link
                                     href="https://crm.goxt.io"
                                     target="_blank"
-                                    onClick={() => setSidebarOpen(false)}
-                                    className="block w-full px-6 py-3 text-center text-gray-700 font-medium hover:text-[var(--goxt-primary)] transition-colors"
+                                    className="block py-3 text-center text-gray-700 font-medium"
                                 >
                                     Iniciar Sesión
                                 </Link>
-                            </motion.div>
+                                <Link
+                                    href="/contacto"
+                                    className="block goxt-btn-accent text-center"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    Solicitar Demo
+                                </Link>
+                            </div>
                         </div>
-
-                        {/* Footer del sidebar */}
-                        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-100 bg-gray-50">
-                            <p className="text-sm text-gray-500 text-center">
-                                © 2026 GOxT - Moving Forward
-                            </p>
-                        </div>
-                    </motion.aside>
+                    </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* AI Chat */}
-            <AIChat isOpen={isChatOpen} onClose={() => setChatOpen(false)} />
-        </>
+        </header>
     );
 }
