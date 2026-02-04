@@ -151,7 +151,7 @@ const features_comparison = [
 export default function CargoPage() {
     return (
         <div className="pt-24">
-            <ConnectingLines />
+            {/* <ConnectingLines /> */}
 
             {/* Hero */}
             <section className="py-20">

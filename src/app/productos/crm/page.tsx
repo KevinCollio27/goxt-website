@@ -115,7 +115,7 @@ const useCases = [
 export default function CRMPage() {
     return (
         <div className="pt-24 min-h-screen bg-[var(--goxt-surface-alt)]">
-            <ConnectingLines />
+            {/* <ConnectingLines /> */}
             {/* Hero Section - Premium Living Design */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden py-20">
                 {/* Background Animated Blobs */}

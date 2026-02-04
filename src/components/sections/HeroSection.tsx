@@ -174,7 +174,7 @@ export function HeroSection() {
                                     <div
                                         className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${message.role === "user"
                                             ? "bg-gray-200"
-                                            : "bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)]"
+                                            : "bg-[var(--goxt-primary)]"
                                             }`}
                                     >
                                         {message.role === "user" ? (

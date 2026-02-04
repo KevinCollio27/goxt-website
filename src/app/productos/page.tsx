@@ -1,115 +1,37 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import FloatingBubbles from "@/components/ui/FloatingBubbles";
+import ProductCarousel from "@/components/sections/ProductCarousel";
 
 export const metadata: Metadata = {
-    title: "Productos",
+    title: "Productos | GOxT",
     description:
-        "Conoce nuestros productos: GOxT CRM para gestión comercial y GOxT Cargo para control de flotas y operaciones logísticas.",
+        "Descubre GOxT CRM y Cargo. Soluciones tecnológicas integrales para la gestión comercial y logística de tu empresa.",
 };
-
-const products = [
-    {
-        id: "crm",
-        name: "CRM",
-        tagline: "De leads a clientes: gestiona todo el ciclo de ventas",
-        description:
-            "El CRM que habla el idioma de tu operación. Cotizaciones en minutos, seguimiento visual de oportunidades e integración con tu sistema operativo.",
-        href: "/productos/crm",
-        icon: (
-            <Image
-                src="/assets/Logo_central_negro.png"
-                alt="GOxT CRM"
-                width={24}
-                height={24}
-                className="w-12 h-12 object-contain"
-            />
-        ),
-        gradient: "from-blue-500 to-blue-700",
-    },
-    {
-        id: "cargo",
-        name: "CARGO",
-        tagline: "Control total de tu flota y operaciones logísticas",
-        description:
-            "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",
-        href: "/productos/cargo",
-        icon: (
-            <Image
-                src="/assets/Logo_central_negro.png"
-                alt="GOxT Cargo"
-                width={24}
-                height={24}
-                className="w-12 h-12 object-contain"
-            />
-        ),
-        gradient: "from-orange-500 to-orange-700",
-    },
-];
 
 export default function ProductosPage() {
     return (
-        <div className="pt-24">
-            <FloatingBubbles />
-            {/* Header */}
-            <section className="py-20">
+        <div className="pt-24 min-h-screen relative overflow-hidden">
+            {/* <FloatingBubbles /> */}
+
+            {/* Header Section */}
+            <section className="py-20 relative z-10">
                 <div className="goxt-container text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                        Nuestros <span className="goxt-gradient-accent-text">Productos</span>
+                    <span className="inline-block py-1 px-3 rounded-full bg-gray-100 text-gray-500 text-sm font-semibold mb-6 tracking-wide uppercase">
+                        Soluciones Tecnológicas
+                    </span>
+                    <h1 className="text-5xl md:text-6xl font-bold text-[var(--goxt-gray-900)] mb-8 tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+                        Potencia tu <span className="goxt-gradient-accent-text">Crecimiento</span>
                     </h1>
-                    <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
-                        Dos productos potentes diseñados para empresas de transporte y
-                        logística. Usa cada uno por separado o intégralos para una solución
-                        completa.
+                    <p className="text-xl text-[var(--goxt-gray-600)] max-w-3xl mx-auto leading-relaxed">
+                        Herramientas diseñadas para la realidad de tu industria.
+                        Desde la primera cotización hasta la entrega final, GOxT está contigo.
                     </p>
                 </div>
             </section>
 
-            {/* Products Grid */}
-            <section className="goxt-section">
-                <div className="goxt-container">
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {products.map((product) => (
-                            <Link
-                                key={product.id}
-                                href={product.href}
-                                className="group goxt-card hover:shadow-2xl"
-                            >
-                                <div className="flex items-center gap-4 mb-4">
-                                    <span className="text-5xl">{product.icon}</span>
-                                    <div>
-                                        <h2 className="text-2xl font-bold text-[var(--goxt-gray-900)] group-hover:text-[var(--goxt-primary)] transition-colors" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                                            GOXT: <span className="goxt-gradient-accent-text">{product.name}</span>
-                                        </h2>
-                                        <p className="text-[var(--goxt-primary)] font-medium">
-                                            {product.tagline}
-                                        </p>
-                                    </div>
-                                </div>
-                                <p className="text-[var(--goxt-gray-600)] mb-6">
-                                    {product.description}
-                                </p>
-                                <span className="inline-flex items-center gap-2 text-[var(--goxt-primary)] font-semibold group-hover:gap-4 transition-all">
-                                    Conocer más
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                        />
-                                    </svg>
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+            {/* Carousel Interactive Section */}
+            <section className="pb-20 relative z-10">
+                <ProductCarousel />
             </section>
         </div>
     );
