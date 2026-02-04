@@ -117,9 +117,6 @@ export function Footer() {
                         {/* Acceso rápido a aplicaciones */}
                         <div className="flex flex-col sm:flex-row gap-4">
                             {aplicaciones.map((app) => {
-                                // Determinar el icono basado en el nombre de la app
-                                const icon = app.name === "CRM" ? "✍️" : "📊";
-
                                 return (
                                     <a
                                         key={app.name}
@@ -128,7 +125,13 @@ export function Footer() {
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-lg transition-colors border border-white/10"
                                     >
-                                        <span className="text-lg">{icon}</span>
+                                        <Image
+                                            src="/assets/logo_central_negro.png"
+                                            alt="GOxT"
+                                            width={24}
+                                            height={24}
+                                            className="w-6 h-6 object-contain brightness-0 invert"
+                                        />
                                         <div className="text-left">
                                             <div className="text-[10px] uppercase tracking-wider text-blue-200/50">Acceder a</div>
                                             <div className="font-semibold">GOxT {app.name}</div>
