@@ -10,7 +10,7 @@ const footerLinks = {
     empresa: [
         { name: "Nosotros", href: "/nosotros" },
         { name: "Contacto", href: "/contacto" },
-        { name: "Blog", href: "/blog" }
+        //{ name: "Blog", href: "/blog" }
     ],
     legal: [
         { name: "Política de privacidad", href: "/privacidad" },
@@ -86,11 +86,11 @@ export function Footer() {
                     <div className="lg:col-span-2">
                         <Link href="/" className="inline-block mb-6">
                             <Image
-                                src="/assets/Logo.png"
+                                src="/assets/Logo_fondonegro.png"
                                 alt="GOxT"
                                 width={140}
                                 height={47}
-                                className="h-12 w-auto brightness-0 invert"
+                                className="h-12 w-auto"
                             />
                         </Link>
                         <p className="mb-6 max-w-sm">
@@ -138,24 +138,9 @@ export function Footer() {
                             })}
                         </div>
                     </div>
-                    <div>
-                        <h3 className="text-sm tracking-widest mb-6 text-white">Alianzas</h3>
-                        <ul className="space-y-3">
-                            {alianzas.map((link) => (
-                                <li key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        className="hover:text-white transition-colors text-sm"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
                     {/* Enlaces rápidos */}
-                    {/*<div>
-                        <h3 className="text-sm tracking-widest mb-6 text-white">Plataforma</h3>
+                    <div>
+                        <h3 className="text-display text-sm tracking-widest mb-4 text-white">Plataforma</h3>
                         <ul className="space-y-3">
                             {footerLinks.productos.map((link) => (
                                 <li key={link.name}>
@@ -168,11 +153,11 @@ export function Footer() {
                                 </li>
                             ))}
                         </ul>
-                    </div>*/}
+                    </div>
 
-                    {/* Empresa */}
-                    {/*<div>
-                        <h3 className="text-sm tracking-widest mb-6 text-white">Compañía</h3>
+                    {/*Empresa*/}
+                    <div>
+                        <h3 className="text-display text-sm tracking-widest mb-4 text-white">Compañía</h3>
                         <ul className="space-y-3">
                             {footerLinks.empresa.map((link) => (
                                 <li key={link.name}>
@@ -185,7 +170,7 @@ export function Footer() {
                                 </li>
                             ))}
                         </ul>
-                    </div>*/}
+                    </div>
                 </div>
 
                 {/* Línea divisoria */}
