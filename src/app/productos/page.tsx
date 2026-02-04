@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import FloatingBubbles from "@/components/ui/FloatingBubbles";
 
 export const metadata: Metadata = {
@@ -16,7 +17,15 @@ const products = [
         description:
             "El CRM que habla el idioma de tu operación. Cotizaciones en minutos, seguimiento visual de oportunidades e integración con tu sistema operativo.",
         href: "/productos/crm",
-        icon: "🎯",
+        icon: (
+            <Image
+                src="/assets/Logo_central_negro.png"
+                alt="GOxT CRM"
+                width={24}
+                height={24}
+                className="w-12 h-12 object-contain"
+            />
+        ),
         gradient: "from-blue-500 to-blue-700",
     },
     {
@@ -26,7 +35,15 @@ const products = [
         description:
             "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",
         href: "/productos/cargo",
-        icon: "🚛",
+        icon: (
+            <Image
+                src="/assets/Logo_central_negro.png"
+                alt="GOxT Cargo"
+                width={24}
+                height={24}
+                className="w-12 h-12 object-contain"
+            />
+        ),
         gradient: "from-orange-500 to-orange-700",
     },
 ];

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function ConcentricCircles() {
     return (
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
             {[1, 2, 3, 4].map((i) => (
                 <motion.div
                     key={i}

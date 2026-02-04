@@ -52,7 +52,7 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                     style={{ maxHeight: "calc(100vh - 100px)" }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)] text-white p-4 flex items-center justify-between">
+                    <div className="bg-[var(--goxt-primary)] text-white p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <span className="text-2xl">
                                 <Image
@@ -64,7 +64,7 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                                 />
                             </span>
                             <div>
-                                <h3 className="font-bold">Chat GOxT</h3>
+                                <h3 className="goxt-gradient-accent-text font-bold">Chat GOxT</h3>
                                 <p className="text-xs text-white/80">Asistente Virtual</p>
                             </div>
                         </div>
@@ -134,7 +134,7 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                             <button
                                 type="submit"
                                 disabled={isLoading || !input.trim()}
-                                className="px-4 py-3 bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)] text-white rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-4 py-3 bg-[var(--goxt-primary)] text-white rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <Send className="w-5 h-5" />
                             </button>

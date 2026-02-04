@@ -19,11 +19,11 @@ export function ChatWidget() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setChatOpen(true)}
-                        className="fixed bottom-6 right-6 z-50 w-18 h-18 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-100 hover:shadow-xl transition-shadow overflow-hidden"
+                        className="fixed bottom-6 right-6 z-50 w-18 h-18 bg-black rounded-full shadow-lg flex items-center justify-center border border-blue hover:shadow-xl transition-shadow overflow-hidden"
                     >
                         <div className="w-10 h-10 relative">
                             <Image
-                                src="/assets/logo_central_negro.png"
+                                src="/assets/logo_central.png"
                                 alt="Chat"
                                 fill
                                 className="object-contain"
