@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2, Trash2 } from "lucide-react";
-import { useChatPersistence } from "@/hooks/useChatPersistence";
+import { useChat } from "@/context/ChatContext";
+import Image from "next/image";
 
 interface Message {
     role: "user" | "assistant";
@@ -16,10 +17,9 @@ interface AIChatProps {
 }
 
 export function AIChat({ isOpen, onClose }: AIChatProps) {
-    // Usar hook personalizado para persistencia
-    const { messages, sessionId, setMessages, setSessionId, clearChat } = useChatPersistence();
+    // Usar contexto global
+    const { messages, isLoading, sendMessage, clearChat } = useChat();
     const [input, setInput] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -34,51 +34,10 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
         e.preventDefault();
         if (!input.trim() || isLoading) return;
 
-        const userMessage: Message = { role: "user", content: input };
-        setMessages((prev) => [...prev, userMessage]);
-        setInput("");
-        setIsLoading(true);
+        const currentInput = input;
+        setInput(""); // Limpiar input inmediatamente
 
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    messages: [...messages, userMessage],
-                    sessionId: sessionId || undefined,
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error("Error en la respuesta");
-            }
-
-            const data = await response.json();
-
-            // Guardar sessionId si es nuevo
-            if (data.sessionId && !sessionId) {
-                setSessionId(data.sessionId);
-            }
-
-            const assistantMessage: Message = {
-                role: "assistant",
-                content: data.message,
-            };
-            setMessages((prev) => [...prev, assistantMessage]);
-        } catch (error) {
-            console.error("Error:", error);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    role: "assistant",
-                    content: "Lo siento, hubo un error. Por favor intenta de nuevo.",
-                },
-            ]);
-        } finally {
-            setIsLoading(false);
-        }
+        await sendMessage(currentInput);
     };
 
     return (
@@ -89,26 +48,41 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                     transition={{ duration: 0.2 }}
-                    className="fixed bottom-6 right-6 w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden"
+                    className="fixed bottom-6 right-6 w-[400px] h-[700px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden"
                     style={{ maxHeight: "calc(100vh - 100px)" }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)] text-white p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                                <span className="text-2xl">🤖</span>
-                            </div>
+                            <span className="text-2xl">
+                                <Image
+                                    src="/assets/logo_central.png"
+                                    alt="AI"
+                                    width={50}
+                                    height={50}
+                                    className="w-full h-full object-cover brightness-0 invert"
+                                />
+                            </span>
                             <div>
                                 <h3 className="font-bold">Chat GOxT</h3>
                                 <p className="text-xs text-white/80">Asistente Virtual</p>
                             </div>
                         </div>
-                        <button
-                            onClick={onClose}
-                            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                        >
-                            <X className="w-5 h-5 text-black" />
-                        </button>
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={clearChat}
+                                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                                title="Limpiar conversación"
+                            >
+                                <Trash2 className="w-5 h-5 text-white" />
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                            >
+                                <X className="w-5 h-5 text-white" />
+                            </button>
+                        </div>
                     </div>
 
                     {/* Messages */}

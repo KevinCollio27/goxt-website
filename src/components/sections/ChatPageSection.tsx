@@ -150,8 +150,14 @@ export function ChatPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-3 mb-4"
                     >
-                        <div className="w-16 h-16 bg-[var(--goxt-primary)] rounded-2xl flex items-center justify-center">
-                            <Bot className="w-8 h-8 text-white" />
+                        <div className="w-16 h-16 bg-[var(--goxt-primary)] rounded-2xl flex items-center justify-center p-3">
+                            <Image
+                                src="/assets/logo_central.png"
+                                alt="AI Assistant"
+                                width={100}
+                                height={100}
+                                className="w-full h-full object-cover brightness-0 invert"
+                            />
                         </div>
                     </motion.div>
                     {/* Headline con animaciones*/}
@@ -216,7 +222,15 @@ export function ChatPage() {
                                     {message.role === "user" ? (
                                         <User className="w-5 h-5 text-gray-700" />
                                     ) : (
-                                        <Bot className="w-5 h-5 text-white" />
+                                        <div className="w-6 h-6 relative flex items-center justify-center">
+                                            <Image
+                                                src="/assets/logo_central.png"
+                                                alt="AI"
+                                                width={40}
+                                                height={40}
+                                                className="w-full h-full object-cover brightness-0 invert"
+                                            />
+                                        </div>
                                     )}
                                 </div>
 
@@ -241,7 +255,15 @@ export function ChatPage() {
                                 className="flex gap-4"
                             >
                                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)] flex items-center justify-center">
-                                    <Bot className="w-5 h-5 text-white" />
+                                    <div className="w-6 h-6 relative flex items-center justify-center">
+                                        <Image
+                                            src="/assets/logo_central.png"
+                                            alt="Thinking"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-contain brightness-0 invert"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="bg-gray-100 p-4 rounded-2xl rounded-tl-none">
                                     <Loader2 className="w-5 h-5 animate-spin text-[var(--goxt-primary)]" />

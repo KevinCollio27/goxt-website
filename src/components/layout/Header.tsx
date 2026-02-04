@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AIChat } from "../ui/AIChat";
+import { useChat } from "@/context/ChatContext";
 
 const navigation = [
     {
@@ -56,7 +57,7 @@ const navigation = [
 
 export function Header() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [chatOpen, setChatOpen] = useState(false);
+    const { isChatOpen, setChatOpen } = useChat();
 
     return (
         <>
@@ -229,7 +230,7 @@ export function Header() {
             </AnimatePresence>
 
             {/* AI Chat */}
-            <AIChat isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+            <AIChat isOpen={isChatOpen} onClose={() => setChatOpen(false)} />
         </>
     );
 }

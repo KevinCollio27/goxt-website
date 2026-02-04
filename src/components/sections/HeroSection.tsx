@@ -2,12 +2,13 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import UnderlinedText from "@/components/ui/UnderlinedText";
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
-import { useState, useRef, useEffect } from "react";
-import { useChatPersistence } from "@/hooks/useChatPersistence";
+import { useState } from "react";
+import { useChat } from "@/context/ChatContext";
 
 interface Stat {
     value: string;
@@ -49,97 +50,39 @@ interface Message {
 }
 
 export function HeroSection() {
-    // Usar hook personalizado para persistencia
-    const { messages, sessionId, setMessages, setSessionId } = useChatPersistence();
+    // Usar contexto global solo para enviar y abrir
+    const { sendMessage, setChatOpen } = useChat();
     const [input, setInput] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-    const messagesContainerRef = useRef<HTMLDivElement>(null);
-    const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
 
-    // Función para hacer scroll
-    const scrollToBottomIfNeeded = () => {
-        if (!shouldScrollToBottom) return;
-        setTimeout(() => {
-            messagesEndRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "end"
-            });
-        }, 100);
-    };
+    // Mensajes locales estáticos para el "teaser"
+    const teaserMessages: Message[] = [
+        {
+            role: "assistant",
+            content: "¡Hola! Soy el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
+        },
+    ];
 
-    useEffect(() => {
-        scrollToBottomIfNeeded();
-    }, [messages]);
 
-    const handleScroll = () => {
-        if (!messagesContainerRef.current) return;
-        const container = messagesContainerRef.current;
-        const isAtBottom =
-            container.scrollHeight - container.scrollTop - container.clientHeight < 50;
-        setShouldScrollToBottom(isAtBottom);
-    };
 
-    useEffect(() => {
-        const container = messagesContainerRef.current;
-        if (container) {
-            container.addEventListener('scroll', handleScroll);
-            return () => container.removeEventListener('scroll', handleScroll);
-        }
-    }, []);
+    // No necesitamos isLoading ni shouldScrollToBottom del contexto para este teaser
+
+    // Eliminamos efectos de scroll ya que es estático
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!input.trim() || isLoading) return;
+        if (!input.trim()) return;
 
-        const userMessage: Message = { role: "user", content: input };
-        setMessages((prev) => [...prev, userMessage]);
+        // 1. Guardar input y limpiar
+        const currentInput = input;
         setInput("");
-        setIsLoading(true);
-        setShouldScrollToBottom(true);
 
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    messages: [...messages, userMessage],
-                    sessionId: sessionId || undefined,
-                }),
-            });
+        // 2. Abrir el chat global (modal)
+        setChatOpen(true);
 
-            if (!response.ok) {
-                throw new Error("Error en la respuesta");
-            }
-
-            const data = await response.json();
-
-            if (data.sessionId && !sessionId) {
-                setSessionId(data.sessionId);
-            }
-
-            const assistantMessage: Message = {
-                role: "assistant",
-                content: data.message,
-            };
-            setMessages((prev) => [...prev, assistantMessage]);
-            setShouldScrollToBottom(true);
-
-        } catch (error) {
-            console.error("Error:", error);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    role: "assistant",
-                    content: "Lo siento, hubo un error. Por favor intenta de nuevo.",
-                },
-            ]);
-            setShouldScrollToBottom(true);
-        } finally {
-            setIsLoading(false);
-        }
+        // 3. Enviar mensaje a través del contexto
+        // Esto añadirá el mensaje al store compartido y disparará la API
+        await sendMessage(currentInput);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -217,75 +160,62 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="mb-8 max-w-2xl mx-auto"
                     >
-                        <div
-                            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
-                            style={{ height: "300px" }}
-                        >
-                            {/* Messages Container */}
-                            <div
-                                ref={messagesContainerRef}
-                                className="h-[calc(100%-80px)] overflow-y-auto p-4 space-y-4"
-                            >
-                                {messages.map((message, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : "flex-row"
+                        <div className="mb-4 px-4 w-full">
+                            {teaserMessages.map((message, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className={`flex gap-3 items-end ${message.role === "user" ? "flex-row-reverse" : "flex-row"
+                                        }`}
+                                >
+                                    {/* Avatar */}
+                                    <div
+                                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${message.role === "user"
+                                            ? "bg-gray-200"
+                                            : "bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)]"
                                             }`}
                                     >
-                                        {/* Avatar */}
-                                        <div
-                                            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${message.role === "user"
-                                                ? "bg-gray-200"
-                                                : "bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)]"
-                                                }`}
-                                        >
-                                            {message.role === "user" ? (
-                                                <User className="w-4 h-4 text-gray-700" />
-                                            ) : (
-                                                <Bot className="w-4 h-4 text-white" />
-                                            )}
-                                        </div>
+                                        {message.role === "user" ? (
+                                            <User className="w-4 h-4 text-gray-700" />
+                                        ) : (
+                                            <div className="w-5 h-5 relative flex items-center justify-center">
+                                                <Image
+                                                    src="/assets/logo_central.png"
+                                                    alt="AI"
+                                                    width={32}
+                                                    height={32}
+                                                    className="w-full h-full object-cover brightness-0 invert"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
 
-                                        {/* Message Bubble */}
-                                        <div
-                                            className={`max-w-[75%] p-3 rounded-2xl text-sm ${message.role === "user"
-                                                ? "bg-[var(--goxt-primary)] text-white rounded-tr-none"
-                                                : "bg-gray-100 text-gray-800 rounded-tl-none"
-                                                }`}
-                                        >
-                                            <p className="whitespace-pre-wrap leading-relaxed">
-                                                {message.content}
-                                            </p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-
-                                {isLoading && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className="flex gap-3"
+                                    {/* Message Bubble */}
+                                    <div
+                                        className={`max-w-[75%] p-3 rounded-2xl text-sm shadow-sm ${message.role === "user"
+                                            ? "bg-[var(--goxt-primary)] text-white rounded-tr-none"
+                                            : "bg-white text-gray-800 rounded-tl-none"
+                                            }`}
                                     >
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-[var(--goxt-primary)] to-[var(--goxt-secondary)] flex items-center justify-center">
-                                            <Bot className="w-4 h-4 text-white" />
-                                        </div>
-                                        <div className="bg-gray-100 p-3 rounded-2xl rounded-tl-none">
-                                            <Loader2 className="w-4 h-4 animate-spin text-[var(--goxt-primary)]" />
-                                        </div>
-                                    </motion.div>
-                                )}
-                                <div ref={messagesEndRef} />
-                            </div>
+                                        <p className="whitespace-pre-wrap leading-relaxed">
+                                            {message.content}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
 
+                        <div
+                            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
+                        >
                             {/* Input */}
                             <form
                                 onSubmit={handleSubmit}
-                                className="h-20 border-t border-gray-200 bg-gray-50 px-4 py-3"
+                                className="bg-gray-50 px-4 py-3"
                             >
-                                <div className="flex gap-2 h-full">
+                                <div className="flex gap-2">
                                     <input
                                         type="text"
                                         value={input}
@@ -293,11 +223,10 @@ export function HeroSection() {
                                         onKeyDown={handleKeyDown}
                                         placeholder="Escribe tu mensaje aquí..."
                                         className="flex-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--goxt-primary)] focus:border-transparent bg-white text-sm"
-                                        disabled={isLoading}
                                     />
                                     <button
                                         type="submit"
-                                        disabled={isLoading || !input.trim()}
+                                        disabled={!input.trim()}
                                         className="px-6 py-2 bg-[var(--goxt-primary)] text-white rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold flex items-center gap-2 text-sm"
                                     >
                                         <Send className="w-4 h-4" />
