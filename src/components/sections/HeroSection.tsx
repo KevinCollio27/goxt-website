@@ -250,12 +250,12 @@ export function HeroSection() {
                         >
                             Solicitar Demo
                         </Link>
-                        {/*<Link
+                        <Link
                             href="/productos"
                             className="goxt-btn-secondary text-lg px-8 py-4"
                         >
                             Explorar Productos
-                        </Link>*/}
+                        </Link>
                     </motion.div>
                 </div>
 

@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { ChatProvider } from "@/context/ChatContext";
+import { ChatWidget } from "@/components/ui/ChatWidget";
 
 // Fuente principal para body text
 const inter = Inter({
@@ -82,6 +83,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <ChatWidget />
         </ChatProvider>
       </body>
     </html>

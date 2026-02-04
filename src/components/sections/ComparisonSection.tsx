@@ -281,13 +281,13 @@ export function ComparisonSection() {
                             >
                                 Agendar demo gratuita
                             </a>
-                            {/*<a
+                            <a
                                 href="/precios"
                                 className="goxt-btn-secondary text-xl px-10 py-5 border-slate-700 text-slate-300 hover:border-cream hover:text-cream"
                                 style={{ borderColor: 'rgba(212, 185, 150, 0.2)' }}
                             >
                                 Ver planes
-                            </a>*/}
+                            </a>
                         </div>
                     </div>
                 </motion.div>

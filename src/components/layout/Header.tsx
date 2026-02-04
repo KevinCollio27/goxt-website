@@ -44,9 +44,9 @@ export function Header() {
                     <Image
                         src="/assets/Logo-FondoBlanco.png"
                         alt="GOxT - Moving Forward"
-                        width={160}
-                        height={54}
-                        className="h-12 md:h-18 w-auto"
+                        width={140}
+                        height={50}
+                        className="h-12 md:h-14 w-auto"
                         priority
                     />
                 </Link>
