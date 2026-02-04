@@ -15,13 +15,29 @@ const navigation = [
                 name: "GOxT CRM",
                 href: "/productos/crm",
                 description: "Gestión comercial y cotizaciones",
-                icon: "🎯",
+                icon: (
+                    <Image
+                        src="/assets/Logo_CRM_Blanco.png"
+                        alt="GOxT CRM"
+                        width={30}
+                        height={30}
+                        className="w-12 h-6 object-contain"
+                    />
+                ),
             },
             {
                 name: "GOxT Cargo",
                 href: "/productos/cargo",
                 description: "Control de flotas y operaciones",
-                icon: "🚛",
+                icon: (
+                    <Image
+                        src="/assets/Logo_cargo_Blanco.png"
+                        alt="GOxT Cargo"
+                        width={30}
+                        height={30}
+                        className="w-12 h-6 object-contain"
+                    />
+                ),
             },
         ],
     },
@@ -46,7 +62,7 @@ export function Header() {
                         alt="GOxT - Moving Forward"
                         width={140}
                         height={50}
-                        className="h-12 md:h-14 w-auto"
+                        className="h-10 md:h-12 w-auto"
                         priority
                     />
                 </Link>

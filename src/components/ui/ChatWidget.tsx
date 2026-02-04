@@ -19,7 +19,7 @@ export function ChatWidget() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setChatOpen(true)}
-                        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-100 hover:shadow-xl transition-shadow overflow-hidden"
+                        className="fixed bottom-6 right-6 z-50 w-18 h-18 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-100 hover:shadow-xl transition-shadow overflow-hidden"
                     >
                         <div className="w-10 h-10 relative">
                             <Image
@@ -29,7 +29,6 @@ export function ChatWidget() {
                                 className="object-contain"
                             />
                         </div>
-                        {/* Optional: Add a notification badge or pulse effect if needed later */}
                     </motion.button>
                 )}
             </AnimatePresence>
