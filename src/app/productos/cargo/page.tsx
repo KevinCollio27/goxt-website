@@ -97,169 +97,166 @@ const features = [
         bg: "bg-indigo-50",
     },
 ];
-const features_comparison = [
-    {
-        feature: "Gestión Integral de Flota",
-        goxt: "✅ Completo",
-        platformA: "❌ Limitado",
-        platformB: "⚠️ Parcial",
-    },
-    {
-        feature: "Integración con CRM",
-        goxt: "✅ Nativa (GOxT)",
-        platformA: "❌ No disponible",
-        platformB: "⚠️ API adicional",
-    },
-    {
-        feature: "Tracking en Tiempo Real",
-        goxt: "✅ GPS + Geocercas",
-        platformA: "✅ Solo GPS",
-        platformB: "❌ No incluido",
-    },
-    {
-        feature: "Control de Combustible",
-        goxt: "✅ Análisis avanzado",
-        platformA: "❌ No disponible",
-        platformB: "⚠️ Básico",
-    },
-    {
-        feature: "Mantenimiento Programado",
-        goxt: "✅ Preventivo + Correctivo",
-        platformA: "❌ No disponible",
-        platformB: "⚠️ Solo preventivo",
-    },
-    {
-        feature: "Documentación Digital",
-        goxt: "✅ Guías, manifiestos",
-        platformA: "❌ No disponible",
-        platformB: "⚠️ Limitado",
-    },
-    {
-        feature: "Reportes Personalizados",
-        goxt: "✅ KPIs + Dashboards",
-        platformA: "⚠️ Básicos",
-        platformB: "✅ Complejos",
-    },
-    {
-        feature: "Soporte 24/7",
-        goxt: "✅ Incluido",
-        platformA: "⚠️ Horario laboral",
-        platformB: "⚠️ Horario laboral",
-    },
-]
 
 export default function CargoPage() {
     return (
         <div className="pt-24">
             {/* <ConnectingLines /> */}
 
-            {/* Hero */}
-            <section className="py-20">
-                <div className="goxt-container">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <div className="flex items-center justify-center gap-3 mb-6">
-                            <span className="text-6xl">🚛</span>
-                            <h1 className="text-4xl md:text-5xl font-bold text-[var(--goxt-gray-900)]" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                                GOxT: <span className="goxt-gradient-accent-text">CARGO</span>
-                            </h1>
-                        </div>
-                        <p className="text-xl md:text-2xl font-medium text-[var(--goxt-primary)] mb-4">
-                            Control total de tu flota y operaciones logísticas
-                        </p>
-                        <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
-                            Sistema operativo para transporte terrestre y marítimo. Gestiona
-                            flotas, rutas, conductores y toda tu operación en una sola
-                            plataforma.
-                        </p>
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <Link href="/contacto" className="goxt-btn-primary text-lg px-8 py-4">
-                                Solicitar Demo
-                            </Link>
-                            <a
-                                href="https://cargo.goxt.io"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="goxt-btn-secondary text-lg px-8 py-4"
-                            >
-                                Iniciar Sesión
-                            </a>
-                        </div>
-                    </div>
+            {/* Hero Section */}
+            <section className="relative min-h-[90vh] flex items-center overflow-hidden py-20">
+                {/* Background Animated Blobs */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 90, 0],
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full blur-[120px] opacity-30"
+                        style={{ background: 'radial-gradient(circle, var(--goxt-primary-100) 0%, transparent 70%)' }}
+                    />
+                    <motion.div
+                        animate={{
+                            scale: [1.2, 1, 1.2],
+                            rotate: [0, -90, 0],
+                        }}
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] rounded-full blur-[100px] opacity-20"
+                        style={{ background: 'radial-gradient(circle, var(--goxt-primary-200) 0%, transparent 70%)' }}
+                    />
                 </div>
-            </section>
 
-            {/* Screenshot con animaciones flotantes */}
-            <section className="py-16 bg-white">
-                <div className="goxt-container">
-                    <div className="relative max-w-5xl mx-auto">
-                        {/* Fondo con blur */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 rounded-2xl blur-2xl" />
-                        <motion.div
-                            variants={floatingAnimation}
-                            initial="initial"
-                            animate="animate"
-                            className="absolute -left-12 top-1/4 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] border border-white/50 max-w-[200px] z-30 hidden lg:block"
-                        >
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                                    <Check className="w-5 h-5 text-green-600" />
+                <div className="goxt-container relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        {/* Left Column: 3D Composition */}
+                        <div className="relative perspective-1000 order-2 lg:order-1">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.8, rotateY: 10 }}
+                                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                                transition={{ duration: 1, delay: 0.2, type: "spring" }}
+                                className="relative z-10"
+                            >
+                                <div className="relative bg-white rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden border-[6px] border-white ring-1 ring-slate-900/5">
+                                    <Image
+                                        src="/assets/DashboardCargo.png"
+                                        alt="Dashboard GOxT Cargo"
+                                        width={1000}
+                                        height={700}
+                                        className="w-full h-auto"
+                                        priority
+                                    />
                                 </div>
-                                <div>
-                                    <div className="text-sm font-bold text-slate-800">Dashboard</div>
-                                </div>
-                            </div>
-                            <div className="text-lg font-bold text-green-600">Tiempo Real</div>
-                            <div className="text-xs text-slate-500">Monitoreo en vivo</div>
-                        </motion.div>
-                        <motion.div
-                            variants={floatingAnimationDelayed}
-                            initial="initial"
-                            animate="animate"
-                            className="absolute -right-12 bottom-1/4 bg-[var(--goxt-midnight)] p-5 rounded-2xl shadow-[0_20px_40px_-10px_rgba(15,23,42,0.4)] border border-slate-700 max-w-[220px] z-30 hidden lg:block"
-                        >
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                                    <Fuel className="w-5 h-5 text-[var(--goxt-cream)]" />
-                                </div>
-                                <div>
-                                    <div className="text-xs font-medium text-slate-400">Eficiencia Flota</div>
-                                    <div className="text-lg font-bold text-white">+24%</div>
-                                </div>
-                            </div>
-                            <div className="h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+
+                                {/* Floating Element 1: Dashboard Info */}
                                 <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "85%" }}
-                                    transition={{ duration: 1.5, delay: 1 }}
-                                    className="h-full bg-[var(--goxt-cream)]"
-                                />
+                                    variants={floatingAnimation}
+                                    initial="initial"
+                                    animate="animate"
+                                    className="absolute -right-8 top-20 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] border border-white/50 max-w-[200px] hidden md:block"
+                                >
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <Check className="w-5 h-5 text-blue-600" />
+                                        </div>
+                                        <div>
+                                            <div className="text-sm font-bold text-slate-800">Operación Activa</div>
+                                            <div className="text-xs text-slate-500">Tiempo Real</div>
+                                        </div>
+                                    </div>
+                                    <div className="text-lg font-bold text-blue-600">Monitoreo Vivo</div>
+                                </motion.div>
+
+                                {/* Floating Element 2: Efficiency Graph */}
+                                <motion.div
+                                    variants={floatingAnimationDelayed}
+                                    initial="initial"
+                                    animate="animate"
+                                    className="absolute -left-12 bottom-20 bg-[var(--goxt-midnight)] p-5 rounded-2xl shadow-[0_20px_40px_-10px_rgba(15,23,42,0.4)] border border-slate-700 max-w-[220px] hidden md:block"
+                                >
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                                            <Fuel className="w-5 h-5 text-[var(--goxt-primary-100)]" />
+                                        </div>
+                                        <div>
+                                            <div className="text-xs font-medium text-slate-400">Eficiencia Flota</div>
+                                            <div className="text-lg font-bold text-white">+24%</div>
+                                        </div>
+                                    </div>
+                                    <div className="h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "85%" }}
+                                            transition={{ duration: 1.5, delay: 1 }}
+                                            className="h-full bg-[var(--goxt-primary-100)]"
+                                        />
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+
+                            {/* Decorative Elements behind image */}
+                            <div className="absolute top-10 -right-20 w-72 h-72 bg-[var(--goxt-primary)]/10 rounded-full blur-[60px] -z-10" />
+                            <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-blue-400/10 rounded-full blur-[50px] -z-10" />
+                        </div>
+
+                        {/* Right Column: Content */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="order-1 lg:order-2"
+                        >
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-100 mb-8">
+                                <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                <span className="text-sm font-medium text-slate-600">Control de Flota Inteligente v3.0</span>
+                            </div>
+
+                            <h1
+                                className="text-5xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-tight"
+                                style={{ color: 'var(--goxt-midnight)' }}
+                            >
+                                Control Total de tu <br />
+                                <span className="relative inline-block">
+                                    <span className="relative z-10 text-blue-600">Operación</span>
+                                    <svg className="absolute w-full h-3 -bottom-1 left-0 text-[var(--goxt-primary-100)] opacity-60 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0 5 Q 50 10 100 5 L 100 10 L 0 10 Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                            </h1>
+
+                            <p className="text-xl text-slate-500 mb-10 max-w-lg leading-relaxed font-medium">
+                                Gestiona vehículos, conductores y rutas con la plataforma líder que <span className="text-[var(--goxt-primary)] font-bold">mueve tu negocio</span>. Eficiencia real en cada kilómetro.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                                <a
+                                    href="https://cargo.goxt.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="goxt-btn-primary text-xl px-10 py-5 shadow-xl shadow-[var(--goxt-primary)]/20 hover:shadow-2xl hover:shadow-[var(--goxt-primary)]/30 transition-all duration-300 transform hover:-translate-y-1"
+                                >
+                                    Empezar Ahora
+                                </a>
+                                <Link
+                                    href="/contacto"
+                                    className="goxt-btn-secondary text-xl px-10 py-5 bg-white hover:bg-slate-50 border-2"
+                                >
+                                    Ver Demo
+                                </Link>
+                            </div>
+
+                            {/* Trust Stats Cards */}
+                            <div className="grid grid-cols-2 gap-4 max-w-sm">
+                                <div className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                    <div className="text-3xl font-bold mb-1 text-blue-600">+24%</div>
+                                    <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Eficiencia Flota</div>
+                                </div>
+                                <div className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                    <div className="text-3xl font-bold mb-1 text-blue-600">100%</div>
+                                    <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Tracking Vivo</div>
+                                </div>
                             </div>
                         </motion.div>
-
-                        <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 z-20">
-                            <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
-                                <div className="flex gap-1.5">
-                                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                                    <div className="w-3 h-3 rounded-full bg-green-400" />
-                                </div>
-                                <div className="flex-1 mx-4">
-                                    <div className="bg-white rounded px-3 py-1 text-xs text-gray-400 border border-gray-200">
-                                        cargo.goxt.io
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="aspect-video relative">
-                                <Image
-                                    src="/assets/DashboardCargo.png"
-                                    alt="Dashboard GOxT Cargo - Mapa de tracking en tiempo real"
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                                />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -269,7 +266,7 @@ export default function CargoPage() {
                 <div className="goxt-container">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                            Funcionalidades <span className="goxt-gradient-accent-text">Principales</span>
+                            Funcionalidades <span className="text-blue-600">Principales</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
                             Todo lo que necesitas para controlar tu operación logística de
@@ -300,128 +297,6 @@ export default function CargoPage() {
                     </div>
                 </div>
             </section>
-            {/* Comparison Section */}
-            <section className="goxt-section bg-[var(--goxt-gray-50)]">
-                <div className="goxt-container">
-                    <div className="text-center mb-12">
-                        <span className="inline-block px-4 py-1 bg-[var(--goxt-primary-100)] text-[var(--goxt-primary)] rounded-full text-sm font-medium mb-4">
-                            Por qué elegir GOxT Cargo
-                        </span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                            Comparativa <span className="goxt-gradient-accent-text">Competitiva</span>
-                        </h2>
-                        <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
-                            Descubre por qué GOxT Cargo es la solución más completa para la gestión de flotas
-                        </p>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <div className="min-w-[900px]">
-                            {/* Header */}
-                            <div className="grid grid-cols-4 gap-4 mb-6">
-                                <div className="p-4">
-                                    <h3 className="font-bold text-[var(--goxt-gray-900)] text-lg">Característica</h3>
-                                </div>
-                                <div className="p-4 bg-white rounded-xl text-center shadow-sm">
-                                    <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-                                        <span className="text-2xl">🚛</span>
-                                    </div>
-                                    <h3 className="font-bold text-[var(--goxt-primary)]">GOxT Cargo</h3>
-                                    <p className="text-sm text-[var(--goxt-gray-600)] mt-1">Solución integral</p>
-                                </div>
-                                <div className="p-4 bg-white rounded-xl text-center shadow-sm">
-                                    <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-                                        <span className="text-2xl">📱</span>
-                                    </div>
-                                    <h3 className="font-bold text-[var(--goxt-gray-700)]">Samsara</h3>
-                                    <p className="text-sm text-[var(--goxt-gray-600)] mt-1">Solo tracking</p>
-                                </div>
-                                <div className="p-4 bg-white rounded-xl text-center shadow-sm">
-                                    <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-                                        <span className="text-2xl">💼</span>
-                                    </div>
-                                    <h3 className="font-bold text-[var(--goxt-gray-700)]">Oracle Logistics</h3>
-                                    <p className="text-sm text-[var(--goxt-gray-600)] mt-1">ERP general</p>
-                                </div>
-                            </div>
-
-                            {/* Comparison Rows */}
-                            <div className="space-y-3">
-                                {features_comparison.map((row, index) => (
-                                    <div key={index} className="grid grid-cols-4 gap-4 p-4 bg-white rounded-xl hover:shadow-sm transition-shadow">
-                                        <div className="flex items-center">
-                                            <span className="font-medium text-[var(--goxt-gray-800)]">{row.feature}</span>
-                                        </div>
-                                        <div className="flex items-center justify-center">
-                                            <span className={`font-bold ${row.goxt.includes('✅') ? 'text-green-600' : row.goxt.includes('$') ? 'text-[var(--goxt-primary)]' : 'text-[var(--goxt-gray-700)]'}`}>
-                                                {row.goxt}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-center">
-                                            <span className={`font-medium ${row.platformA.includes('❌') ? 'text-red-500' : row.platformA.includes('⚠️') ? 'text-amber-500' : 'text-[var(--goxt-gray-600)]'}`}>
-                                                {row.platformA}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-center">
-                                            <span className={`font-medium ${row.platformB.includes('❌') ? 'text-red-500' : row.platformB.includes('⚠️') ? 'text-amber-500' : 'text-[var(--goxt-gray-600)]'}`}>
-                                                {row.platformB}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Value Proposition */}
-                            <div className="mt-8 p-6 bg-gradient-to-r from-[var(--goxt-primary-100)] to-blue-50 rounded-2xl border border-[var(--goxt-primary-200)]">
-                                <div className="grid md:grid-cols-3 gap-6">
-                                    <div className="text-center">
-                                        <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                            <span className="text-2xl">🏆</span>
-                                        </div>
-                                        <h4 className="font-bold text-[var(--goxt-gray-900)] mb-2">Mejor ROI</h4>
-                                        <p className="text-sm text-[var(--goxt-gray-600)]">
-                                            Más funciones por menor costo que soluciones empresariales
-                                        </p>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                            <span className="text-2xl">⚡</span>
-                                        </div>
-                                        <h4 className="font-bold text-[var(--goxt-gray-900)] mb-2">Implementación Rápida</h4>
-                                        <p className="text-sm text-[var(--goxt-gray-600)]">
-                                            Operativo en días, no meses. Sin configuración compleja
-                                        </p>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                            <span className="text-2xl">🔗</span>
-                                        </div>
-                                        <h4 className="font-bold text-[var(--goxt-gray-900)] mb-2">Ecosistema Integrado</h4>
-                                        <p className="text-sm text-[var(--goxt-gray-600)]">
-                                            CRM + Cargo + Finanzas en una sola plataforma
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* CTA */}
-                            <div className="mt-10 text-center">
-                                <p className="text-lg text-[var(--goxt-gray-700)] mb-6">
-                                    ¿No estás seguro si GOxT Cargo es para ti?
-                                </p>
-                                <div className="flex flex-wrap gap-4 justify-center">
-                                    <Link
-                                        href="/contacto"
-                                        className="goxt-btn-primary px-8 py-3"
-                                    >
-                                        Agenda una demo para demostrarlo 🫱🏻‍🫲🏼
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Integration with CRM */}
             <section className="goxt-section bg-white">
@@ -432,7 +307,7 @@ export default function CargoPage() {
                                 Integración
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                                Mejor cuando trabajan <span className="goxt-gradient-accent-text">juntos</span>
+                                Mejor cuando trabajan <span className="text-blue-600">juntos</span>
                             </h2>
                             <p className="text-lg text-[var(--goxt-gray-600)] mb-6">
                                 GOxT Cargo se integra nativamente con GOxT CRM. Las
@@ -505,35 +380,81 @@ export default function CargoPage() {
                             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-orange-500 opacity-20 rounded-2xl blur-2xl" />
                             <div className="relative bg-white rounded-2xl p-8 shadow-xl">
                                 <div className="flex justify-center gap-8 items-center">
+                                    {/* Logo CRM */}
                                     <div className="text-center">
-                                        <span className="text-6xl block mb-2">🎯</span>
+                                        <div className="w-20 h-20 mx-auto mb-3 bg-[var(--goxt-cream)] rounded-2xl flex items-center justify-center">
+                                            <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center">
+                                                <Image
+                                                    src="/assets/Logo_CRM_Blanco.png"
+                                                    alt="Logo"
+                                                    width={50}
+                                                    height={50} />
+                                            </div>
+                                        </div>
                                         <span className="font-semibold text-[var(--goxt-gray-900)]">
-                                            CRM
+                                            GOxT CRM
                                         </span>
                                     </div>
-                                    <svg
-                                        className="w-8 h-8 text-gray-400"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                        />
-                                    </svg>
+
+                                    {/* Símbolo de integración */}
+                                    <div className="relative">
+                                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-orange-500 rounded-full flex items-center justify-center">
+                                            <svg
+                                                className="w-6 h-6 text-white"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                {/* Icono de integración/circular */}
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                                />
+                                                {/* Círculo alrededor */}
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="11"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    fill="none"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                            <span className="text-xs text-white font-bold">✓</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Logo Cargo */}
                                     <div className="text-center">
-                                        <span className="text-6xl block mb-2">🚛</span>
+                                        <div className="w-20 h-20 mx-auto mb-3 bg-blue-600 rounded-2xl flex items-center justify-center">
+                                            <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center">
+                                                <div className="text-2xl font-bold text-orange-600">
+                                                    <Image
+                                                        src="/assets/Logo_cargo_Blanco.png"
+                                                        alt="Logo"
+                                                        width={50}
+                                                        height={50} />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <span className="font-semibold text-[var(--goxt-gray-900)]">
-                                            Cargo
+                                            GOxT Cargo
                                         </span>
                                     </div>
                                 </div>
-                                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                                    <p className="text-sm text-center text-[var(--goxt-gray-600)]">
-                                        Cotización aprobada → Orden de transporte automática
+
+                                <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-orange-50 rounded-lg border border-blue-100">
+                                    <p className="text-sm text-center text-[var(--goxt-gray-700)] font-medium">
+                                        <span className="text-[var(--goxt-cream)] font-semibold">Cotización aprobada</span>
+                                        <span className="mx-2">↔</span>
+                                        <span className="text-blue-600 font-semibold">Orden de transporte automática</span>
+                                    </p>
+                                    <p className="text-xs text-center text-[var(--goxt-gray-500)] mt-1">
+                                        Integración perfecta entre plataformas
                                     </p>
                                 </div>
                             </div>
@@ -546,7 +467,7 @@ export default function CargoPage() {
             <section className="goxt-section">
                 <div className="goxt-container text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                        ¿Listo para tomar el <span className="goxt-gradient-accent-text">control de tu operación</span>?
+                        ¿Listo para tomar el <span className="text-blue-600">control de tu operación</span>?
                     </h2>
                     <p className="text-lg text-[var(--goxt-gray-600)] mb-8 max-w-2xl mx-auto">
                         Agenda una demo personalizada y descubre cómo GOxT Cargo puede

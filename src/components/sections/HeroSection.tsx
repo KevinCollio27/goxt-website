@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import UnderlinedText from "@/components/ui/UnderlinedText";
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
 import { useState } from "react";
 import { useChat } from "@/context/ChatContext";

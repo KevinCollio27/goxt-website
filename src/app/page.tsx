@@ -4,7 +4,6 @@ import {
   BenefitsSection,
   ContactSection,
   ComparisonSection,
-  ImplementationSection,
 } from "@/components/sections";
 
 export default function HomePage() {
@@ -14,7 +13,6 @@ export default function HomePage() {
       <ProductsSection />
       <BenefitsSection />
       <ComparisonSection />
-      <ImplementationSection />
       <ContactSection />
     </>
   );
