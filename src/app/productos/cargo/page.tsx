@@ -381,7 +381,7 @@ export default function CargoPage() {
                             <div className="relative bg-white rounded-2xl p-8 shadow-xl">
                                 <div className="flex justify-center gap-8 items-center">
                                     {/* Logo CRM */}
-                                    <div className="text-center">
+                                    <div className="text-center theme-legacy-crm">
                                         <div className="w-20 h-20 mx-auto mb-3 bg-[var(--goxt-cream)] rounded-2xl flex items-center justify-center">
                                             <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center">
                                                 <Image
@@ -398,7 +398,7 @@ export default function CargoPage() {
 
                                     {/* Símbolo de integración */}
                                     <div className="relative">
-                                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-orange-500 rounded-full flex items-center justify-center">
+                                        <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
                                             <svg
                                                 className="w-6 h-6 text-white"
                                                 fill="none"
@@ -449,7 +449,7 @@ export default function CargoPage() {
 
                                 <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-orange-50 rounded-lg border border-blue-100">
                                     <p className="text-sm text-center text-[var(--goxt-gray-700)] font-medium">
-                                        <span className="text-[var(--goxt-cream)] font-semibold">Cotización aprobada</span>
+                                        <span className="theme-legacy-crm"><span className="text-[var(--goxt-cream)] font-semibold">Cotización aprobada</span></span>
                                         <span className="mx-2">↔</span>
                                         <span className="text-blue-600 font-semibold">Orden de transporte automática</span>
                                     </p>

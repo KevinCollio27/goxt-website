@@ -114,7 +114,7 @@ const useCases = [
 
 export default function CRMPage() {
     return (
-        <div className="pt-24 min-h-screen bg-[var(--goxt-surface-alt)]">
+        <div className="theme-legacy-crm pt-24 min-h-screen bg-[var(--goxt-surface-alt)]">
             {/* <ConnectingLines /> */}
             {/* Hero Section - Premium Living Design */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden py-20">

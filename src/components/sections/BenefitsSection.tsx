@@ -5,6 +5,7 @@ import { Zap, Link2, BarChart3, Settings2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import CircledText from "@/components/ui/CircledText";
 import HighlightText from "@/components/ui/HighlightText";
+import Image from "next/image";
 
 interface Benefit {
     Icon: LucideIcon;
@@ -69,7 +70,13 @@ export function BenefitsSection() {
                                     color: 'var(--goxt-accent)'
                                 }}
                             >
-                                GOxT
+                                <Image
+                                    src="/assets/Logo_FondoBlanco.png"
+                                    alt="GOxT"
+                                    width={150}
+                                    height={150}
+                                    className="inline-block"
+                                />
                             </span>
                         </CircledText>?
                     </motion.h2>

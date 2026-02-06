@@ -6,31 +6,31 @@
    ========================================== */
 
 :root {
-  /* Primary Colors - Midnight */
-  --goxt-midnight: #0F172A;
-  --goxt-midnight-light: #1E293B;
-  --goxt-midnight-dark: #020617;
+  /* Primary Colors - Deep Blue */
+  --goxt-midnight: #011627;
+  --goxt-midnight-light: #1F2933;
+  --goxt-midnight-dark: #000B14;
 
-  /* Accent Colors - Cream/Gold */
-  --goxt-cream: #D4B996;
-  --goxt-cream-light: #E5D4BB;
-  --goxt-cream-dark: #B89968;
-  --goxt-gold: #C9A961;
+  /* Accent Colors - Cyan/Teal/Blue */
+  --goxt-cream: #00B5D8;
+  --goxt-cream-light: #0CAEA6;
+  --goxt-cream-dark: #0059B3;
+  --goxt-gold: #00B285;
 
   /* Primary & Accent (Main Usage) */
-  --goxt-primary: #0F172A;
-  --goxt-primary-dark: #020617;
-  --goxt-primary-light: #1E293B;
+  --goxt-primary: #011627;
+  --goxt-primary-dark: #000B14;
+  --goxt-primary-light: #1F2933;
 
-  --goxt-accent: #D4B996;
-  --goxt-accent-dark: #B89968;
-  --goxt-accent-light: #E5D4BB;
-  --goxt-accent-hover: #C9A961;
+  --goxt-accent: #00B5D8;
+  --goxt-accent-dark: #0059B3;
+  --goxt-accent-light: #0CAEA6;
+  --goxt-accent-hover: #00B285;
 
   /* Neutrals - Slate Scale */
-  --goxt-gray-900: #0F172A;
-  --goxt-gray-800: #1E293B;
-  --goxt-gray-700: #334155;
+  --goxt-gray-900: #011627;
+  --goxt-gray-800: #1F2933;
+  --goxt-gray-700: #2E2E2E;
   --goxt-gray-600: #475569;
   --goxt-gray-500: #64748B;
   --goxt-gray-400: #94A3B8;
@@ -47,31 +47,31 @@
 
   /* Background & Foreground */
   --background: #FFFFFF;
-  --foreground: #0F172A;
+  --foreground: #011627;
 
   /* Text Colors */
-  --text-primary: #0F172A;
+  --text-primary: #011627;
   --text-secondary: #475569;
   --text-muted: #64748B;
 
   /* Semantic Colors */
-  --goxt-success: #10B981;
+  --goxt-success: #00B285;
   --goxt-warning: #F59E0B;
   --goxt-error: #EF4444;
-  --goxt-info: #3B82F6;
+  --goxt-info: #00B5D8;
 
   /* Gradients */
   --goxt-gradient-hero: linear-gradient(145deg, #F8FAFC 0%, #FFFFFF 50%, #F1F5F9 100%);
-  --goxt-gradient-primary: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-  --goxt-gradient-accent: linear-gradient(135deg, #D4B996 0%, #B89968 100%);
-  --goxt-gradient-accent-hover: linear-gradient(135deg, #C9A961 0%, #B89968 100%);
+  --goxt-gradient-primary: linear-gradient(135deg, #011627 0%, #1F2933 100%);
+  --goxt-gradient-accent: linear-gradient(135deg, #00B5D8 0%, #0059B3 100%);
+  --goxt-gradient-accent-hover: linear-gradient(135deg, #0CAEA6 0%, #0059B3 100%);
 
   /* Shadows */
-  --goxt-shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
-  --goxt-shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.1);
-  --goxt-shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.15), 0 4px 6px -4px rgb(15 23 42 / 0.1);
-  --goxt-shadow-xl: 0 20px 25px -5px rgb(15 23 42 / 0.2), 0 8px 10px -6px rgb(15 23 42 / 0.1);
-  --goxt-shadow-glow: 0 20px 50px -12px rgba(212, 185, 150, 0.35);
+  --goxt-shadow-sm: 0 1px 2px 0 rgb(1 22 39 / 0.05);
+  --goxt-shadow-md: 0 4px 6px -1px rgb(1 22 39 / 0.1), 0 2px 4px -2px rgb(1 22 39 / 0.1);
+  --goxt-shadow-lg: 0 10px 15px -3px rgb(1 22 39 / 0.15), 0 4px 6px -4px rgb(1 22 39 / 0.1);
+  --goxt-shadow-xl: 0 20px 25px -5px rgb(1 22 39 / 0.2), 0 8px 10px -6px rgb(1 22 39 / 0.1);
+  --goxt-shadow-glow: 0 20px 50px -12px rgba(0, 181, 216, 0.35);
 
   /* Border Radius */
   --goxt-radius-sm: 0.375rem;
@@ -104,6 +104,44 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+.theme-legacy-crm {
+  --goxt-midnight: #0F172A;
+  --goxt-midnight-light: #1E293B;
+  --goxt-midnight-dark: #020617;
+
+  --goxt-cream: #D4B996;
+  --goxt-cream-light: #E5D4BB;
+  --goxt-cream-dark: #B89968;
+  --goxt-gold: #C9A961;
+
+  --goxt-primary: #0F172A;
+  --goxt-primary-dark: #020617;
+  --goxt-primary-light: #1E293B;
+
+  --goxt-accent: #D4B996;
+  --goxt-accent-dark: #B89968;
+  --goxt-accent-light: #E5D4BB;
+  --goxt-accent-hover: #C9A961;
+
+  --goxt-gray-900: #0F172A;
+  --goxt-gray-800: #1E293B;
+  --goxt-gray-700: #334155;
+
+  --goxt-success: #10B981;
+  --goxt-info: #3B82F6;
+
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+
+  --text-primary: #0F172A;
+
+  --goxt-gradient-primary: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  --goxt-gradient-accent: linear-gradient(135deg, #D4B996 0%, #B89968 100%);
+  --goxt-gradient-accent-hover: linear-gradient(135deg, #C9A961 0%, #B89968 100%);
+
+  --goxt-shadow-glow: 0 20px 50px -12px rgba(212, 185, 150, 0.35);
 }
 
 /* ==========================================

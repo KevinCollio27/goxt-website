@@ -126,7 +126,7 @@ export default function ProductCarousel() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.4 }}
-                        className="grid lg:grid-cols-2 gap-12 items-center"
+                        className={`grid lg:grid-cols-2 gap-12 items-center ${activeTab === 'crm' ? 'theme-legacy-crm' : ''}`}
                     >
                         {/* Left Column: Text Content */}
                         <div className="space-y-8">

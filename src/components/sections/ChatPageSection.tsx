@@ -21,7 +21,7 @@ const features = [
     },
     {
         name: "Solicita información personalizada",
-        icon: "/assets/Logo-FondoBlanco.png",
+        icon: "/assets/Logo_FondoBlanco.png",
     },
 ];
 export function ChatPage() {

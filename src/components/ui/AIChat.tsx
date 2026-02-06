@@ -64,7 +64,7 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                                 />
                             </span>
                             <div>
-                                <h3 className="goxt-gradient-accent-text font-bold">Chat GOxT</h3>
+                                <h3 className="goxt-gradient-accent-text font-bold">Agente GOxT</h3>
                                 <p className="text-xs text-white/80">Asistente Virtual</p>
                             </div>
                         </div>

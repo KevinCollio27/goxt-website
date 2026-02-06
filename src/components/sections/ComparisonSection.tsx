@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import UnderlinedText from "@/components/ui/UnderlinedText";
+import Image from "next/image";
 
 interface ComparisonItem {
     feature: string;
@@ -73,7 +74,15 @@ const comparisonData: ComparisonItem[] = [
 
 export function ComparisonSection() {
     const columns = [
-        { id: 'goxt', name: 'GOxT', isFeatured: true },
+        {
+            id: 'goxt', name: <Image
+                src="/assets/Logo_fondonegro.png"
+                alt="GOxT"
+                width={100}
+                height={100}
+                className="inline-block"
+            />, isFeatured: true
+        },
         { id: 'genericCrm', name: 'CRM Genérico', isFeatured: false },
         { id: 'excel', name: 'Excel/Sheets', isFeatured: false }
     ];
@@ -145,7 +154,15 @@ export function ComparisonSection() {
                             color: 'var(--text-primary)'
                         }}
                     >
-                        ¿Por qué <span className="goxt-gradient-accent-text">elegir GOxT</span> sobre otras opciones?
+                        ¿Por qué elegir <span className="goxt-gradient-accent-text">
+                            <Image
+                                src="/assets/Logo_FondoBlanco.png"
+                                alt="GOxT"
+                                width={150}
+                                height={150}
+                                className="inline-block"
+                            />
+                        </span> sobre otras opciones?
                     </motion.h2>
 
                     <motion.p
@@ -280,13 +297,6 @@ export function ComparisonSection() {
                                 style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
                             >
                                 Agendar demo gratuita
-                            </a>
-                            <a
-                                href="/precios"
-                                className="goxt-btn-secondary text-xl px-10 py-5 border-slate-700 text-slate-300 hover:border-cream hover:text-cream"
-                                style={{ borderColor: 'rgba(212, 185, 150, 0.2)' }}
-                            >
-                                Ver planes
                             </a>
                         </div>
                     </div>
