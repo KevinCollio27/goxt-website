@@ -155,7 +155,7 @@ export default function CRMPage() {
 
                             <h1
                                 className="text-5xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-tight"
-                                style={{ color: 'var(--goxt-midnight)' }}
+                                style={{ color: 'var(--goxt-midnight)', fontFamily: "var(--font-handwritten), cursive" }}
                             >
                                 De Leads a <br />
                                 <span className="relative inline-block">

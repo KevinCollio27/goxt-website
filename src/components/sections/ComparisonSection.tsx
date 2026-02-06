@@ -282,7 +282,7 @@ export function ComparisonSection() {
                     <div className="relative z-10">
                         <h3
                             className="text-2xl md:text-3xl font-bold mb-4"
-                            style={{ color: 'var(--goxt-cream)' }}
+                            style={{ color: 'white' }}
                         >
                             ¿Sigues estancado en procesos manuales?
                         </h3>

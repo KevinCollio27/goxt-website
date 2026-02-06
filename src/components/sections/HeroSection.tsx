@@ -53,21 +53,6 @@ export function HeroSection() {
     const { sendMessage, setChatOpen } = useChat();
     const [input, setInput] = useState("");
 
-    // Mensajes locales estáticos para el "teaser"
-    const teaserMessages: Message[] = [
-        {
-            role: "assistant",
-            content: "¡Hola! Soy el asistente virtual de GOxT. ¿En qué puedo ayudarte hoy?",
-        },
-    ];
-
-
-
-    // No necesitamos isLoading ni shouldScrollToBottom del contexto para este teaser
-
-    // Eliminamos efectos de scroll ya que es estático
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -100,31 +85,32 @@ export function HeroSection() {
         >
             <InteractiveParticles />
             <div className="goxt-container relative z-10">
-                <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-5xl mx-auto text-center">
                     {/* Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+                        className="inline-flex items-center gap-2 px-6 py-2 rounded-full mb-8 relative group cursor-default"
                         style={{
-                            background: 'var(--goxt-surface-card)',
-                            border: '1px solid var(--goxt-accent)',
+                            background: 'rgba(224, 242, 254, 0.5)', // light cyan/blue bg
+                            border: '1px solid rgba(14, 165, 233, 0.2)', // light border
+                            boxShadow: '0 4px 6px -1px rgba(14, 165, 233, 0.1)'
                         }}
                     >
                         <span
-                            className="w-2 h-2 rounded-full animate-pulse"
-                            style={{ background: 'var(--goxt-accent)' }}
+                            className="w-2.5 h-2.5 rounded-full animate-pulse"
+                            style={{ background: 'var(--goxt-cream)' }} // Cyan/Blue dot
                         />
                         <span
-                            className="text-sm font-medium"
-                            style={{ color: 'var(--text-secondary)' }}
+                            className="text-sm font-bold tracking-wide uppercase"
+                            style={{ color: '#0059B3' }} // Darker blue text
                         >
-                            La suite para transporte y logística
+                            LA SUITE PARA TRANSPORTE Y LOGÍSTICA
                         </span>
                     </motion.div>
 
-                    {/* Headline con animaciones*/}
+                    {/* Headline */}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -134,7 +120,7 @@ export function HeroSection() {
                     >
                         <span
                             className="font-bold"
-                            style={{ color: 'var(--text-primary)' }}
+                            style={{ color: 'var(--goxt-midnight)' }}
                         >
                             Más clientes.
                         </span>{" "}
@@ -145,91 +131,60 @@ export function HeroSection() {
                         </span>
                         <br />
                         <span
-                            className="font-bold"
-                            style={{ color: 'var(--text-primary)' }}
+                            className="font-extrabold"
+                            style={{ color: 'var(--goxt-midnight)' }}
                         >
                             Menos problemas.
                         </span>
                     </motion.h1>
 
-                    {/* AI Chat Container - Funcional */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.15 }}
+                        className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto mb-12 leading-relaxed"
+                    >
+                        Potencia tu empresa de tecnología con herramientas de IA diseñadas para dominar el mercado logístico B2B y terrestre.
+                    </motion.p>
+
+                    {/* AI Chat Widget - Updated Design */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="mb-8 max-w-2xl mx-auto"
+                        className="mb-16 max-w-3xl mx-auto relative group"
                     >
-                        <div className="mb-4 px-4 w-full">
-                            {teaserMessages.map((message, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className={`flex gap-3 items-end ${message.role === "user" ? "flex-row-reverse" : "flex-row"
-                                        }`}
-                                >
-                                    {/* Avatar */}
-                                    <div
-                                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${message.role === "user"
-                                            ? "bg-gray-200"
-                                            : "bg-[var(--goxt-primary)]"
-                                            }`}
-                                    >
-                                        {message.role === "user" ? (
-                                            <User className="w-4 h-4 text-gray-700" />
-                                        ) : (
-                                            <div className="w-5 h-5 relative flex items-center justify-center">
-                                                <Image
-                                                    src="/assets/logo_central.png"
-                                                    alt="AI"
-                                                    width={32}
-                                                    height={32}
-                                                    className="w-full h-full object-cover brightness-0 invert"
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
+                        {/* Glow Effect behind */}
+                        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
-                                    {/* Message Bubble */}
-                                    <div
-                                        className={`max-w-[75%] p-3 rounded-2xl text-sm shadow-sm ${message.role === "user"
-                                            ? "bg-[var(--goxt-primary)] text-white rounded-tr-none"
-                                            : "bg-white text-gray-800 rounded-tl-none"
-                                            }`}
-                                    >
-                                        <p className="whitespace-pre-wrap leading-relaxed">
-                                            {message.content}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
+                        <div className="relative bg-gradient-to-b from-[#E0F7FA] to-[#E3E8EF] rounded-2xl p-6 md:p-8 shadow-xl border border-white/50 backdrop-blur-sm">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-10 h-10 rounded-full bg-[#011627] flex items-center justify-center shadow-lg">
+                                    <Bot className="w-5 h-5 text-[var(--goxt-cream)]" />
+                                </div>
+                                <div className="text-left">
+                                    <div className="font-bold text-slate-800 text-lg">Asistente Virtual GOxT</div>
+                                    <div className="text-slate-500 text-sm">¿En qué puedo ayudarte hoy?</div>
+                                </div>
+                            </div>
 
-                        <div
-                            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
-                        >
-                            {/* Input */}
                             <form
                                 onSubmit={handleSubmit}
-                                className="bg-gray-50 px-4 py-3"
+                                className="relative"
                             >
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        onKeyDown={handleKeyDown}
-                                        placeholder="Escribe tu mensaje aquí..."
-                                        className="flex-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--goxt-primary)] focus:border-transparent bg-white text-sm"
-                                    />
+                                <input
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    placeholder="Escribe tu consulta sobre tu flota o ventas..."
+                                    className="w-full pl-6 pr-32 py-4 bg-white rounded-xl shadow-inner border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[var(--goxt-cream)] focus:border-transparent text-slate-700 placeholder-slate-400 text-lg transition-all"
+                                />
+                                <div className="absolute right-2 top-2 bottom-2">
                                     <button
                                         type="submit"
-                                        disabled={!input.trim()}
-                                        className="px-6 py-2 bg-[var(--goxt-primary)] text-white rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold flex items-center gap-2 text-sm"
+                                        className="h-full px-6 bg-slate-400 hover:bg-slate-500 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
                                     >
-                                        <Send className="w-4 h-4" />
-                                        <span className="hidden sm:inline">Enviar</span>
+                                        Enviar <Send className="w-4 h-4" />
                                     </button>
                                 </div>
                             </form>
@@ -241,29 +196,29 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+                        className="flex flex-col sm:flex-row gap-6 justify-center mb-24"
                     >
                         <Link
                             href="/contacto"
-                            className="goxt-btn-primary text-lg px-8 py-4"
+                            className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white"
                         >
                             Solicitar Demo
                         </Link>
                         <Link
                             href="/productos"
-                            className="goxt-btn-secondary text-lg px-8 py-4"
+                            className="goxt-btn-secondary text-lg px-8 py-4 bg-white border-slate-200 hover:bg-slate-50"
                         >
                             Explorar Productos
                         </Link>
                     </motion.div>
                 </div>
 
-                {/* Stats Cards */}
+                {/* Stats Cards - Updated Grid */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
                 >
                     {stats.map((stat, index) => (
                         <motion.div
@@ -271,17 +226,14 @@ export function HeroSection() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                            className="bg-white rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                            style={{
-                                boxShadow: 'var(--goxt-shadow-md)',
-                            }}
+                            className="bg-white rounded-2xl p-8 py-10 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group border border-slate-100"
                         >
-                            {/* Icon con fondo Midnight */}
+                            {/* Icon Square */}
                             <div
-                                className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-4"
+                                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300"
                                 style={{
                                     background: 'var(--goxt-midnight)',
-                                    color: 'var(--goxt-cream)'
+                                    color: 'white'
                                 }}
                             >
                                 <stat.Icon className="w-7 h-7" strokeWidth={1.5} />
@@ -289,26 +241,25 @@ export function HeroSection() {
 
                             {/* Value */}
                             <div
-                                className="text-3xl md:text-4xl font-bold mb-2"
-                                style={{ color: 'var(--text-primary)' }}
+                                className="text-4xl font-extrabold mb-3 tracking-tight"
+                                style={{ color: 'var(--goxt-midnight)' }}
                             >
                                 {stat.value}
                             </div>
 
-                            {/* Label */}
-                            <div
-                                className="font-semibold text-base mb-1"
-                                style={{ color: 'var(--text-secondary)' }}
-                            >
-                                {stat.label}
-                            </div>
-
-                            {/* Description */}
-                            <div
-                                className="text-sm"
-                                style={{ color: 'var(--text-muted)' }}
-                            >
-                                {stat.description}
+                            {/* Label - Uppercase small */}
+                            <div className="flex flex-col gap-1">
+                                <div
+                                    className="font-bold text-sm uppercase tracking-wider"
+                                    style={{ color: 'var(--text-secondary)' }}
+                                >
+                                    {stat.label}
+                                </div>
+                                <div
+                                    className="text-xs font-semibold uppercase tracking-wider text-slate-400"
+                                >
+                                    {stat.description.toUpperCase()}
+                                </div>
                             </div>
                         </motion.div>
                     ))}

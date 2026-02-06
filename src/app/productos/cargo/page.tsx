@@ -213,12 +213,12 @@ export default function CargoPage() {
 
                             <h1
                                 className="text-5xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-tight"
-                                style={{ color: 'var(--goxt-midnight)' }}
+                                style={{ color: 'var(--goxt-midnight)', fontFamily: "var(--font-handwritten), cursive" }}
                             >
                                 Control Total de tu <br />
                                 <span className="relative inline-block">
                                     <span className="relative z-10 text-blue-600">Operación</span>
-                                    <svg className="absolute w-full h-3 -bottom-1 left-0 text-[var(--goxt-primary-100)] opacity-60 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <svg className="absolute w-full h-3 -bottom-1 left-0 text-blue-400 opacity-60 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0 5 Q 50 10 100 5 L 100 10 L 0 10 Z" fill="currentColor" />
                                     </svg>
                                 </span>
@@ -265,7 +265,7 @@ export default function CargoPage() {
             <section className="goxt-section bg-[var(--goxt-gray-50)]">
                 <div className="goxt-container">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
                             Funcionalidades <span className="text-blue-600">Principales</span>
                         </h2>
                         <p className="text-lg text-[var(--goxt-gray-600)] max-w-2xl mx-auto">
@@ -286,7 +286,7 @@ export default function CargoPage() {
                                 <div className={`w-14 h-14 ${feature.bg} rounded-xl flex items-center justify-center mb-4`}>
                                     <feature.Icon className={`w-7 h-7 ${feature.color}`} strokeWidth={1.8} />
                                 </div>
-                                <h3 className="text-lg font-bold text-[var(--goxt-gray-900)] mb-2" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                                <h3 className="text-lg font-bold mb-2" style={{ fontFamily: "var(--font-handwritten), cursive", color: '#0F172A' }}>
                                     {feature.title}
                                 </h3>
                                 <p className="text-sm text-[var(--goxt-gray-600)]">

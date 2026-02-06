@@ -297,7 +297,7 @@ h6 {
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   font-size: 1rem;
-  color: var(--goxt-cream);
+  color: white;
   background: var(--goxt-gradient-primary);
   border: none;
   border-radius: var(--goxt-radius-full);

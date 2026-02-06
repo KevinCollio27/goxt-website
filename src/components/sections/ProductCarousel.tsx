@@ -143,7 +143,7 @@ export default function ProductCarousel() {
 
                                 <motion.h2
                                     className="text-4xl md:text-5xl font-bold text-[var(--goxt-primary)]"
-                                    style={{ fontFamily: "var(--font-display)" }}
+                                    style={{ fontFamily: "var(--font-handwritten), cursive" }}
                                 >
                                     {products[activeTab].title}
                                 </motion.h2>
