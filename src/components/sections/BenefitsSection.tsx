@@ -1,161 +1,162 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Link2, BarChart3, Settings2 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import CircledText from "@/components/ui/CircledText";
-import HighlightText from "@/components/ui/HighlightText";
+import { Zap, Link as LinkIcon, BarChart3, Settings2, Sparkles } from "lucide-react";
 import Image from "next/image";
 
-interface Benefit {
-    Icon: LucideIcon;
+interface Reason {
+    icon: React.ReactNode;
     title: string;
-    accent: string;
+    tag: string;
     description: string;
+    delay: number;
 }
 
-const benefits: Benefit[] = [
+const reasons: Reason[] = [
     {
-        Icon: Zap,
-        title: "Cotizaciones en ",
-        accent: "Minutos",
-        description:
-            "Configura tus productos una vez y genera cotizaciones profesionales en segundos. Responde antes que la competencia.",
+        icon: <Zap className="w-6 h-6" />,
+        title: "Cotizaciones en",
+        tag: "Minutos",
+        description: "Configura tus productos una vez y genera cotizaciones profesionales en segundos. Responde antes que la competencia.",
+        delay: 0.1
     },
     {
-        Icon: Link2,
-        title: "Conectado a tu ",
-        accent: "Operación",
-        description:
-            "Integración nativa entre ventas y operaciones. De la cotización al viaje, sin doble digitación.",
+        icon: <LinkIcon className="w-6 h-6" />,
+        title: "Conectado a tu",
+        tag: "Operación",
+        description: "Integración nativa entre ventas y operaciones. De la cotización al viaje, sin doble digitación.",
+        delay: 0.2
     },
     {
-        Icon: BarChart3,
-        title: "Inteligente ",
-        accent: "Pipeline Visual",
-        description:
-            "Tablero Kanban para visualizar todo tu embudo de ventas. Nunca pierdas de vista una oportunidad.",
+        icon: <BarChart3 className="w-6 h-6" />,
+        title: "Inteligente",
+        tag: "Pipeline Visual",
+        description: "Tablero Kanban para visualizar todo tu embudo de ventas. Nunca pierdas de vista una oportunidad.",
+        delay: 0.3
     },
     {
-        Icon: Settings2,
-        title: "100% ",
-        accent: "Personalizable",
-        description:
-            "Crea productos con los campos exactos que necesitas. Sin desarrolladores, sin esperas, sin código.",
-    },
+        icon: <Settings2 className="w-6 h-6" />,
+        title: "100%",
+        tag: "Personalizable",
+        description: "Crea productos con los campos exactos que necesitas. Sin desarrolladores, sin esperas, sin código.",
+        delay: 0.4
+    }
 ];
 
 export function BenefitsSection() {
     return (
-        <section className="goxt-section bg-white">
-            <div className="goxt-container">
-                {/* Header */}
+        <section className="py-24 bg-white relative overflow-hidden">
+            {/* Tech Pattern Background */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(#011627 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                {/* Header Section */}
                 <div className="text-center mb-20">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl md:text-5xl font-bold mb-6"
-                        style={{
-                            fontFamily: "var(--font-display), serif",
-                            color: 'var(--goxt-primary)'
-                        }}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="flex justify-center items-center gap-4 mb-6"
                     >
-                        ¿Por qué elegir a {" "}
-                        <CircledText color="var(--goxt-accent)" delay={0.5}>
-                            <span
-                                className="font-bold text-5xl md:text-6xl"
-                                style={{
-                                    fontFamily: "var(--font-handwritten), cursive",
-                                    color: 'var(--goxt-accent)'
-                                }}
-                            >
+                        <h2
+                            className="text-4xl md:text-5xl font-bold flex items-center gap-3"
+                            style={{ color: 'var(--goxt-midnight)' }}
+                        >
+                            ¿Por qué elegir a
+                            <div className="relative inline-flex items-center px-4 py-1 border-2 rounded-full group" style={{ borderColor: 'var(--goxt-accent)' }}>
                                 <Image
                                     src="/assets/Logo_FondoBlanco.png"
-                                    alt="GOxT"
-                                    width={150}
-                                    height={150}
-                                    className="inline-block"
+                                    alt="GOXT"
+                                    width={120}
+                                    height={40}
+                                    className="h-8 w-auto object-contain"
                                 />
-                            </span>
-                        </CircledText>?
-                    </motion.h2>
+                                <div className="absolute -inset-1 opacity-10 blur-sm rounded-full group-hover:opacity-25 transition-opacity" style={{ backgroundColor: 'var(--goxt-accent)' }}></div>
+                            </div>
+                            ?
+                        </h2>
+                    </motion.div>
+
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-lg md:text-xl max-w-2xl mx-auto"
-                        style={{ color: 'var(--text-secondary)' }}
+                        className="text-lg md:text-xl text-slate-600 font-medium"
                     >
                         Diseñado específicamente para empresas de transporte y logística.
-                        Resolvemos los problemas que <HighlightText color="var(--goxt-accent)" delay={0.5}>otros CRM</HighlightText> no entienden.
+                    </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="text-lg md:text-xl text-slate-600"
+                    >
+                        Resolvemos los problemas que <span className="px-2 rounded font-bold" style={{ backgroundColor: 'rgba(0, 181, 216, 0.2)', color: 'var(--goxt-accent-dark)' }}>otros CRM</span> no entienden.
                     </motion.p>
                 </div>
 
-                {/* Benefits Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {benefits.map((benefit, index) => (
+                {/* Features Grid */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {reasons.map((reason, index) => (
                         <motion.div
-                            key={benefit.accent}
+                            key={index}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: reason.delay, duration: 0.5 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            whileHover={{ y: -8, scale: 1.02 }}
-                            className="relative bg-white rounded-3xl p-8 text-center transition-all duration-300 border border-gray-50"
+                            whileHover={{ y: -8 }}
+                            className="group relative bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
                             style={{
-                                boxShadow: 'var(--goxt-shadow-lg)',
+                                boxShadow: '0 20px 25px -5px rgb(203 213 225 / 0.5)' // approximating shadow-slate-200/50
                             }}
                         >
-                            {/* Icon Container con estilo Midnight/Cream y rotación en hover */}
-                            <motion.div
-                                whileHover={{ rotate: 360 }}
-                                transition={{ duration: 0.6 }}
-                                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-8"
+                            {/* Animated Corner Accent */}
+                            <div
+                                className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                                 style={{
-                                    background: 'var(--goxt-midnight)',
-                                    color: 'var(--goxt-cream)',
-                                    boxShadow: '0 10px 25px -5px rgba(15, 23, 42, 0.2)'
+                                    background: 'linear-gradient(to bottom left, rgba(0, 181, 216, 0.1), transparent)'
                                 }}
-                            >
-                                <benefit.Icon
-                                    className="w-7 h-7"
-                                    strokeWidth={1.5}
-                                />
-                            </motion.div>
+                            ></div>
 
-                            {/* Title con parte handwritten */}
-                            <h3
-                                className="text-xl font-bold mb-4 leading-tight"
-                                style={{ color: 'var(--goxt-primary)' }}
-                            >
-                                {benefit.title}
-                                <span
-                                    className="block text-2xl"
+                            {/* Icon Core */}
+                            <div className="relative mb-10">
+                                <div
+                                    className="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-lg"
                                     style={{
-                                        fontFamily: "var(--font-handwritten), cursive",
+                                        backgroundColor: 'var(--goxt-midnight)',
                                         color: 'var(--goxt-accent)',
-                                        marginTop: '0.2rem'
+                                        boxShadow: '0 10px 15px -3px rgba(30, 58, 138, 0.2)' // shadow-blue-900/20
                                     }}
                                 >
-                                    {benefit.accent}
-                                </span>
-                            </h3>
+                                    {reason.icon}
+                                </div>
+                                {/* Radial Glow */}
+                                <div
+                                    className="absolute inset-0 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    style={{ backgroundColor: 'rgba(0, 181, 216, 0.2)' }}
+                                ></div>
+                            </div>
 
-                            {/* Description */}
-                            <p
-                                className="text-sm leading-relaxed"
-                                style={{ color: 'var(--text-secondary)' }}
-                            >
-                                {benefit.description}
-                            </p>
+                            {/* Text Content */}
+                            <div className="space-y-4">
+                                <h3
+                                    className="text-2xl font-bold leading-tight"
+                                    style={{ color: 'var(--goxt-midnight)' }}
+                                >
+                                    {reason.title} <br />
+                                    <span className="italic font-medium" style={{ color: 'var(--goxt-accent)' }}>{reason.tag}</span>
+                                </h3>
 
-                            {/* Decorative element - sutil línea Cream al hover */}
+                                <p className="text-slate-500 text-sm leading-relaxed">
+                                    {reason.description}
+                                </p>
+                            </div>
+
+                            {/* Bottom Interactive Bar */}
                             <div
-                                className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full opacity-0 transition-opacity duration-300"
-                                style={{ background: 'var(--goxt-accent)' }}
-                            />
+                                className="mt-8 h-1 w-0 group-hover:w-full transition-all duration-700 rounded-full"
+                                style={{ backgroundColor: 'var(--goxt-accent)' }}
+                            ></div>
                         </motion.div>
                     ))}
                 </div>

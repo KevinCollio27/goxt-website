@@ -226,13 +226,16 @@ export function HeroSection() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                            className="bg-white rounded-2xl p-8 py-10 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group border border-slate-100"
+                            className="bg-gradient-to-br from-slate-50 to-white rounded-2xl p-8 py-10 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group border border-slate-200/70 backdrop-blur-sm"
                         >
+                            {/* Fondo sutil de patrón */}
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,178,133,0.03)_0%,transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                             {/* Icon Square */}
                             <div
-                                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300"
+                                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10"
                                 style={{
-                                    background: 'var(--goxt-midnight)',
+                                    background: 'linear-gradient(135deg, #011627 0%, #1f2933 100%)',
                                     color: 'white'
                                 }}
                             >
@@ -241,14 +244,14 @@ export function HeroSection() {
 
                             {/* Value */}
                             <div
-                                className="text-4xl font-extrabold mb-3 tracking-tight"
-                                style={{ color: 'var(--goxt-midnight)' }}
+                                className="text-4xl font-extrabold mb-3 tracking-tight relative z-10"
+                                style={{ color: 'var(--goxt-primary)' }}
                             >
                                 {stat.value}
                             </div>
 
-                            {/* Label - Uppercase small */}
-                            <div className="flex flex-col gap-1">
+                            {/* Label */}
+                            <div className="flex flex-col gap-1 relative z-10">
                                 <div
                                     className="font-bold text-sm uppercase tracking-wider"
                                     style={{ color: 'var(--text-secondary)' }}
@@ -256,7 +259,7 @@ export function HeroSection() {
                                     {stat.label}
                                 </div>
                                 <div
-                                    className="text-xs font-semibold uppercase tracking-wider text-slate-400"
+                                    className="text-xs font-semibold uppercase tracking-wider text-slate-500"
                                 >
                                     {stat.description.toUpperCase()}
                                 </div>

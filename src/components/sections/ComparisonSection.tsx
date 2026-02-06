@@ -206,7 +206,7 @@ export function ComparisonSection() {
                                                 {col.isFeatured && (
                                                     <span
                                                         className="text-[10px] px-3 py-1 rounded-full font-bold tracking-tighter"
-                                                        style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
+                                                        style={{ background: 'var(--goxt-cream)', color: 'white' }}
                                                     >
                                                         RECOMENDADO
                                                     </span>

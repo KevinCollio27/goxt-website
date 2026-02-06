@@ -87,7 +87,8 @@ export default function ProductCarousel() {
             <div className="flex justify-center mb-16">
                 <div className="bg-white p-1.5 rounded-full shadow-lg border border-gray-100 inline-flex relative">
                     <motion.div
-                        className="absolute top-1.5 bottom-1.5 rounded-full bg-[var(--goxt-primary)] z-0"
+                        className="absolute top-1.5 bottom-1.5 rounded-full z-0 shadow-sm"
+                        style={{ background: 'var(--goxt-gradient-accent)' }}
                         initial={false}
                         animate={{
                             left: activeTab === "crm" ? "6px" : "50%",
