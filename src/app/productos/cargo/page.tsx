@@ -241,7 +241,7 @@ export default function CargoPage() {
                                     href="/contacto"
                                     className="goxt-btn-secondary text-xl px-10 py-5 bg-white hover:bg-slate-50 border-2"
                                 >
-                                    Ver Demo
+                                    Solicitar Demo
                                 </Link>
                             </div>
 

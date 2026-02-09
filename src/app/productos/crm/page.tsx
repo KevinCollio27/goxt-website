@@ -33,7 +33,7 @@ const floatingAnimationDelayed: Variants = {
 
 const features = [
     {
-        title: "Pipeline Visual Kanban",
+        title: "Pipeline Interactivo Kanban",
         description:
             "Visualiza todas tus oportunidades en un tablero intuitivo. Forecast automático de ingresos basado en probabilidades de cierre y conversiones.",
         Icon: Kanban,
@@ -71,13 +71,13 @@ const features = [
     {
         title: "Seguridad y Roles",
         description:
-            "Roles granulares (Admin vs Ejecutivos) para proteger tu información. Control total sobre quién ve y edita qué.",
+            "Múltiples roles para proteger tu información. Control total sobre quién ve y edita qué.",
         Icon: ShieldCheck,
     },
     {
         title: "Integración Operativa",
         description:
-            "Conexión nativa con Cargo. Las cotizaciones aprobadas se transmiten a operaciones sin doble digitación.",
+            "Conexión nativa con TMS Cargo. Las cotizaciones aprobadas se transmiten a operaciones sin doble digitación.",
         Icon: Link2,
     },
 ];
@@ -86,27 +86,27 @@ const useCases = [
     {
         title: "Transporte Terrestre",
         items: [
-            "Optimización de rutas frecuentes y gestión de transportistas preferidos.",
-            "Visualización de origen/destino desde mapa interactivo.",
-            "Tarifarios dinámicos por zona, km o tonelada.",
+            "Tarifarios dinámicos por zona, km o tonelada configurables al 100%.",
+            "Integración nativa con TMS Cargo para evitar la doble digitación de órdenes.",
+            "Control de márgenes comerciales y costos por ruta desde la cotización.",
         ],
         Icon: Truck,
     },
     {
-        title: "Transporte Marítimo",
+        title: "Transporte Marítimo / Forwarding",
         items: [
-            "Gestión de naves, contenedores y tracking de puertos.",
-            "Consolidación de múltiples servicios en una sola oferta.",
-            "Trazabilidad de BL y documentación específica.",
+            "Gestión de naves, contenedores y tracking de puertos integrado.",
+            "Cotizaciones dinámicas multimodales con campos específicos por tipo de contenedor.",
+            "Consolidación de servicios y trazabilidad de BL en un solo lugar.",
         ],
         Icon: Ship,
     },
     {
         title: "Operadores Logísticos",
         items: [
-            "Cálculo de almacenaje, picking y packing automatizado.",
-            "Gestión de inventarios por ubicaciones y clientes.",
-            "Control de márgenes operativos por tipo de operación.",
+            "Gestión de oferta y demanda en capacidad de transporte.",
+            "Visibilidad 360° de la relación comercial con múltiples clientes y ubicaciones.",
+            "Sincronización automática de acuerdos comerciales con el sistema operativo.",
         ],
         Icon: Package,
     },
@@ -183,12 +183,12 @@ export default function CRMPage() {
                                     href="/contacto"
                                     className="goxt-btn-secondary text-xl px-10 py-5 bg-white hover:bg-slate-50 border-2"
                                 >
-                                    Ver Demo
+                                    Solicitar Demo
                                 </Link>
                             </div>
 
                             {/* Trust Stats Cards */}
-                            <div className="grid grid-cols-2 gap-4 max-w-sm">
+                            {/*<div className="grid grid-cols-2 gap-4 max-w-sm">
                                 <div className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 shadow-sm">
                                     <div className="text-3xl font-bold mb-1 goxt-gradient-accent-text">+35%</div>
                                     <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Tasa de Cierre</div>
@@ -197,7 +197,7 @@ export default function CRMPage() {
                                     <div className="text-3xl font-bold mb-1 goxt-gradient-accent-text">2x</div>
                                     <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Velocidad Cotización</div>
                                 </div>
-                            </div>
+                            </div>*/}
                         </motion.div>
 
                         {/* Right Column: 3D Composition */}
@@ -411,21 +411,21 @@ export default function CRMPage() {
                                 Deja de perder <span className="goxt-gradient-accent-text">oportunidades</span>
                             </h2>
                             <p className="text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
-                                Únete a las empresas que ya optimizaron su proceso comercial con GOxT.
+                                Únete a las empresas que ya optimizaron su proceso comercial con nosotros.
                                 La eficiencia operativa empieza en la venta.
                             </p>
                             <div className="flex flex-wrap gap-6 justify-center">
                                 <Link
-                                    href="/contacto"
+                                    href="https://crm.goxt.io"
                                     className="goxt-btn-primary text-2xl px-12 py-6"
                                 >
-                                    Solicitar Demo CRM
+                                    Inicia Sesión
                                 </Link>
                                 <Link
-                                    href="/productos/cargo"
+                                    href="/contacto"
                                     className="goxt-btn-secondary text-2xl px-12 py-6"
                                 >
-                                    Ver GOxT Cargo
+                                    Solicitar Demo CRM
                                 </Link>
                             </div>
                         </div>
