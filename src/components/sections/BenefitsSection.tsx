@@ -91,7 +91,7 @@ export function BenefitsSection() {
                         transition={{ delay: 0.1 }}
                         className="text-lg md:text-xl text-slate-600"
                     >
-                        Resolvemos los problemas que <span className="px-2 rounded font-bold" style={{ backgroundColor: 'rgba(0, 181, 216, 0.2)', color: 'var(--goxt-accent-dark)' }}>otros CRM</span> no entienden.
+                        Resolvemos los problemas que <span className="px-2 rounded font-bold" style={{ backgroundColor: 'rgba(0, 181, 216, 0.2)', color: 'var(--goxt-accent-dark)' }}>otras solcuiones tecnológicas</span> no entienden.
                     </motion.p>
                 </div>
 

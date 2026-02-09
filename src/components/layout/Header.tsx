@@ -12,27 +12,12 @@ const navigation = [
         href: "/productos",
         submenu: [
             {
-                name: "GOxT CRM",
+                name: "CRM",
                 href: "/productos/crm",
-                description: "Gestión comercial y cotizaciones",
                 icon: (
                     <Image
-                        src="/assets/Logo_CRM_Blanco.png"
-                        alt="GOxT CRM"
-                        width={30}
-                        height={30}
-                        className="w-12 h-6 object-contain"
-                    />
-                ),
-            },
-            {
-                name: "GOxT Cargo",
-                href: "/productos/cargo",
-                description: "Control de flotas y operaciones",
-                icon: (
-                    <Image
-                        src="/assets/Logo_cargo_Blanco.png"
-                        alt="GOxT Cargo"
+                        src="/assets/logo_central_negro.png"
+                        alt="CRM"
                         width={30}
                         height={30}
                         className="w-12 h-6 object-contain"
@@ -119,9 +104,6 @@ export function Header() {
                                                     <div>
                                                         <div className="font-semibold text-gray-900 group-hover:text-[var(--goxt-primary)]">
                                                             {subitem.name}
-                                                        </div>
-                                                        <div className="text-sm text-gray-500">
-                                                            {subitem.description}
                                                         </div>
                                                     </div>
                                                 </Link>

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Mail, MapPin, Check, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
+import Image from "next/image";
 
 export function ContactSection() {
     const [formData, setFormData] = useState({
@@ -70,34 +71,31 @@ export function ContactSection() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <div className="bg-[var(--goxt-gray-50)] rounded-2xl p-8">
-                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-6" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
-                                Información de contacto
+                        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                            <h3 className="text-xl font-bold mb-6" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-midnight)' }}>
+                                No esperes más. Empieza gratis:
                             </h3>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 text-[var(--goxt-gray-700)]">
-                                    <div className="w-10 h-10 bg-[var(--goxt-accent)]/10 rounded-lg flex items-center justify-center">
-                                        <Mail className="w-5 h-5 text-[var(--goxt-accent)]" strokeWidth={1.5} />
-                                    </div>
-                                    <a
-                                        href="mailto:contacto@goxt.io"
-                                        className="hover:text-[var(--goxt-accent)] transition-colors"
-                                    >
-                                        contacto@goxt.io
-                                    </a>
+                            <a
+                                href="https://crm.goxt.io"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="goxt-btn-primary flex items-center justify-center gap-4 py-4 px-6 w-full group transform transition-all hover:scale-[1.02]"
+                            >
+                                <div className="p-1 rounded-md">
+                                    <Image
+                                        src="/assets/logo_central.png"
+                                        alt="GOxT"
+                                        width={24}
+                                        height={24}
+                                    />
                                 </div>
-                                <div className="flex items-center gap-3 text-[var(--goxt-gray-700)]">
-                                    <div className="w-10 h-10 bg-[var(--goxt-accent)]/10 rounded-lg flex items-center justify-center">
-                                        <MapPin className="w-5 h-5 text-[var(--goxt-accent)]" strokeWidth={1.5} />
-                                    </div>
-                                    <span>Santiago, Chile</span>
-                                </div>
-                            </div>
+                                <span className="font-bold">GOxT CRM</span>
+                            </a>
                         </div>
 
                         {/* Why choose us */}
                         <div className="bg-[var(--goxt-gray-50)] rounded-2xl p-8">
-                            <h3 className="text-xl font-bold text-[var(--goxt-gray-900)] mb-4" style={{ fontFamily: "var(--font-handwritten), cursive" }}>
+                            <h3 className="text-xl font-bold mb-4" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-midnight)' }}>
                                 ¿Por qué agendar una demo?
                             </h3>
                             <ul className="space-y-3">

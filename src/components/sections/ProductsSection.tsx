@@ -3,8 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Target, Truck, Check, ChevronLeft, ChevronRight } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 interface Product {
@@ -14,7 +13,6 @@ interface Product {
     description: string;
     href: string;
     appUrl: string;
-    Icon: LucideIcon;
     features: string[];
     screenshot: string;
 }
@@ -23,17 +21,16 @@ const products: Product[] = [
     {
         id: "crm",
         name: "CRM",
-        tagline: "De leads a clientes: gestiona todo el ciclo de ventas",
+        tagline: "De leads a clientes: gestiona todo tu negocio en un solo lugar.",
         description:
             "El CRM que habla el idioma de tu operación. Cotizaciones en minutos, seguimiento visual de oportunidades e integración con tu sistema operativo.",
         href: "/productos/crm",
         appUrl: "https://crm.goxt.io",
-        Icon: Target,
         features: [
-            "Pipeline visual Kanban",
+            "Pipeline interactivo Kanban",
             "Cotizaciones dinámicas",
             "Productos 100% configurables",
-            "Integración con Cargo",
+            "Integración con TMS Cargo",
             "Reportes y dashboards",
             "Multi-workspace",
         ],
@@ -47,14 +44,13 @@ const products: Product[] = [
             "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",
         href: "/productos/cargo",
         appUrl: "https://cargo.goxt.io",
-        Icon: Truck,
         features: [
             "Gestión de flotas",
             "Tracking GPS en tiempo real",
             "Órdenes de transporte",
-            "Control de combustible",
-            "Mantenimiento programado",
-            "Documentación digital",
+            "Alertas automatizadas",
+            "APP Móvil para comprobación de entregas",
+            "Gestión de documentación digital",
         ],
         screenshot: "/assets/LoginCARGO.png",
     },
@@ -174,7 +170,7 @@ export function ProductsSection() {
                                                     color: 'var(--goxt-cream)'
                                                 }}
                                             >
-                                                <currentProduct.Icon className="w-8 h-8" strokeWidth={1.5} />
+                                                <Image src="/assets/logo_central.png" alt="GOxT" width={40} height={40} />
                                             </div>
                                             <h3
                                                 className="text-3xl md:text-4xl font-bold"
@@ -234,19 +230,21 @@ export function ProductsSection() {
 
                                         {/* CTAs */}
                                         <div className="flex flex-wrap gap-4">
-                                            <a
-                                                href={currentProduct.appUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="goxt-btn-primary"
-                                            >
-                                                Ir a {currentProduct.name}
-                                            </a>
+                                            {currentProduct.id === "crm" && (
+                                                <a
+                                                    href={currentProduct.appUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="goxt-btn-primary"
+                                                >
+                                                    Empieza gratis
+                                                </a>
+                                            )}
                                             <Link
-                                                href={currentProduct.href}
-                                                className="goxt-btn-secondary"
+                                                href="/contacto"
+                                                className={currentProduct.id === "crm" ? "goxt-btn-secondary" : "goxt-btn-primary"}
                                             >
-                                                Conocer más
+                                                Solicitar Demo
                                             </Link>
                                         </div>
                                     </motion.div>
