@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 export const GoogleAnalytics = () => {
-    const GA_ID = "G-VXZY3NG7JS";
+    const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
     return (
         <>
