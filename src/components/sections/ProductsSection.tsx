@@ -38,7 +38,7 @@ const products: Product[] = [
     },
     {
         id: "cargo",
-        name: "CARGO",
+        name: "TMS CARGO",
         tagline: "Control total de tu flota y operaciones logísticas",
         description:
             "Sistema operativo para transporte terrestre y marítimo. Gestiona flotas, rutas, conductores y toda tu operación en una sola plataforma.",

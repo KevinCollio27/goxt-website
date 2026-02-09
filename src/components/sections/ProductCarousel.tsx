@@ -125,7 +125,7 @@ export default function ProductCarousel() {
                             height={20}
                             className="w-5 h-5 object-contain"
                         />
-                        GOXT CARGO
+                        GOXT TMS CARGO
                     </button>
                 </div>
             </div>

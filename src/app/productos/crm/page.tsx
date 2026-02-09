@@ -93,7 +93,7 @@ const useCases = [
         Icon: Truck,
     },
     {
-        title: "Transporte Marítimo / Forwarding",
+        title: "Transporte Marítimo",
         items: [
             "Gestión de naves, contenedores y tracking de puertos integrado.",
             "Cotizaciones dinámicas multimodales con campos específicos por tipo de contenedor.",
@@ -419,7 +419,7 @@ export default function CRMPage() {
                                     href="https://crm.goxt.io"
                                     className="goxt-btn-primary text-2xl px-12 py-6"
                                 >
-                                    Inicia Sesión
+                                    Iniciar Sesión
                                 </Link>
                                 <Link
                                     href="/contacto"

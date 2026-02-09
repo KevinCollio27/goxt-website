@@ -119,7 +119,7 @@ export function Header() {
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-4">
                     <Link href="https://crm.goxt.io" className="goxt-btn-primary">
-                        Inicia sesión
+                        Iniciar Sesión
                     </Link>
                     <Link href="/contacto" className="goxt-btn-secondary">
                         Solicitar Demo

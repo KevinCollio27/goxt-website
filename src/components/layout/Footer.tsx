@@ -98,7 +98,7 @@ export function Footer() {
                     </div>
                     {/* Enlaces rápidos */}
                     <div>
-                        <h3 className="text-xl font-bold mb-4" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'white' }}>
+                        <h3 className="text-white font-medium mb-4 flex items-center gap-1">
                             Acceso Directo
                         </h3>
                         <ul className="space-y-3">

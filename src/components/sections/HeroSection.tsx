@@ -24,7 +24,7 @@ const stats: Stat[] = [
         Icon: Building2,
     },
     {
-        value: "+2M USD",
+        value: "+USD 2M",
         label: "Gestionados",
         description: "en cotizaciones",
         Icon: DollarSign,
@@ -106,7 +106,7 @@ export function HeroSection() {
                             className="text-sm font-bold tracking-wide uppercase"
                             style={{ color: '#0059B3' }}
                         >
-                            LA SUITE PARA TRANSPORTE Y LOGÍSTICA
+                            TODA LA LOGÍSTICA EN UN SOLO LUGAR
                         </span>
                     </motion.div>
 
@@ -132,15 +132,6 @@ export function HeroSection() {
                         </span>
                     </motion.h1>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.15 }}
-                        className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto mb-12 leading-relaxed"
-                    >
-                        Dime lo que necesitas y te diré como podemos ayudarte.
-                    </motion.p>
-
                     {/* AI Chat Widget */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -152,6 +143,7 @@ export function HeroSection() {
                         <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
                         <div className="relative bg-gradient-to-b from-[#E0F7FA] to-[#E3E8EF] rounded-2xl p-6 md:p-8 shadow-xl border border-white/50 backdrop-blur-sm">
+                            <p className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto mb-12 leading-relaxed">¿En qué puedo ayudarte?</p>
                             <form
                                 onSubmit={handleSubmit}
                                 className="relative"
