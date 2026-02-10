@@ -2,16 +2,17 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-// Interfaz para datos del lead
+// Interfaz para datos del lead (coincide con formulario de contacto)
 interface LeadData {
     name: string;
     email: string;
+    phone?: string;
     company?: string;
+    rut?: string;
+    website?: string;
+    industry?: string;
     productInterest: string;
     message?: string;
-    phone?: string;
-    fleetSize?: string;
-    currentSoftware?: string;
     collectedAt: string; // ISO string
 }
 
@@ -20,9 +21,9 @@ export async function POST(req: Request) {
         const leadData: LeadData = await req.json();
 
         // Validar datos requeridos
-        if (!leadData.name || !leadData.email || !leadData.productInterest) {
+        if (!leadData.name || !leadData.email) {
             return NextResponse.json(
-                { error: "Faltan campos requeridos: name, email, productInterest" },
+                { error: "Faltan campos requeridos: name, email" },
                 { status: 400 }
             );
         }
@@ -62,7 +63,14 @@ export async function POST(req: Request) {
         // Guardar archivo actualizado
         fs.writeFileSync(filePath, JSON.stringify(leads, null, 2), 'utf-8');
 
-        console.log('✅ Lead capturado exitosamente:', leadData);
+        console.log('✅ Lead capturado exitosamente:', {
+            name: leadData.name,
+            email: leadData.email,
+            phone: leadData.phone,
+            company: leadData.company,
+            rut: leadData.rut,
+            industry: leadData.industry,
+        });
 
         // TODO: En el futuro, también enviar a api-crm.goxt.io/public/leads
         // try {
@@ -89,3 +97,4 @@ export async function POST(req: Request) {
         );
     }
 }
+

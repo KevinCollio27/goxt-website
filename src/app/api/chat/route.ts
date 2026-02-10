@@ -20,16 +20,17 @@ interface CachedDocs {
     timestamp: number;
 }
 
-// Interfaz para datos del lead
+// Interfaz para datos del lead (coincide con formulario de contacto)
 interface LeadData {
     name: string;
     email: string;
-    company?: string;
+    phone: string;
+    company: string;
+    rut?: string;
+    website?: string;
+    industry?: string;
     productInterest: string;
     message?: string;
-    phone?: string;
-    fleetSize?: string;
-    currentSoftware?: string;
     collectedAt: Date;
 }
 
@@ -189,20 +190,49 @@ function startDemoCollection(sessionId: string): ConversationState {
     return conversationState;
 }
 
-// Procesar paso de demo
+// Procesar paso de demo (5 pasos alineados con formulario de contacto)
 function processDemoStep(sessionId: string, userInput: string, currentStep: number) {
     const conversationState = conversationStates.get(sessionId);
     if (!conversationState) return { nextStep: 0, isComplete: false };
 
-    // Guardar dato según el paso actual
-    const steps = ['name', 'email', 'company', 'productInterest', 'phone', 'fleetSize', 'currentSoftware'];
-    if (currentStep < steps.length) {
-        const field = steps[currentStep] as keyof Omit<LeadData, 'collectedAt' | 'message'>;
-        conversationState.collectedData[field] = userInput.trim();
+    // Mapear paso actual al campo correspondiente
+    const stepFieldMap: { step: number; fields: (keyof Omit<LeadData, 'collectedAt' | 'message'>)[] }[] = [
+        { step: 0, fields: ['name'] },
+        { step: 1, fields: ['email'] },
+        { step: 2, fields: ['phone'] },
+        { step: 3, fields: ['company', 'rut'] },       // empresa + RUT juntos
+        { step: 4, fields: ['industry', 'website'] },   // industria + web juntos (opcionales)
+    ];
+
+    const TOTAL_STEPS = stepFieldMap.length;
+
+    if (currentStep < TOTAL_STEPS) {
+        const mapping = stepFieldMap[currentStep];
+        const input = userInput.trim();
+
+        if (currentStep === 3) {
+            // Paso 4: separar empresa y RUT si el usuario los da juntos
+            const parts = input.split(/[,;\-–]/); // separador flexible
+            conversationState.collectedData.company = parts[0]?.trim() || input;
+            if (parts[1]) {
+                conversationState.collectedData.rut = parts[1].trim();
+            }
+        } else if (currentStep === 4) {
+            // Paso 5: industria y web opcionales
+            if (input.toLowerCase().includes('no') || input.toLowerCase().includes('omitir') || input.toLowerCase().includes('saltar')) {
+                // El usuario no quiere dar estos datos
+            } else {
+                conversationState.collectedData.industry = input;
+            }
+        } else {
+            // Pasos simples: un campo por paso
+            const field = mapping.fields[0];
+            conversationState.collectedData[field] = input;
+        }
     }
 
     const nextStep = currentStep + 1;
-    const isComplete = nextStep >= steps.length;
+    const isComplete = nextStep >= TOTAL_STEPS;
 
     if (!isComplete) {
         conversationState.currentStep = nextStep;
@@ -310,52 +340,43 @@ Porque queremos asegurarnos de que:
 ¿Te gustaría agendar una **demo personalizada y sin compromiso** para que nuestro equipo pueda conocerte mejor y crear una propuesta que se ajuste perfectamente a lo que necesitas?`;
 }
 
-// Prompt para proceso de demo
+// Prompt para proceso de demo (5 pasos alineados con formulario de contacto)
 function getDemoPrompt(currentStep: number, collectedData: Partial<LeadData> = {}) {
     const steps = [
         {
             question: "nombre completo",
             field: "name",
-            explanation: "para personalizar tu experiencia y dirigirte correctamente"
+            explanation: "para personalizar tu experiencia. Ej: Juan Pérez"
         },
         {
             question: "correo electrónico",
             field: "email",
-            explanation: "para enviarte los detalles de la demo y materiales"
-        },
-        {
-            question: "nombre de tu empresa",
-            field: "company",
-            explanation: "para entender mejor tu contexto (este campo es opcional, puedes decir 'prefiero no decirlo')"
-        },
-        {
-            question: "producto de interés",
-            field: "productInterest",
-            explanation: "¿te interesa CRM, Cargo, o ambos? Así enfocamos la demo en lo que necesitas"
+            explanation: "para enviarte los detalles de la demo. Puede ser tu correo de trabajo o personal"
         },
         {
             question: "teléfono de contacto",
             field: "phone",
-            explanation: "por si necesitamos contactarte (opcional, puedes decir 'no quiero compartirlo')"
+            explanation: "para que nuestro equipo pueda coordinarse contigo de forma rápida"
         },
         {
-            question: "tamaño aproximado de tu flota",
-            field: "fleetSize",
-            explanation: "para mostrarte cómo GOxT escala según tu operación (opcional)"
+            question: "nombre de tu empresa y RUT o ID fiscal",
+            field: "company",
+            explanation: "para preparar la demo con el contexto de tu empresa. Dime el nombre y, si lo tienes a mano, el RUT separado por coma. Ej: Transportes S.A., 76.123.456-K"
         },
         {
-            question: "software actual que utilizas",
-            field: "currentSoftware",
-            explanation: "para explicarte la migración y beneficios específicos (opcional, si no usas ninguno solo dilo)"
+            question: "industria o giro de tu empresa y sitio web",
+            field: "industry",
+            explanation: "para entender mejor tu sector (ej: Logística, Minería, Retail). Si tienes sitio web, compártelo también. Estos campos son opcionales, puedes decir 'omitir' si prefieres"
         }
     ];
 
+    const TOTAL_STEPS = steps.length;
     const step = steps[currentStep];
-    const collectedFields = Object.keys(collectedData).length;
+    const collectedFields = Object.entries(collectedData).filter(([_, v]) => v).length;
 
-    return `Eres el agente IA de GOxT, que está ayudando a un usuario a SOLICITAR UNA DEMO.
+    return `Eres el Agente GOxT, un consultor amable que está ayudando a un usuario a SOLICITAR UNA DEMO completando su formulario de contacto.
 
-ESTADO DEL PROCESO (${collectedFields + 1}/7 datos):
+ESTADO DEL PROCESO (${collectedFields + 1}/${TOTAL_STEPS} datos):
 
 DATOS RECOPILADOS:
 ${Object.entries(collectedData)
@@ -363,27 +384,27 @@ ${Object.entries(collectedData)
             .map(([k, v]) => `✓ ${k}: ${v}`)
             .join('\n') || 'Aún sin datos.'}
 
-PASO ACTUAL (${currentStep + 1}/7):
+PASO ACTUAL (${currentStep + 1}/${TOTAL_STEPS}):
 Necesitas recopilar: ${step.question}
 
 INSTRUCCIONES CRÍTICAS:
-1. Sé CONVERSACIONAL y AMABLE, no como un formulario
+1. Sé CONVERSACIONAL, CORDIAL y CÁLIDO, como un asesor que genuinamente quiere ayudar
 2. PIDE SOLO este dato: "${step.question}"
 3. EXPLICA brevemente: "${step.explanation}"
-4. Si es campo opcional, MENCIONA que puede omitirlo
+4. Si es el último paso (paso 5), menciona que es OPCIONAL y puede decir "omitir"
 5. NO preguntes múltiples cosas a la vez
 6. NO pidas datos que ya tienes
-
-EJEMPLO DE RESPUESTA IDEAL:
-"¡Perfecto! Ahora necesito tu ${step.question} ${step.explanation}. ¿Cuál es tu ${step.question}?"
+7. Si el usuario ya proporcionó algún dato previamente en la conversación, reconócelo
 
 SI EL USUARIO PREGUNTA OTRA COSA:
-Responde MUY BREVEMENTE y luego retoma: "Por cierto, necesitaría tu ${step.question} para continuar."
+Responde MUY BREVEMENTE y luego retoma cordialmente: "Por cierto, para avanzar con tu solicitud, necesitaría tu ${step.question}."
 
-SI EL DATO PARECE INVÁLIDO (ej: email sin @):
-"Hmm, ese ${step.question} no parece correcto. ¿Podrías verificarlo?"
+SI EL DATO PARECE INVÁLIDO (ej: email sin @, teléfono muy corto):
+"Hmm, parece que ese dato no está completo. ¿Podrías verificarlo?"
 
-TONO: Profesional pero cálido, como un vendedor experto ayudando a un cliente.
+TONO: Profesional pero cálido, como un asesor experto que se preocupa por el cliente.
+
+IMPORTANTE: Menciona que estás completando su formulario de solicitud de demo para que el equipo de GOxT pueda contactarlo.
 
 RESPONDE EN ESPAÑOL.`;
 }
@@ -391,52 +412,34 @@ RESPONDE EN ESPAÑOL.`;
 // Prompt para confirmación de envío
 function getConfirmationPrompt(leadData: LeadData, submitResult: { success: boolean; error?: string }) {
     if (submitResult.success) {
-        // Determinar qué login recomendar
-        const productLower = leadData.productInterest.toLowerCase();
-        let loginInfo = "";
+        return `Eres el Agente GOxT y acabas de COMPLETAR exitosamente el formulario de solicitud de demo del usuario.
 
-        if (productLower.includes('crm') && productLower.includes('cargo')) {
-            loginInfo = `\n\n**Cuando necesites acceder:**\n• GOxT CRM: ${PRODUCT_URLS.CRM}\n• GOxT Cargo: ${PRODUCT_URLS.CARGO}`;
-        } else if (productLower.includes('crm')) {
-            loginInfo = `\n\n**Cuando necesites acceder a GOxT CRM:** ${PRODUCT_URLS.CRM}`;
-        } else if (productLower.includes('cargo')) {
-            loginInfo = `\n\n**Cuando necesites acceder a GOxT Cargo:** ${PRODUCT_URLS.CARGO}`;
-        }
-
-        return `Eres el agente IA de GOxT y acabas de COMPLETAR exitosamente la solicitud de demo del usuario.
-
-DATOS CAPTURADOS:
+DATOS DEL FORMULARIO ENVIADOS:
 - Nombre: ${leadData.name}
 - Email: ${leadData.email}
-- Empresa: ${leadData.company || 'No especificada'}
-- Producto: ${leadData.productInterest}
-- Teléfono: ${leadData.phone || 'No especificado'}
-- Flota: ${leadData.fleetSize || 'No especificada'}
-- Software actual: ${leadData.currentSoftware || 'No especificado'}
+- Teléfono: ${leadData.phone}
+- Empresa: ${leadData.company}
+- RUT: ${leadData.rut || 'No proporcionado'}
+- Industria: ${leadData.industry || 'No proporcionada'}
+- Sitio Web: ${leadData.website || 'No proporcionado'}
 
 INSTRUCCIONES:
-1. CONFIRMA que su solicitud fue enviada exitosamente
-2. Dile que el equipo se pondrá en contacto en menos de 24 horas
-3. ${loginInfo ? 'Proporciona la información de login:' : ''}
-4. Pregunta si tiene alguna otra duda mientras tanto
-5. Mantén un tono ENTUSIASTA y PROFESIONAL
-
-RESPONSE FORMAT:
-"¡Listo, ${leadData.name}! 🎉 Tu solicitud de demo para ${leadData.productInterest} ha sido enviada exitosamente. 
-
-Nuestro equipo se pondrá en contacto contigo a ${leadData.email} en las próximas 24 horas para coordinar la mejor fecha y hora.${loginInfo}
-
-Mientras tanto, ¿hay algo más que quieras saber sobre GOxT?"
+1. CONFIRMA con entusiasmo que su formulario de solicitud de demo fue completado y enviado exitosamente
+2. Haz un RESUMEN breve de los datos enviados
+3. Dile que el equipo de GOxT se pondrá en contacto en menos de 24 horas
+4. Menciona que pueden contactarlo al email y teléfono que proporcionó
+5. Pregunta si tiene alguna otra duda mientras tanto
+6. Mantén un tono ENTUSIASTA, CORDIAL y PROFESIONAL
 
 RESPONDE EN ESPAÑOL con mucho ENTUSIASMO.`;
     } else {
-        return `Eres el agente IA de GOxT y hubo un ERROR al enviar la solicitud de demo.
+        return `Eres el Agente GOxT y hubo un ERROR al enviar el formulario de solicitud de demo.
 
 ERROR: ${submitResult.error}
 
 INSTRUCCIONES:
-1. DISCULPATE profesionalmente
-2. Ofrece alternativa: que te contacte por email a contacto@goxt.io
+1. DISCÚLPATE profesionalmente
+2. Ofrece alternativa: que te contacte por email a contacto@goxt.io o que complete el formulario directamente en la sección de contacto del sitio web
 3. Mantén tono CALMADO y SERVICIAL
 
 RESPONDE EN ESPAÑOL de forma EMPÁTICA.`;
@@ -492,25 +495,40 @@ RESPONDE EN ESPAÑOL de forma CONVINCENTE y MOTIVADORA.`;
     }
 
     // Base prompt para conversación normal
-    let systemPrompt = `Eres el agente IA de GOxT especializado en software para transporte y logística.
+    let systemPrompt = `Eres el Agente GOxT, un consultor experto y cordial en software para transporte y logística.
+    
+    TU OBJETIVO PRINCIPAL:
+    1. ESCUCHAR y ENTENDER los problemas o desafíos logísticos del usuario.
+    2. CAPTURAR información del lead (Nombre, Email, Teléfono) de forma natural durante la charla.
+    3. GUIAR al usuario hacia una solución (Demo o Login).
 
-CONTEXTO DISPONIBLE:
-=== INFORMACIÓN DEL CRM ===
-${docs.crm}
-=== FIN CRM ===
+    CONSTITUCIÓN DEL AGENTE:
+    - Sé EXTREMADAMENTE CORDIAL y EMPÁTICO. Usa frases como "Entiendo perfectamente lo difícil que puede ser...", "¿Cómo te ha afectado ese problema en el día a día?", "¡Qué gusto saludarte! Estoy aquí para apoyarte".
+    - No seas un simple buscador de info. Sé un asesor. Si el usuario menciona un problema, indaga más antes de dar una solución técnica.
+    - Captura de Datos: No pidas todo de golpe. Si el usuario te cuenta un problema, podrías decir: "Eso suena como algo que podemos resolver. Para darte una asesoría más precisa, ¿con quién tengo el gusto de hablar?" (para nombre) o "Me encantaría enviarte una propuesta sobre esto, ¿cuál es tu correo?".
 
-DETECTADO EN CONVERSACIÓN:
-${detectedCRM ? '• Usuario muestra interés en CRM\n' : ''}
-${detectedCargo ? '• Usuario muestra interés en Cargo\n' : ''}
-${wantsLogin ? '• Usuario quiere acceder/login\n' : ''}
-${wantsTrial ? '• Usuario quiere probar el sistema\n' : ''}
+    CONTEXTO DISPONIBLE:
+    === INFORMACIÓN DEL CRM ===
+    ${docs.crm}
+    === FIN CRM ===
+    
+    DETECTADO EN CONVERSACIÓN:
+    ${detectedCRM ? '• Usuario muestra interés en CRM\n' : ''}
+    ${detectedCargo ? '• Usuario muestra interés en Cargo\n' : ''}
+    ${wantsLogin ? '• Usuario quiere acceder/login\n' : ''}
+    ${wantsTrial ? '• Usuario quiere probar el sistema\n' : ''}
+    
+    URLS IMPORTANTES (úsalos cuando sea relevante):
+    • GOxT CRM Login: ${PRODUCT_URLS.CRM}
+    • GOxT Cargo Login: ${PRODUCT_URLS.CARGO}
+    • Solicitar Demo: ${PRODUCT_URLS.DEMO_REQUEST}
+    
+    ESTRATEGIA RECOMENDADA:
+    - Si es el inicio de la charla: Saluda cordialmente y pregunta qué problemas o desafíos está enfrentando hoy en su logística o ventas.
+    - Si ya identificaste un problema: Explica brevemente cómo GOxT lo resuelve y pide un dato de contacto (Email o Teléfono) para profundizar.
+    - Si el usuario parece listo: Ofrécele agendar una demo personalizada.
 
-URLS IMPORTANTES (úsalos cuando sea relevante, pero NO los repitas textualmente):
-• GOxT CRM Login: ${PRODUCT_URLS.CRM}
-• GOxT Cargo Login: ${PRODUCT_URLS.CARGO}
-• Solicitar Demo: ${PRODUCT_URLS.DEMO_REQUEST}
-
-TU ESTRATEGIA:`;
+    RESPONDE EN ESPAÑOL con tono PROFESIONAL, CÁLIDO y de ASESOR experto.`;
 
     if (wantsLogin) {
         systemPrompt += `
@@ -634,12 +652,13 @@ export async function POST(req: Request) {
                 const leadData: LeadData = {
                     name: conversationState.collectedData.name,
                     email: conversationState.collectedData.email,
-                    company: conversationState.collectedData.company,
-                    productInterest: conversationState.collectedData.productInterest || 'general',
-                    phone: conversationState.collectedData.phone,
-                    fleetSize: conversationState.collectedData.fleetSize,
-                    currentSoftware: conversationState.collectedData.currentSoftware,
-                    message: `Demo solicitada vía Chat IA. Flota: ${conversationState.collectedData.fleetSize || 'N/A'}, Software: ${conversationState.collectedData.currentSoftware || 'N/A'}`,
+                    phone: conversationState.collectedData.phone || '',
+                    company: conversationState.collectedData.company || '',
+                    rut: conversationState.collectedData.rut,
+                    website: conversationState.collectedData.website,
+                    industry: conversationState.collectedData.industry,
+                    productInterest: 'Demo solicitada vía Chat IA',
+                    message: `Empresa: ${conversationState.collectedData.company || 'N/A'}, RUT: ${conversationState.collectedData.rut || 'N/A'}, Industria: ${conversationState.collectedData.industry || 'N/A'}`,
                     collectedAt: new Date()
                 };
 
