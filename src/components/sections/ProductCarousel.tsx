@@ -23,11 +23,11 @@ const products = {
         name: "CRM",
         title: "Gestión Comercial Inteligente",
         tagline: "De leads a clientes leales: domina tu ciclo de ventas.",
-        description: "GOxT CRM no es solo una base de datos, es tu copiloto comercial. Diseñado para equipos de alto rendimiento que necesitan velocidad y claridad.",
+        description: "Nuestro CRM no es solo una base de datos, es tu copiloto comercial. Diseñado para equipos de alto rendimiento que necesitan velocidad y claridad.",
         features: [
             {
                 icon: <BarChart3 className="w-6 h-6" />,
-                title: "Pipeline Visual",
+                title: "Pipeline Interactivo",
                 desc: "Visualiza tus oportunidades en un tablero Kanban intuitivo. Arrastra, suelta y cierra tratos."
             },
             {
@@ -52,17 +52,17 @@ const products = {
         name: "CARGO",
         title: "Control Total de Logística",
         tagline: "Tu flota, tus rutas y tu operación bajo control absoluto.",
-        description: "GOxT Cargo es el sistema operativo para el transporte moderno. Optimiza cada kilometro y maximiza la rentabilidad de tu flota.",
+        description: "Nuestro TMS Cargo es el sistema operativo para el transporte moderno. Optimiza cada kilometro y maximiza la rentabilidad de tu flota.",
         features: [
             {
                 icon: <Truck className="w-6 h-6" />,
                 title: "Gestión de Flotas",
-                desc: "Hoja de vida de cada vehículo. Mantenimientos, seguros y documentación siempre al día."
+                desc: "Hoja de vida de cada vehículo. Seguros y documentación siempre al día."
             },
             {
                 icon: <Map className="w-6 h-6" />,
-                title: "Rutas Eficientes",
-                desc: "Planificación inteligente de rutas para reducir combustible y mejorar tiempos de entrega."
+                title: "Gestión Documental Eficiente",
+                desc: "Gestión de documentos de manera centralizada y seguimiento de la ruta sin perder documentos."
             },
             {
                 icon: <ShieldCheck className="w-6 h-6" />,
@@ -103,7 +103,13 @@ export default function ProductCarousel() {
                         className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-200 flex items-center gap-2 ${activeTab === "crm" ? "text-white" : "text-gray-500 hover:text-gray-900"
                             }`}
                     >
-                        <Users className="w-4 h-4" />
+                        <Image
+                            src={activeTab === "crm" ? "/assets/logo_central.png" : "/assets/logo_central_negro.png"}
+                            alt="CRM"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 object-contain"
+                        />
                         GOXT CRM
                     </button>
 
@@ -112,8 +118,14 @@ export default function ProductCarousel() {
                         className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-200 flex items-center gap-2 ${activeTab === "cargo" ? "text-white" : "text-gray-500 hover:text-gray-900"
                             }`}
                     >
-                        <Truck className="w-4 h-4" />
-                        GOXT CARGO
+                        <Image
+                            src={activeTab === "cargo" ? "/assets/logo_central.png" : "/assets/logo_central_negro.png"}
+                            alt="Cargo"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 object-contain"
+                        />
+                        GOXT TMS CARGO
                     </button>
                 </div>
             </div>
@@ -183,15 +195,35 @@ export default function ProductCarousel() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.6 }}
-                                className="pt-4"
+                                className="pt-4 flex flex-wrap gap-4"
                             >
-                                <Link
-                                    href={products[activeTab].href}
-                                    className={`inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${products[activeTab].color}`}
-                                >
-                                    Explorar {products[activeTab].name}
-                                    <ArrowRight className="w-5 h-5" />
-                                </Link>
+                                {activeTab === "crm" ? (
+                                    <>
+                                        <Link
+                                            href="https://crm.goxt.io"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${products[activeTab].color}`}
+                                        >
+                                            Empieza Gratis
+                                            <ArrowRight className="w-5 h-5" />
+                                        </Link>
+                                        <Link
+                                            href="/productos/crm"
+                                            className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-[var(--goxt-midnight)] font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-1 bg-white border border-gray-100"
+                                        >
+                                            Conoce más
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <Link
+                                        href="/contacto"
+                                        className={`inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${products[activeTab].color}`}
+                                    >
+                                        Solicitar Demo
+                                        <ArrowRight className="w-5 h-5" />
+                                    </Link>
+                                )}
                             </motion.div>
                         </div>
 

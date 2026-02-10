@@ -1,9 +1,9 @@
 import {
   HeroSection,
   ProductsSection,
-  BenefitsSection,
   ContactSection,
   ComparisonSection,
+  CTASection,
 } from "@/components/sections";
 
 export default function HomePage() {
@@ -11,8 +11,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ProductsSection />
-      <BenefitsSection />
-      <ComparisonSection />
+      <CTASection />
       <ContactSection />
     </>
   );

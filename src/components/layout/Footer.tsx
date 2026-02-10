@@ -98,7 +98,9 @@ export function Footer() {
                     </div>
                     {/* Enlaces rápidos */}
                     <div>
-                        <h3 className="text-display text-sm tracking-widest mb-4 text-white">Acceso Directo</h3>
+                        <h3 className="text-white font-medium mb-4 flex items-center gap-1">
+                            Acceso Directo
+                        </h3>
                         <ul className="space-y-3">
                             {aplicaciones.map((app) => (
                                 <a

@@ -12,27 +12,12 @@ const navigation = [
         href: "/productos",
         submenu: [
             {
-                name: "GOxT CRM",
+                name: "CRM",
                 href: "/productos/crm",
-                description: "Gestión comercial y cotizaciones",
                 icon: (
                     <Image
-                        src="/assets/Logo_CRM_Blanco.png"
-                        alt="GOxT CRM"
-                        width={30}
-                        height={30}
-                        className="w-12 h-6 object-contain"
-                    />
-                ),
-            },
-            {
-                name: "GOxT Cargo",
-                href: "/productos/cargo",
-                description: "Control de flotas y operaciones",
-                icon: (
-                    <Image
-                        src="/assets/Logo_cargo_Blanco.png"
-                        alt="GOxT Cargo"
+                        src="/assets/logo_central_negro.png"
+                        alt="CRM"
                         width={30}
                         height={30}
                         className="w-12 h-6 object-contain"
@@ -120,9 +105,6 @@ export function Header() {
                                                         <div className="font-semibold text-gray-900 group-hover:text-[var(--goxt-primary)]">
                                                             {subitem.name}
                                                         </div>
-                                                        <div className="text-sm text-gray-500">
-                                                            {subitem.description}
-                                                        </div>
                                                     </div>
                                                 </Link>
                                             ))}
@@ -136,7 +118,10 @@ export function Header() {
 
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-4">
-                    <Link href="/contacto" className="goxt-btn-primary">
+                    <Link href="https://crm.goxt.io" className="goxt-btn-primary">
+                        Iniciar Sesión
+                    </Link>
+                    <Link href="/contacto" className="goxt-btn-secondary">
                         Solicitar Demo
                     </Link>
                 </div>
@@ -219,14 +204,14 @@ export function Header() {
                             <div className="pt-4 space-y-3 border-t border-gray-100">
                                 <Link
                                     href="https://crm.goxt.io"
-                                    target="_blank"
-                                    className="block py-3 text-center text-gray-700 font-medium"
+                                    className="block goxt-btn-accent text-center"
+                                    onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Iniciar Sesión
                                 </Link>
                                 <Link
                                     href="/contacto"
-                                    className="block goxt-btn-accent text-center"
+                                    className="block goxt-btn-secondary text-center"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Solicitar Demo
