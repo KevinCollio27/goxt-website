@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, Rea
 interface Message {
     role: "user" | "assistant";
     content: string;
+    image?: string; // base64 data URL
 }
 
 interface ChatContextType {
@@ -22,7 +23,7 @@ interface ChatContextType {
     clearChat: () => void;
 
     // Funcionalidad
-    sendMessage: (content: string) => Promise<void>;
+    sendMessage: (content: string, image?: string) => Promise<void>;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -99,32 +100,30 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     }, []);
 
     // Función centralizada para enviar mensajes
-    const sendMessage = useCallback(async (content: string) => {
-        if (!content.trim() || isLoading) return;
+    const sendMessage = useCallback(async (content: string, image?: string) => {
+        if ((!content.trim() && !image) || isLoading) return;
 
         // 1. Añadir mensaje de usuario
-        const userMessage: Message = { role: "user", content };
+        const userMessage: Message = { role: "user", content, ...(image ? { image } : {}) };
         setMessagesState(prev => [...prev, userMessage]);
         setIsLoading(true);
 
         try {
-            // 2. Llamada API
-            // Nota: usamos el estado actual de messages + el nuevo mensaje
-            // Como setMessagesState es asíncrono, usamos el callback para obtener el valor más reciente si fuera necesario,
-            // pero aquí construimos el array para la petición manualmente.
-
-            // IMPORTANTE: Necesitamos el valor actual de messages y sessionId. 
-            // Como estamos dentro de un closure, 'messages' y 'sessionId' podrían ser viejos si no depedemos de ellos.
-            // Para evitar problemas de dependencias complejas, usaremos una referencia funcional en el fetch o
-            // aceptaremos que sendMessage se re-crea cuando messages cambia.
-
             const currentMessages = [...messages, userMessage];
+
+            // Para el API, enviamos el historial pero solo la imagen del mensaje actual
+            // para ahorrar ancho de banda y tokens
+            const messagesForApi = currentMessages.map((msg, index) => {
+                if (index === currentMessages.length - 1) return msg;
+                const { image, ...rest } = msg;
+                return rest;
+            });
 
             const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    messages: currentMessages,
+                    messages: messagesForApi,
                     sessionId: sessionId || undefined,
                 }),
             });

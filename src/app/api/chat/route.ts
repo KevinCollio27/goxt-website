@@ -190,6 +190,21 @@ function startDemoCollection(sessionId: string): ConversationState {
     return conversationState;
 }
 
+// Extraer email de un mensaje de texto natural
+function extractEmail(text: string): string {
+    const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
+    const match = text.match(emailRegex);
+    return match ? match[0] : text.trim();
+}
+
+// Extraer teléfono de un mensaje de texto natural
+function extractPhone(text: string): string {
+    // Eliminar texto común y quedarse sólo con el número
+    const phoneRegex = /[+]?[\d\s\-().]{7,20}/;
+    const match = text.match(phoneRegex);
+    return match ? match[0].trim() : text.trim();
+}
+
 // Procesar paso de demo (5 pasos alineados con formulario de contacto)
 function processDemoStep(sessionId: string, userInput: string, currentStep: number) {
     const conversationState = conversationStates.get(sessionId);
@@ -210,7 +225,13 @@ function processDemoStep(sessionId: string, userInput: string, currentStep: numb
         const mapping = stepFieldMap[currentStep];
         const input = userInput.trim();
 
-        if (currentStep === 3) {
+        if (currentStep === 1) {
+            // Paso 2: extraer email del mensaje del usuario
+            conversationState.collectedData.email = extractEmail(input);
+        } else if (currentStep === 2) {
+            // Paso 3: extraer teléfono del mensaje del usuario
+            conversationState.collectedData.phone = extractPhone(input);
+        } else if (currentStep === 3) {
             // Paso 4: separar empresa y RUT si el usuario los da juntos
             const parts = input.split(/[,;\-–]/); // separador flexible
             conversationState.collectedData.company = parts[0]?.trim() || input;
@@ -225,7 +246,7 @@ function processDemoStep(sessionId: string, userInput: string, currentStep: numb
                 conversationState.collectedData.industry = input;
             }
         } else {
-            // Pasos simples: un campo por paso
+            // Pasos simples: un campo por paso (nombre)
             const field = mapping.fields[0];
             conversationState.collectedData[field] = input;
         }
@@ -243,9 +264,22 @@ function processDemoStep(sessionId: string, userInput: string, currentStep: numb
 }
 
 // Enviar lead a la API
-async function submitLeadToAPI(leadData: LeadData): Promise<{ success: boolean; error?: string }> {
+async function submitLeadToAPI(leadData: LeadData, requestUrl?: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const response = await fetch(`http://localhost:3000/api/leads`, {
+        // Determinar la URL base dinámicamente
+        let baseUrl = 'http://localhost:3000';
+        if (requestUrl) {
+            try {
+                const url = new URL(requestUrl);
+                baseUrl = url.origin;
+            } catch {
+                // fallback al default
+            }
+        } else if (process.env.NEXT_PUBLIC_SITE_URL) {
+            baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+        }
+
+        const response = await fetch(`${baseUrl}/api/leads`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -446,6 +480,30 @@ RESPONDE EN ESPAÑOL de forma EMPÁTICA.`;
     }
 }
 
+// Formatear mensajes para OpenAI (soporte para visión)
+function formatOpenAIMessages(messages: any[]): any[] {
+    return messages.map((msg) => {
+        if (msg.role === 'user' && msg.image) {
+            return {
+                role: 'user',
+                content: [
+                    { type: 'text', text: msg.content || "¿Qué ves en esta imagen?" },
+                    {
+                        type: 'image_url',
+                        image_url: {
+                            url: msg.image, // base64 data URL
+                        },
+                    },
+                ],
+            };
+        }
+        return {
+            role: msg.role,
+            content: msg.content,
+        };
+    });
+}
+
 // Prompt normal con detección de interés
 function getNormalPrompt(
     userMessage: string,
@@ -600,6 +658,9 @@ export async function POST(req: Request) {
             .filter((msg: any) => msg.role === 'user')
             .pop()?.content || '';
 
+        // Formatear mensajes para OpenAI (Vision support)
+        const openAIMessages = formatOpenAIMessages(messages);
+
         const conversationHistory = messages
             .filter((msg: any) => msg.role === 'user')
             .slice(0, -1) // Excluir el último mensaje
@@ -625,8 +686,10 @@ export async function POST(req: Request) {
         }
 
         // Si el usuario quiere demo y no estamos en proceso, iniciar
+        let justStartedDemo = false;
         if (interest.wantsDemo && !conversationState?.isCollectingDemoData) {
             conversationState = startDemoCollection(currentSessionId);
+            justStartedDemo = true;
 
             // Transferir interés detectado
             if (conversationState) {
@@ -641,11 +704,20 @@ export async function POST(req: Request) {
 
         // Si estamos en proceso de demo
         if (conversationState?.isCollectingDemoData) {
-            const { nextStep, isComplete } = processDemoStep(
-                currentSessionId,
-                lastUserMessage,
-                conversationState.currentStep
-            );
+            // Si acabamos de iniciar el demo, NO procesar el mensaje trigger como dato
+            // Solo generar el prompt para pedir el primer dato (nombre)
+            let nextStep = conversationState.currentStep;
+            let isComplete = false;
+
+            if (!justStartedDemo) {
+                const result = processDemoStep(
+                    currentSessionId,
+                    lastUserMessage,
+                    conversationState.currentStep
+                );
+                nextStep = result.nextStep;
+                isComplete = result.isComplete;
+            }
 
             // Si completamos todos los pasos, enviar a API
             if (isComplete && conversationState.collectedData.name && conversationState.collectedData.email) {
@@ -662,7 +734,7 @@ export async function POST(req: Request) {
                     collectedAt: new Date()
                 };
 
-                const submitResult = await submitLeadToAPI(leadData);
+                const submitResult = await submitLeadToAPI(leadData, req.url);
 
                 // Generar mensaje de confirmación
                 const systemPrompt = getConfirmationPrompt(leadData, submitResult);
@@ -702,10 +774,10 @@ export async function POST(req: Request) {
                     model: "gpt-4o-mini",
                     messages: [
                         { role: "system", content: systemPrompt },
-                        ...messages,
+                        ...openAIMessages,
                     ],
                     temperature: 0.7,
-                    max_tokens: 300,
+                    max_tokens: 500, // Aumentado para visión
                 });
 
                 const response = completion.choices[0]?.message?.content ||
@@ -753,10 +825,10 @@ export async function POST(req: Request) {
                 model: "gpt-4o-mini",
                 messages: [
                     { role: "system", content: systemPrompt },
-                    ...messages,
+                    ...openAIMessages,
                 ],
                 temperature: 0.8,
-                max_tokens: 500,
+                max_tokens: 800, // Aumentado para visión
             });
 
             const response = completion.choices[0]?.message?.content ||
