@@ -39,6 +39,10 @@ interface ConversationState {
     isCollectingDemoData: boolean;
     currentStep: number;
     collectedData: Partial<LeadData>;
+    funnelStep: 'pain' | 'solution' | 'contact' | 'completed'; // El funnel de 3 pasos
+    funnelData: {
+        painIdentified?: string;
+    };
     detectedInterest: {
         crm: boolean;
         cargo: boolean;
@@ -179,6 +183,8 @@ function startDemoCollection(sessionId: string): ConversationState {
         isCollectingDemoData: true,
         currentStep: 0,
         collectedData: {},
+        funnelStep: 'contact', // Cuando es demo directa, vamos al paso de contacto
+        funnelData: {},
         detectedInterest: {
             crm: false,
             cargo: false,
@@ -504,13 +510,15 @@ function formatOpenAIMessages(messages: any[]): any[] {
     });
 }
 
-// Prompt normal con detección de interés
+// Prompt normal con detección de interés y funnel de 3 pasos
 function getNormalPrompt(
     userMessage: string,
     conversationHistory: string[] = [],
-    interest: ReturnType<typeof analyzeUserInterest>
+    interest: ReturnType<typeof analyzeUserInterest>,
+    conversationState: ConversationState
 ) {
     const docs = getCachedDocs();
+    const { funnelStep } = conversationState;
 
     const detectedCRM = interest.interestedInCRM;
     const detectedCargo = interest.interestedInCargo;
@@ -552,100 +560,59 @@ EJEMPLO DE RESPUESTA:
 RESPONDE EN ESPAÑOL de forma CONVINCENTE y MOTIVADORA.`;
     }
 
-    // Base prompt para conversación normal
+    // Base prompt para conversación normal basada en el FUNNEL DE 3 PASOS
     let systemPrompt = `Eres el Agente GOxT, un consultor experto y cordial en software para transporte y logística.
-    
-    TU OBJETIVO PRINCIPAL:
-    1. ESCUCHAR y ENTENDER los problemas o desafíos logísticos del usuario.
-    2. CAPTURAR información del lead (Nombre, Email, Teléfono) de forma natural durante la charla.
-    3. GUIAR al usuario hacia una solución (Demo o Login).
+    Tu misión es guiar al usuario a través de un **Funnel de Ventas de 3 Pasos** para convertirlo en un lead calificado.
+
+    === TU ESTRATEGIA ACTUAL: PASO ${funnelStep === 'pain' ? '1 (Identificar Dolor)' : funnelStep === 'solution' ? '2 (Ofrecer Solución)' : '3 (Capturar ContactO)'} ===
+
+    ${funnelStep === 'pain' ? `
+    PASO 1: IDENTIFICAR EL DOLOR (PROBLEMA)
+    - Objetivo: Que el usuario describa su problema logístico o comercial.
+    - Acciones: Saluda con calidez y haz preguntas abiertas sobre su operación.
+    - Tono: Empático y curioso.
+    - Ejemplo: "Entiendo que la logística puede ser un caos. ¿Cuál es el mayor cuello de botella que enfrentas hoy con tu flota?"
+    ` : funnelStep === 'solution' ? `
+    PASO 2: OFRECER SOLUCIÓN (EXPLICACIÓN PRÁCTICA)
+    - Objetivo: Mostrar cómo GOxT resuelve específicamente EL PROBLEMA que el usuario mencionó en el paso 1.
+    - Acciones: Usa la información del CRM/Cargo para dar una explicación PRÁCTICA. No leas un manual, cuenta cómo le cambia la vida.
+    - Tono: Seguro, profesional y visionario.
+    - Ejemplo: "Ya que mencionas que pierdes tiempo en cotizaciones, GOxT CRM las genera en 3 minutos automáticamente. Esto te permitiría cerrar más ventas en menos tiempo."
+    ` : `
+    PASO 3: CAPTURAR CONTACTO
+    - Objetivo: Obtener el consentimiento para una demo o enviar info.
+    - Acciones: Invita cordialmente a agendar una demo o dejar sus datos para que un experto lo contacte.
+    - Tono: Servicial y directo.
+    - Ejemplo: "Me encantaría mostrarte esto funcionando con tus propios datos. ¿Te gustaría que agendemos una demo breve para profundizar?"
+    `}
 
     CONSTITUCIÓN DEL AGENTE:
-    - Sé EXTREMADAMENTE CORDIAL y EMPÁTICO. Usa frases como "Entiendo perfectamente lo difícil que puede ser...", "¿Cómo te ha afectado ese problema en el día a día?", "¡Qué gusto saludarte! Estoy aquí para apoyarte".
-    - No seas un simple buscador de info. Sé un asesor. Si el usuario menciona un problema, indaga más antes de dar una solución técnica.
-    - Captura de Datos: No pidas todo de golpe. Si el usuario te cuenta un problema, podrías decir: "Eso suena como algo que podemos resolver. Para darte una asesoría más precisa, ¿con quién tengo el gusto de hablar?" (para nombre) o "Me encantaría enviarte una propuesta sobre esto, ¿cuál es tu correo?".
+    - Sé EXTREMADAMENTE CORDIAL y EMPÁTICO.
+    - Usa frases como "Entiendo perfectamente lo difícil que puede ser...", "¿Cómo te ha afectado ese problema en el día a día?".
+    - No pidas datos de contacto hasta que hayas pasado por el paso 2 de solución.
 
     CONTEXTO DISPONIBLE:
-    === INFORMACIÓN DEL CRM ===
+    === INFORMACIÓN DEL CRM/CARGO ===
     ${docs.crm}
-    === FIN CRM ===
+    === FIN CONTEXTO ===
     
     DETECTADO EN CONVERSACIÓN:
-    ${detectedCRM ? '• Usuario muestra interés en CRM\n' : ''}
-    ${detectedCargo ? '• Usuario muestra interés en Cargo\n' : ''}
-    ${wantsLogin ? '• Usuario quiere acceder/login\n' : ''}
-    ${wantsTrial ? '• Usuario quiere probar el sistema\n' : ''}
+    ${interest.interestedInCRM ? '• Interés en CRM\n' : ''}
+    ${interest.interestedInCargo ? '• Interés en Cargo\n' : ''}
     
-    URLS IMPORTANTES (úsalos cuando sea relevante):
+    URLS IMPORTANTES (úsalos si el usuario los pide):
     • GOxT CRM Login: ${PRODUCT_URLS.CRM}
     • GOxT Cargo Login: ${PRODUCT_URLS.CARGO}
-    • Solicitar Demo: ${PRODUCT_URLS.DEMO_REQUEST}
     
-    ESTRATEGIA RECOMENDADA:
-    - Si es el inicio de la charla: Saluda cordialmente y pregunta qué problemas o desafíos está enfrentando hoy en su logística o ventas.
-    - Si ya identificaste un problema: Explica brevemente cómo GOxT lo resuelve y pide un dato de contacto (Email o Teléfono) para profundizar.
-    - Si el usuario parece listo: Ofrécele agendar una demo personalizada.
+    RESPONDE EN ESPAÑOL con tono PROFESIONAL y AMIGABLE.`;
 
-    RESPONDE EN ESPAÑOL con tono PROFESIONAL, CÁLIDO y de ASESOR experto.`;
-
-    if (wantsLogin) {
+    if (interest.wantsLogin || interest.wantsTrial) {
         systemPrompt += `
-USUARIO QUIERE LOGIN/ACCESO:
-1. Si pregunta específicamente por CRM o Cargo, da el link correspondiente
-2. Si no especifica, pregunta: "¿Para qué producto necesitas acceso: CRM, Cargo o ambos?"
-3. Si es nuevo usuario, sugiere demo primero
-4. SIEMPRE proporciona los links cuando sea relevante
-
-EJEMPLOS:
-Usuario: "¿Cómo ingreso al CRM?"
-Tú: "Para acceder a GOxT CRM: ${PRODUCT_URLS.CRM}"
-Usuario: "Quiero entrar al sistema"
-Tú: "¿Te refieres a GOxT CRM (${PRODUCT_URLS.CRM}) o GOxT Cargo (${PRODUCT_URLS.CARGO})? ¿O ambos?"`;
-
-    } else if (wantsTrial) {
-        systemPrompt += `
-USUARIO QUIERE PROBAR/PRUEBA:
-1. Explícale que ofrecemos demo personalizada en lugar de trial autogestionado
-2. Destaca ventajas: configuración personalizada, respuesta a dudas en vivo
-3. Ofrece agendar demo inmediatamente
-4. Si insiste en trial, menciona que el equipo evaluará su caso
-
-EJEMPLO:
-"Actualmente ofrecemos demos personalizadas para que veas exactamente cómo funciona en TU operación. ¿Te gustaría agendar 15 minutos para mostrarte todo?"`;
-
-    } else if (detectedCRM || detectedCargo) {
-        systemPrompt += `
-USUARIO INTERESADO EN PRODUCTOS ESPECÍFICOS:
-1. Responde su pregunta de forma ÚTIL
-2. Destaca 1-2 BENEFICIOS clave del producto que le interesa
-3. Termina ofreciendo DEMO personalizada O link de login si parece ser usuario existente
-
-EJEMPLOS:
-Usuario pregunta sobre CRM:
-"GOxT CRM optimiza cotizaciones en 3 minutos y organiza tus clientes. ¿Ya eres usuario? Puedes acceder en: ${PRODUCT_URLS.CRM} ¿O prefieres una demo personalizada?"
-
-Usuario pregunta sobre Cargo:
-"GOxT Cargo reduce costos de flota con seguimiento GPS en tiempo real. ¿Ya lo usas? Accede en: ${PRODUCT_URLS.CARGO} ¿O te interesa ver una demo?"`;
-
-    } else {
-        systemPrompt += `
-CONVERSACIÓN GENERAL:
-1. Responde preguntas de forma CLARA y ÚTIL
-2. Detecta señales de interés en productos específicos
-3. Si menciona "probar", "usar", "acceder", "login" → ofrece links
-4. Si menciona "demo", "ver", "mostrar" → ofrece demo
-5. SIEMPRE termina con opción clara: demo o login según contexto
-
-OBJETIVO FINAL:
-Guiar al usuario hacia DEMO (para nuevos) o LOGIN (para existentes) según su interés detectado.
-
-TONO:
-Amigable, servicial, pero directo al punto.`;
+        
+        INSTRUCCIÓN ADICIONAL: El usuario quiere login o probar el sistema. 
+        - Si es login: proporciona los links: CRM: ${PRODUCT_URLS.CRM}, Cargo: ${PRODUCT_URLS.CARGO}.
+        - Si es prueba: explícale que ofrecemos demos personalizadas.`;
     }
-
-    systemPrompt += `
-
-RESPONDE EN ESPAÑOL con tono PROFESIONAL y AMIGABLE.`;
 
     return systemPrompt;
 }
@@ -672,17 +639,44 @@ export async function POST(req: Request) {
         // Verificar estado de conversación actual
         let conversationState = conversationStates.get(currentSessionId);
 
+        if (!conversationState) {
+            conversationState = {
+                isCollectingDemoData: false,
+                currentStep: 0,
+                collectedData: {},
+                funnelStep: 'pain',
+                funnelData: {},
+                detectedInterest: {
+                    crm: false,
+                    cargo: false,
+                    wantsTrial: false,
+                    wantsLogin: false
+                }
+            };
+            conversationStates.set(currentSessionId, conversationState);
+        }
+
         // Analizar interés del usuario
         const interest = analyzeUserInterest(lastUserMessage, conversationHistory);
 
         // Actualizar estado de interés
-        if (conversationState) {
-            conversationState.detectedInterest = {
-                crm: conversationState.detectedInterest.crm || interest.interestedInCRM,
-                cargo: conversationState.detectedInterest.cargo || interest.interestedInCargo,
-                wantsTrial: conversationState.detectedInterest.wantsTrial || interest.wantsTrial,
-                wantsLogin: conversationState.detectedInterest.wantsLogin || interest.wantsLogin
-            };
+        conversationState.detectedInterest = {
+            crm: conversationState.detectedInterest.crm || interest.interestedInCRM,
+            cargo: conversationState.detectedInterest.cargo || interest.interestedInCargo,
+            wantsTrial: conversationState.detectedInterest.wantsTrial || interest.wantsTrial,
+            wantsLogin: conversationState.detectedInterest.wantsLogin || interest.wantsLogin
+        };
+
+        // Lógica de avance del Funnel (solo si no estamos ya en recolección de demo)
+        if (!conversationState.isCollectingDemoData) {
+            // PASO 1 -> PASO 2: Si detectamos interés en un producto o problema
+            if (conversationState.funnelStep === 'pain' && (interest.interestedInCRM || interest.interestedInCargo)) {
+                conversationState.funnelStep = 'solution';
+            }
+            // PASO 2 -> PASO 3: Si ya ofrecimos solución y el usuario sigue interesado o pregunta "cómo"
+            else if (conversationState.funnelStep === 'solution' && (interest.wantsTrial || lastUserMessage.toLowerCase().includes('cómo') || lastUserMessage.toLowerCase().includes('interesa'))) {
+                conversationState.funnelStep = 'contact';
+            }
         }
 
         // Si el usuario quiere demo y no estamos en proceso, iniciar
@@ -818,8 +812,8 @@ export async function POST(req: Request) {
                 });
             }
 
-            // Conversación normal con detección de interés
-            const systemPrompt = getNormalPrompt(lastUserMessage, conversationHistory, interest);
+            // Conversación normal con detección de interés y funnel
+            const systemPrompt = getNormalPrompt(lastUserMessage, conversationHistory, interest, conversationState);
 
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
