@@ -7,7 +7,6 @@ import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User 
 import type { LucideIcon } from "lucide-react";
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
 import { useState } from "react";
-import { useChat } from "@/context/ChatContext";
 
 interface Stat {
     value: string;
@@ -49,24 +48,38 @@ interface Message {
 }
 
 export function HeroSection() {
-    // Usar contexto global solo para enviar y abrir
-    const { sendMessage, setChatOpen } = useChat();
     const [input, setInput] = useState("");
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!input.trim()) return;
 
-        // 1. Guardar input y limpiar
         const currentInput = input;
         setInput("");
 
-        // 2. Abrir el chat global (modal)
-        setChatOpen(true);
+        // Abrir y enviar en el widget de CRM
+        const launcher = document.querySelector('.goxt-widget-launcher') as HTMLButtonElement;
+        const container = document.querySelector('.goxt-widget-container');
 
-        // 3. Enviar mensaje a través del contexto
-        // Esto añadirá el mensaje al store compartido y disparará la API
-        await sendMessage(currentInput);
+        if (launcher && container) {
+            if (!container.classList.contains('open')) {
+                launcher.click();
+            }
+
+            setTimeout(() => {
+                const widgetInput = document.getElementById('goxt-input') as HTMLInputElement;
+                const sendBtn = document.getElementById('goxt-send-btn') as HTMLButtonElement;
+                if (widgetInput && sendBtn) {
+                    widgetInput.value = currentInput;
+                    widgetInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    sendBtn.click();
+                }
+            }, 100);
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -151,7 +164,7 @@ export function HeroSection() {
                                 <input
                                     type="text"
                                     value={input}
-                                    onChange={(e) => setInput(e.target.value)}
+                                    onChange={handleInputChange}
                                     placeholder="Pregunta a GOxT lo que quieras..."
                                     className="w-full pl-6 pr-32 py-4 bg-white rounded-xl shadow-inner border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[var(--goxt-cream)] focus:border-transparent text-slate-700 placeholder-slate-400 text-lg transition-all"
                                 />
