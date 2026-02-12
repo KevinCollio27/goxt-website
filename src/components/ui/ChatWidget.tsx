@@ -1,39 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { useChat } from "@/context/ChatContext";
-import { AIChat } from "./AIChat";
-import { motion, AnimatePresence } from "framer-motion";
+import Script from "next/script";
 
 export function ChatWidget() {
-    const { isChatOpen, setChatOpen } = useChat();
-
     return (
-        <>
-            <AnimatePresence>
-                {!isChatOpen && (
-                    <motion.button
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => setChatOpen(true)}
-                        className="fixed bottom-6 right-6 z-50 w-18 h-18 bg-black rounded-full shadow-lg flex items-center justify-center border border-blue hover:shadow-xl transition-shadow overflow-hidden"
-                    >
-                        <div className="w-10 h-10 relative">
-                            <Image
-                                src="/assets/logo_central.png"
-                                alt="Chat"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-                    </motion.button>
-                )}
-            </AnimatePresence>
-
-            <AIChat isOpen={isChatOpen} onClose={() => setChatOpen(false)} />
-        </>
+        <Script
+            src="https://api-crm.goxt.io/api/widget/embed.js"
+            strategy="afterInteractive"
+            data-api-key="wk_0ac4fed868da91973c3916dfa0f4a7c4d3a9ead19b97772a"
+        />
     );
 }
