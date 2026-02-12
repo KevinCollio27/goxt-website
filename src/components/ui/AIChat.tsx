@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2, Trash2, Paperclip, Image as ImageIcon } from "lucide-react";
 import { useChat } from "@/context/ChatContext";
 import Image from "next/image";
+import { LeadForm } from "./chat/LeadForm";
 
 interface Message {
     role: "user" | "assistant";
@@ -160,17 +161,34 @@ export function AIChat({ isOpen, onClose }: AIChatProps) {
                                         : "bg-white text-gray-800 border border-gray-200"
                                         }`}
                                 >
-                                    {message.image && (
-                                        <div className="mb-2 overflow-hidden rounded-lg border border-white/20">
-                                            <img
-                                                src={message.image}
-                                                alt="Usuario adjunto"
-                                                className="w-full h-auto max-h-60 object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                                                onClick={() => window.open(message.image, '_blank')}
+                                    {message.type === 'lead_form' ? (
+                                        <div className="space-y-4">
+                                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                            <LeadForm
+                                                initialData={message.data}
+                                                onSuccess={() => {
+                                                    sendMessage("He completado el formulario.");
+                                                }}
+                                                onSkip={() => {
+                                                    sendMessage("Prefiero continuar conversando por ahora.");
+                                                }}
                                             />
                                         </div>
+                                    ) : (
+                                        <>
+                                            {message.image && (
+                                                <div className="mb-2 overflow-hidden rounded-lg border border-white/20">
+                                                    <img
+                                                        src={message.image}
+                                                        alt="Usuario adjunto"
+                                                        className="w-full h-auto max-h-60 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                                                        onClick={() => window.open(message.image, '_blank')}
+                                                    />
+                                                </div>
+                                            )}
+                                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                        </>
                                     )}
-                                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                                 </div>
                             </motion.div>
                         ))}

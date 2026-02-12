@@ -17,6 +17,7 @@ const PRODUCT_URLS = {
 // Interfaz para información en caché
 interface CachedDocs {
     crm: string;
+    cargo: string;
     timestamp: number;
 }
 
@@ -74,14 +75,20 @@ function getCachedDocs(): CachedDocs {
     ];
 
     let crmContent = '';
+    let cargoContent = '';
 
     for (const basePath of possiblePaths) {
         const crmPath = path.join(basePath, 'GOXT_CRM_RESUMEN_COMPLETO.md');
+        const cargoPath = path.join(basePath, 'GOXT_TMS_CARGO_RESUMEN_COMPLETO.md');
 
         try {
             if (fs.existsSync(crmPath) && !crmContent) {
                 crmContent = fs.readFileSync(crmPath, 'utf-8');
                 console.log(`Encontrado CRM en: ${crmPath}`);
+            }
+            if (fs.existsSync(cargoPath) && !cargoContent) {
+                cargoContent = fs.readFileSync(cargoPath, 'utf-8');
+                console.log(`Encontrado Cargo en: ${cargoPath}`);
             }
         } catch (error) {
             console.warn(`Error accediendo a ${basePath}:`, error);
@@ -89,16 +96,23 @@ function getCachedDocs(): CachedDocs {
     }
 
     if (!crmContent) {
-        crmContent = "Información detallada del CRM no disponible. Solicita una demo para más información.";
+        crmContent = "Información detallada del CRM no disponible.";
+    }
+    if (!cargoContent) {
+        cargoContent = "Información detallada de TMS Cargo no disponible.";
     }
 
     const maxLength = 4000;
     if (crmContent.length > maxLength) {
-        crmContent = crmContent.substring(0, maxLength) + "... [información truncada por tamaño]";
+        crmContent = crmContent.substring(0, maxLength) + "... [información truncada]";
+    }
+    if (cargoContent.length > maxLength) {
+        cargoContent = cargoContent.substring(0, maxLength) + "... [información truncada]";
     }
 
     docsCache = {
         crm: crmContent,
+        cargo: cargoContent,
         timestamp: now
     };
 
@@ -593,7 +607,11 @@ RESPONDE EN ESPAÑOL de forma CONVINCENTE y MOTIVADORA.`;
 
     CONTEXTO DISPONIBLE:
     === INFORMACIÓN DEL CRM/CARGO ===
+    --- GOXT CRM ---
     ${docs.crm}
+    
+    --- GOXT TMS CARGO ---
+    ${docs.cargo}
     === FIN CONTEXTO ===
     
     DETECTADO EN CONVERSACIÓN:
@@ -704,13 +722,29 @@ export async function POST(req: Request) {
             let isComplete = false;
 
             if (!justStartedDemo) {
-                const result = processDemoStep(
-                    currentSessionId,
-                    lastUserMessage,
-                    conversationState.currentStep
-                );
-                nextStep = result.nextStep;
-                isComplete = result.isComplete;
+                // Si el usuario confirma que llenó el formulario o quiere omitir
+                if (lastUserMessage.includes("He completado el formulario") || lastUserMessage.includes("Prefiero continuar conversando")) {
+                    isComplete = true; // Forzamos finalización del estado de recolección
+
+                    // Si completó, podemos limpiar el estado
+                    if (lastUserMessage.includes("He completado el formulario")) {
+                        conversationStates.delete(currentSessionId);
+                        return NextResponse.json({
+                            message: "¡Excelente! Ya recibimos tus datos. Un integrante de nuestro equipo se pondrá en contacto contigo a la brevedad para coordinar la demo. ¿Hay algo más en lo que pueda ayudarte?",
+                            sessionId: currentSessionId,
+                            isCollectingDemo: false,
+                            demoComplete: true
+                        });
+                    }
+                } else {
+                    const result = processDemoStep(
+                        currentSessionId,
+                        lastUserMessage,
+                        conversationState.currentStep
+                    );
+                    nextStep = result.nextStep;
+                    isComplete = result.isComplete;
+                }
             }
 
             // Si completamos todos los pasos, enviar a API
@@ -758,28 +792,15 @@ export async function POST(req: Request) {
                 });
 
             } else {
-                // Continuar con el siguiente paso
-                const systemPrompt = getDemoPrompt(
-                    conversationState.currentStep,
-                    conversationState.collectedData
-                );
-
-                const completion = await openai.chat.completions.create({
-                    model: "gpt-4o-mini",
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        ...openAIMessages,
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500, // Aumentado para visión
-                });
-
-                const response = completion.choices[0]?.message?.content ||
-                    "Por favor, proporciona la información solicitada.";
+                // Si preferimos mostrar el FORMULARIO COMPLETO de una vez
+                // Podríamos usar esta lógica para disparar el componente LeadForm
+                const systemPrompt = `El usuario quiere solicitar una demo. Ofrécele cordialmente completar el formulario que aparecerá a continuación para capturar su interés de forma profesional.`;
 
                 return NextResponse.json({
-                    message: response,
+                    message: "¡Excelente! Para agendar tu demo personalizada, por favor completa este breve formulario con tus datos de contacto:",
                     sessionId: currentSessionId,
+                    type: 'lead_form',
+                    data: conversationState.collectedData,
                     isCollectingDemo: true,
                     demoStep: nextStep,
                     demoComplete: false
