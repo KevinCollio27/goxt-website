@@ -6,6 +6,8 @@ interface Message {
     role: "user" | "assistant";
     content: string;
     image?: string; // base64 data URL
+    type?: 'text' | 'lead_form';
+    data?: any;
 }
 
 interface ChatContextType {
@@ -139,6 +141,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             const assistantMessage: Message = {
                 role: "assistant",
                 content: data.message,
+                type: data.type || 'text',
+                data: data.data || null
             };
 
             setMessagesState(prev => [...prev, assistantMessage]);
