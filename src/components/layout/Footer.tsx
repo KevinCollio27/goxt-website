@@ -62,8 +62,8 @@ const alianzas = [
 export function Footer() {
     return (
         <footer className="bg-[#0f172a] text-white">
-            <div className="goxt-container py-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="goxt-container py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {/* Logo y descripción */}
                     <div className="lg:col-span-2">
                         <Link href="/" className="inline-block mb-6">
@@ -137,23 +137,6 @@ export function Footer() {
                             ))}
                         </ul>
                     </div>
-
-                    {/*Empresa*/}
-                    {/*<div>
-                        <h3 className="text-display text-sm tracking-widest mb-4 text-white">Compañía</h3>
-                        <ul className="space-y-3">
-                            {footerLinks.empresa.map((link) => (
-                                <li key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        className="hover:text-white transition-colors text-sm"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>*/}
                 </div>
 
                 {/* Línea divisoria */}

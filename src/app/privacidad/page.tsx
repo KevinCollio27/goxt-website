@@ -99,7 +99,7 @@ export default function PrivacidadPage() {
                                     4. Seguridad y Almacenamiento
                                 </h3>
                                 <p>
-                                    Toda la información reside en servidores de alta disponibilidad de <strong>Amazon Web Services (AWS)</strong>. GOxT realiza copias de seguridad periódicas y mantiene registros de auditoría para prevenir accesos no autorizados a la infraestructura.
+                                    GOxT realiza copias de seguridad periódicas y mantiene registros de auditoría para prevenir accesos no autorizados a la infraestructura.
                                 </p>
                             </section>
 
@@ -108,7 +108,7 @@ export default function PrivacidadPage() {
                                     5. Sus Derechos
                                 </h3>
                                 <p>
-                                    Como titular del servicio contratado, el Cliente puede solicitar la exportación, rectificación o eliminación total de sus datos alojados en el sistema enviando un correo a <a href="mailto:privacidad@goxt.io" className="text-[var(--goxt-accent)] font-semibold">privacidad@goxt.io</a>.
+                                    Como titular del servicio contratado, el Cliente puede solicitar la exportación, rectificación o eliminación total de sus datos alojados en el sistema enviando un correo a <a href="mailto:contacto@goxt.io" className="text-[var(--goxt-accent)] font-semibold">contacto@goxt.io</a>.
                                 </p>
                             </section>
 

@@ -12,7 +12,7 @@ interface Stat {
     value: string;
     label: string;
     description: string;
-    Icon: LucideIcon;
+    Icon: any;
 }
 
 const stats: Stat[] = [
@@ -38,14 +38,18 @@ const stats: Stat[] = [
         value: "AI",
         label: "Tecnología",
         description: "Potenciada por IA",
-        Icon: Bot,
+        Icon: () => (
+            <div className="relative w-7 h-7">
+                <Image
+                    src="/assets/logo_central.png"
+                    alt="AI Icon"
+                    fill
+                    className="object-contain"
+                />
+            </div>
+        ),
     },
 ];
-
-interface Message {
-    role: "user" | "assistant";
-    content: string;
-}
 
 export function HeroSection() {
     const [input, setInput] = useState("");
@@ -99,30 +103,6 @@ export function HeroSection() {
             <InteractiveParticles />
             <div className="goxt-container relative z-10">
                 <div className="max-w-5xl mx-auto text-center">
-                    {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-6 py-2 rounded-full mb-8 relative group cursor-default"
-                        style={{
-                            background: 'rgba(224, 242, 254, 0.5)',
-                            border: '1px solid rgba(14, 165, 233, 0.2)',
-                            boxShadow: '0 4px 6px -1px rgba(14, 165, 233, 0.1)'
-                        }}
-                    >
-                        <span
-                            className="w-2.5 h-2.5 rounded-full animate-pulse"
-                            style={{ background: 'var(--goxt-cream)' }}
-                        />
-                        <span
-                            className="text-sm font-bold tracking-wide uppercase"
-                            style={{ color: '#0059B3' }}
-                        >
-                            TODA LA LOGÍSTICA EN UN SOLO LUGAR
-                        </span>
-                    </motion.div>
-
                     {/* Headline */}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
