@@ -173,13 +173,21 @@ export function ProductsSection() {
                                                 <Image src="/assets/logo_central.png" alt="GOxT" width={40} height={40} />
                                             </div>
                                             <h3
-                                                className="text-3xl md:text-4xl font-bold"
+                                                className="text-3xl md:text-4xl font-bold flex items-center gap-2"
                                                 style={{
-                                                    fontFamily: "'Pacifico', cursive",
+                                                    fontFamily: "var(--font-handwritten), cursive",
                                                     color: 'var(--text-primary)'
                                                 }}
                                             >
-                                                GOxT: <span className="goxt-gradient-accent-text">{currentProduct.name}</span>
+                                                <Image
+                                                    src="/assets/Logo_FondoBlanco.png"
+                                                    alt="GOxT"
+                                                    width={100}
+                                                    height={30}
+                                                    className="object-contain"
+                                                />
+                                                <span className="mb-1">:</span>
+                                                <span className="goxt-gradient-accent-text">{currentProduct.name}</span>
                                             </h3>
                                         </div>
 

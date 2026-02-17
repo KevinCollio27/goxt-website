@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User } from "lucide-react";
+import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User, ArrowUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface Stat {
     value: string;
@@ -54,8 +54,20 @@ const stats: Stat[] = [
 export function HeroSection() {
     const [input, setInput] = useState("");
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(e.target.value);
+
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            const scrollHeight = textareaRef.current.scrollHeight;
+            const maxHeight = 140;
+            const newHeight = Math.min(scrollHeight, maxHeight);
+            textareaRef.current.style.height = `${newHeight}px`;
+
+            textareaRef.current.style.overflowY = scrollHeight > maxHeight ? 'auto' : 'hidden';
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -65,7 +77,6 @@ export function HeroSection() {
         const currentInput = input;
         setInput("");
 
-        // Abrir y enviar en el widget de CRM
         const launcher = document.querySelector('.goxt-widget-launcher') as HTMLButtonElement;
         const container = document.querySelector('.goxt-widget-container');
 
@@ -130,30 +141,47 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="mb-16 max-w-3xl mx-auto relative group"
+                        className="mb-16 max-w-3xl mx-auto w-full"
                     >
-                        {/* Glow Effect behind */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                        <h3 className="text-2xl md:text-3xl font-bold mb-10 text-slate-900 tracking-tight text-center" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-midnight)' }}>
+                            <span className="relative inline-block">
+                                ¿En qué puedo ayudarte?
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: "100%" }}
+                                    transition={{ duration: 0.8, delay: 0.5 }}
+                                    className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-50"
+                                />
+                            </span>
+                        </h3>
 
-                        <div className="relative bg-gradient-to-b from-[#E0F7FA] to-[#E3E8EF] rounded-2xl p-6 md:p-8 shadow-xl border border-white/50 backdrop-blur-sm">
-                            <p className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto mb-12 leading-relaxed">¿En qué puedo ayudarte?</p>
+                        <div className="relative group">
+                            {/* Subtle Glow Effect */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-[32px] blur-lg opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+
                             <form
                                 onSubmit={handleSubmit}
                                 className="relative"
                             >
-                                <input
-                                    type="text"
+                                <textarea
+                                    ref={textareaRef}
                                     value={input}
                                     onChange={handleInputChange}
+                                    onKeyDown={handleKeyDown}
                                     placeholder="Pregunta a GOxT lo que quieras..."
-                                    className="w-full pl-6 pr-32 py-4 bg-white rounded-xl shadow-inner border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[var(--goxt-cream)] focus:border-transparent text-slate-700 placeholder-slate-400 text-lg transition-all"
+                                    rows={1}
+                                    className="w-full px-8 py-6 bg-[#F8FAFC]/80 backdrop-blur-xl rounded-[32px] border border-slate-200/60 focus:outline-none focus:ring-4 focus:ring-slate-200/30 focus:border-slate-300 text-slate-700 placeholder-slate-400 text-base md:text-xl transition-all shadow-sm min-h-[80px] max-h-[140px] resize-none overflow-hidden leading-relaxed pr-16"
                                 />
-                                <div className="absolute right-2 top-2 bottom-2">
+                                <div className="absolute right-3 bottom-6">
                                     <button
                                         type="submit"
-                                        className="h-full px-6 bg-slate-400 hover:bg-slate-500 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+                                        disabled={!input.trim()}
+                                        className={`p-3 rounded-full transition-all flex items-center justify-center ${input.trim()
+                                            ? "bg-slate-900 text-white hover:bg-slate-800 shadow-lg"
+                                            : "bg-slate-100 text-slate-400"
+                                            }`}
                                     >
-                                        <Send className="w-4 h-4" />
+                                        <ArrowUp className="w-6 h-6" strokeWidth={2.5} />
                                     </button>
                                 </div>
                             </form>
