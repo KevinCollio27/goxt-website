@@ -168,7 +168,7 @@ export function HeroSection() {
                                     value={input}
                                     onChange={handleInputChange}
                                     onKeyDown={handleKeyDown}
-                                    placeholder="Pregunta a GOxT lo que quieras..."
+                                    placeholder="Cuéntame, ¿qué desafío tiene tu negocio?"
                                     rows={1}
                                     className="w-full px-8 py-6 bg-[#F8FAFC]/80 backdrop-blur-xl rounded-[32px] border border-slate-200/60 focus:outline-none focus:ring-4 focus:ring-slate-200/30 focus:border-slate-300 text-slate-700 placeholder-slate-400 text-base md:text-xl transition-all shadow-sm min-h-[80px] max-h-[140px] resize-none overflow-hidden leading-relaxed pr-16"
                                 />
