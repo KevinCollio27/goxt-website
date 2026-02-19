@@ -167,7 +167,7 @@ export default function CRMPage() {
                             </h1>
 
                             <p className="text-xl text-slate-500 mb-10 max-w-lg leading-relaxed font-medium">
-                                Gestiona todo tu ciclo comercial con el único CRM que <span className="text-[var(--goxt-primary)] font-bold">entiende de logística</span>. Cierra más ventas, menos, burocracia.
+                                Gestiona todo tu ciclo comercial con el único CRM que <span className="text-[var(--goxt-primary)] font-bold">entiende tu negocio</span>. Cierra más ventas, menos, burocracia.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 mb-12">
