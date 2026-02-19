@@ -32,11 +32,11 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   title: {
-    default: "GOxT | La Suite Tecnológica para Transporte y Logística",
+    default: "GOxT | Tecnología al servicio de tu negocio.",
     template: "%s | GOxT",
   },
   description:
-    "Más clientes. Mejor control. Menos problemas. CRM y gestión logística diseñados específicamente para empresas de transporte.",
+    "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
   keywords: [
     "CRM transporte",
     "logística",
@@ -52,15 +52,15 @@ export const metadata: Metadata = {
     locale: "es_CL",
     url: "https://goxt.io",
     siteName: "GOxT",
-    title: "GOxT | La Suite Tecnológica para Transporte y Logística",
+    title: "GOxT | Tecnología al servicio de tu negocio.",
     description:
-      "Más clientes. Mejor control. Menos problemas. CRM y gestión logística diseñados específicamente para empresas de transporte.",
+      "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GOxT | La Suite Tecnológica para Transporte y Logística",
+    title: "GOxT | Tecnología al servicio de tu negocio.",
     description:
-      "Más clientes. Mejor control. Menos problemas. CRM y gestión logística diseñados específicamente para empresas de transporte.",
+      "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
   },
   robots: {
     index: true,
