@@ -118,10 +118,10 @@ export function Header() {
 
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-4">
-                    <Link href="https://crm.goxt.io" className="goxt-btn-primary">
+                    <a href="https://crm.goxt.io" target="_blank" rel="noopener noreferrer" className="goxt-btn-primary">
                         Iniciar Sesión
-                    </Link>
-                    <Link href="/contacto" className="goxt-btn-secondary">
+                    </a>
+                    <Link href="/contacto" className="goxt-btn-secondary" data-location="header_desktop">
                         Solicitar Demo
                     </Link>
                 </div>
@@ -202,17 +202,20 @@ export function Header() {
                                 </div>
                             ))}
                             <div className="pt-4 space-y-3 border-t border-gray-100">
-                                <Link
+                                <a
                                     href="https://crm.goxt.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="block goxt-btn-accent text-center"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Iniciar Sesión
-                                </Link>
+                                </a>
                                 <Link
                                     href="/contacto"
                                     className="block goxt-btn-secondary text-center"
                                     onClick={() => setMobileMenuOpen(false)}
+                                    data-location="header_mobile"
                                 >
                                     Solicitar Demo
                                 </Link>

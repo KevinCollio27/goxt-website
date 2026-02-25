@@ -182,6 +182,7 @@ export default function CRMPage() {
                                 <Link
                                     href="/contacto"
                                     className="goxt-btn-secondary text-xl px-10 py-5 bg-white hover:bg-slate-50 border-2"
+                                    data-location="Seccion de Productos CRM Hero"
                                 >
                                     Solicitar Demo
                                 </Link>
@@ -415,15 +416,18 @@ export default function CRMPage() {
                                 La eficiencia operativa empieza en la venta.
                             </p>
                             <div className="flex flex-wrap gap-6 justify-center">
-                                <Link
+                                <a
                                     href="https://crm.goxt.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="goxt-btn-primary text-2xl px-12 py-6"
                                 >
                                     Iniciar Sesión
-                                </Link>
+                                </a>
                                 <Link
                                     href="/contacto"
                                     className="goxt-btn-secondary text-2xl px-12 py-6"
+                                    data-location="Seccion de Productos CRM"
                                 >
                                     Solicitar Demo CRM
                                 </Link>

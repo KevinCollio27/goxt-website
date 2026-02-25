@@ -195,15 +195,18 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row gap-6 justify-center mb-24"
                     >
-                        <Link
+                        <a
                             href="https://crm.goxt.io"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white"
                         >
                             Empieza gratis
-                        </Link>
+                        </a>
                         <Link
                             href="/contacto"
                             className="goxt-btn-secondary text-lg px-8 py-4 bg-white border-slate-200 hover:bg-slate-50"
+                            data-location="Hero Section"
                         >
                             Solicitar Demo
                         </Link>

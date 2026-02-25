@@ -44,6 +44,7 @@ export function CTASection() {
                                 href="/contacto"
                                 className="goxt-btn-secondary text-xl px-10 py-5 border-white text-white hover:bg-white/10"
                                 style={{ color: 'white' }}
+                                data-location="CTA Section"
                             >
                                 Solicitar Demo
                             </Link>

@@ -240,6 +240,7 @@ export default function CargoPage() {
                                 <Link
                                     href="/contacto"
                                     className="goxt-btn-secondary text-xl px-10 py-5 bg-white hover:bg-slate-50 border-2"
+                                    data-location="Seccion de Productos Cargo Hero"
                                 >
                                     Solicitar Demo
                                 </Link>
@@ -477,6 +478,7 @@ export default function CargoPage() {
                         <Link
                             href="/contacto"
                             className="goxt-btn-primary text-lg px-8 py-4"
+                            data-location="Seccion de Productos Cargo"
                         >
                             Solicitar Demo
                         </Link>

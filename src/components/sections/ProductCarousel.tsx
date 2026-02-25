@@ -199,7 +199,7 @@ export default function ProductCarousel() {
                             >
                                 {activeTab === "crm" ? (
                                     <>
-                                        <Link
+                                        <a
                                             href="https://crm.goxt.io"
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -207,7 +207,7 @@ export default function ProductCarousel() {
                                         >
                                             Empieza Gratis
                                             <ArrowRight className="w-5 h-5" />
-                                        </Link>
+                                        </a>
                                         <Link
                                             href="/productos/crm"
                                             className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-[var(--goxt-midnight)] font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-1 bg-white border border-gray-100"
@@ -219,6 +219,7 @@ export default function ProductCarousel() {
                                     <Link
                                         href="/contacto"
                                         className={`inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${products[activeTab].color}`}
+                                        data-location="Carrusel de Productos"
                                     >
                                         Solicitar Demo
                                         <ArrowRight className="w-5 h-5" />
