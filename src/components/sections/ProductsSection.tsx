@@ -251,6 +251,7 @@ export function ProductsSection() {
                                             <Link
                                                 href="/contacto"
                                                 className={currentProduct.id === "crm" ? "goxt-btn-secondary" : "goxt-btn-primary"}
+                                                data-location="Seccion de Productos"
                                             >
                                                 Solicitar Demo
                                             </Link>

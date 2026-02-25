@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
+import { GoogleTagManager, GTMNoScript } from "@/components/layout/GoogleTagManager";
 import { ChatProvider } from "@/context/ChatContext";
 import { ChatWidget } from "@/components/ui/ChatWidget";
 
@@ -78,11 +79,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
+        <GoogleTagManager />
         <GoogleAnalytics />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} antialiased`}>
+        <GTMNoScript />
         <ChatProvider>
           <Header />
           <main>{children}</main>
