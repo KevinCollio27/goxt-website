@@ -48,6 +48,7 @@ export function ContactSection() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="goxt-btn-primary flex items-center justify-center gap-4 py-4 px-6 w-full group transform transition-all hover:scale-[1.02]"
+                                data-location="Contact Section CRM"
                             >
                                 <div className="p-1 rounded-md">
                                     <Image

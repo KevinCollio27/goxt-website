@@ -200,6 +200,7 @@ export function HeroSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white"
+                            data-location="Hero Section CRM"
                         >
                             Empieza gratis
                         </a>

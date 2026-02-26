@@ -37,6 +37,7 @@ export function CTASection() {
                                 href="https://crm.goxt.io"
                                 className="goxt-btn-primary text-xl px-10 py-5"
                                 style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
+                                data-location="CTA Section CRM"
                             >
                                 Empieza gratis CRM
                             </a>
