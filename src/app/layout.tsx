@@ -7,6 +7,8 @@ import { ChatProvider } from "@/context/ChatContext";
 import { ChatWidget } from "@/components/ui/ChatWidget";
 import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { GTMClickTracker } from "@/components/layout/GTMClickTracker";
+import { CookieBanner } from "@/components/ui/CookieBanner";
+import Script from "next/script";
 
 // Fuente principal para body text
 const inter = Inter({
@@ -70,6 +72,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/assets/logo_central_negro.png",
     apple: "/assets/logo_central_negro.png",
+    shortcut: "/assets/logo_central_negro.png",
   },
 };
 
@@ -80,21 +83,46 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        {/* Google Consent Mode v2 Default State */}
+        <Script id="google-consent-mode" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { window.dataLayer.push(arguments); }
+            
+            // Check if there's an existing consent decision
+            const savedConsent = typeof window !== 'undefined' ? localStorage.getItem('cookie-consent-choice') : null;
+            
+            if (savedConsent) {
+              gtag('consent', 'default', JSON.parse(savedConsent));
+            } else {
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'analytics_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied'
+              });
+            }
+          `}
+        </Script>
+      </head>
       {process.env.NEXT_PUBLIC_GTM_ID && (
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
       )}
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       )}
-      <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} antialiased`}>
+      <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} antialiased font-body`}>
         <ChatProvider>
           <GTMClickTracker />
           <Header />
           <main>{children}</main>
           <Footer />
           <ChatWidget />
+          <CookieBanner />
         </ChatProvider>
       </body>
     </html>
   );
 }
+
