@@ -3,10 +3,10 @@ import { Inter, Caveat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
-import { GoogleTagManager, GTMNoScript } from "@/components/layout/GoogleTagManager";
 import { ChatProvider } from "@/context/ChatContext";
 import { ChatWidget } from "@/components/ui/ChatWidget";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+import { GTMClickTracker } from "@/components/layout/GTMClickTracker";
 
 // Fuente principal para body text
 const inter = Inter({
@@ -80,13 +80,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <GoogleTagManager />
-        <GoogleAnalytics />
-      </head>
+      {process.env.NEXT_PUBLIC_GTM_ID && (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+      )}
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
       <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} antialiased`}>
-        <GTMNoScript />
         <ChatProvider>
+          <GTMClickTracker />
           <Header />
           <main>{children}</main>
           <Footer />
