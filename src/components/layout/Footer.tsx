@@ -68,7 +68,7 @@ export function Footer() {
                     <div className="lg:col-span-2">
                         <Link href="/" className="inline-block mb-6">
                             <Image
-                                src="/assets/Logo_fondonegro.png"
+                                src="/assets/logo_goxt_blanco.png"
                                 alt="GOxT"
                                 width={140}
                                 height={47}

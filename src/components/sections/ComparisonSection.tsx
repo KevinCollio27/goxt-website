@@ -76,7 +76,7 @@ export function ComparisonSection() {
     const columns = [
         {
             id: 'goxt', name: <Image
-                src="/assets/Logo_fondonegro.png"
+                src="/assets/logo_goxt_blanco.png"
                 alt="GOxT"
                 width={100}
                 height={100}
@@ -156,7 +156,7 @@ export function ComparisonSection() {
                     >
                         ¿Por qué elegir <span className="goxt-gradient-accent-text">
                             <Image
-                                src="/assets/Logo_FondoBlanco.png"
+                                src="/assets/logo_goxt.png"
                                 alt="GOxT"
                                 width={150}
                                 height={150}
