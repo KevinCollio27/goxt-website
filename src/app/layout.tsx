@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: "%s | GOxT",
   },
   description:
-    "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
+    "Impulsa tu empresa con tecnología de vanguardia. CRM y gestión logística diseñados para optimizar tus procesos.",
   keywords: [
     "CRM transporte",
     "logística",
@@ -57,13 +57,22 @@ export const metadata: Metadata = {
     siteName: "GOxT",
     title: "GOxT | Tecnología al servicio de tu negocio.",
     description:
-      "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
+      "Impulsa tu empresa con tecnología de vanguardia. CRM y gestión logística diseñados para optimizar tus procesos.",
+    images: [
+      {
+        url: "https://goxt.io/assets/logo_central_negro.png",
+        width: 256,
+        height: 256,
+        alt: "GOxT Logo",
+      },
+    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "GOxT | Tecnología al servicio de tu negocio.",
     description:
-      "Impulsa tu empresa con tecnología de vanguardia. CRM, gestión logística y mucho más diseñados para atraer más clientes, optimizar procesos y tomar el control total de tu negocio.",
+      "Impulsa tu empresa con tecnología de vanguardia. CRM y gestión logística diseñados para optimizar tus procesos.",
+    images: ["https://goxt.io/assets/logo_central_negro.png"],
   },
   robots: {
     index: true,
