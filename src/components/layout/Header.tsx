@@ -43,7 +43,7 @@ export function Header() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
                     <Image
-                        src="/assets/Logo_FondoBlanco.png"
+                        src="/assets/logo_goxt.png"
                         alt="GOxT - Moving Forward"
                         width={140}
                         height={50}

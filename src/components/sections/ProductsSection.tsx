@@ -180,7 +180,7 @@ export function ProductsSection() {
                                                 }}
                                             >
                                                 <Image
-                                                    src="/assets/Logo_FondoBlanco.png"
+                                                    src="/assets/logo_goxt.png"
                                                     alt="GOxT"
                                                     width={100}
                                                     height={30}

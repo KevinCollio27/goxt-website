@@ -386,7 +386,7 @@ export default function CargoPage() {
                                         <div className="w-20 h-20 mx-auto mb-3 bg-[var(--goxt-cream)] rounded-2xl flex items-center justify-center">
                                             <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center">
                                                 <Image
-                                                    src="/assets/Logo_CRM_Blanco.png"
+                                                    src="/assets/logo_CRM.png"
                                                     alt="Logo"
                                                     width={50}
                                                     height={50} />

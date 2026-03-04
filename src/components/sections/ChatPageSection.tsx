@@ -13,7 +13,7 @@ interface Message {
 const features = [
     {
         name: "Pregunta sobre GOxT CRM",
-        icon: "/assets/Logo_CRM_Blanco.png",
+        icon: "/assets/logo_CRM.png",
     },
     {
         name: "Conoce GOxT Cargo",
@@ -21,7 +21,7 @@ const features = [
     },
     {
         name: "Solicita información personalizada",
-        icon: "/assets/Logo_FondoBlanco.png",
+        icon: "/assets/logo_goxt.png",
     },
 ];
 export function ChatPage() {

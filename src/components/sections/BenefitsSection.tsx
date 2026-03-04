@@ -66,7 +66,7 @@ export function BenefitsSection() {
                             ¿Por qué elegir a
                             <div className="relative inline-flex items-center px-4 py-1 border-2 rounded-full group" style={{ borderColor: 'var(--goxt-accent)' }}>
                                 <Image
-                                    src="/assets/Logo_FondoBlanco.png"
+                                    src="/assets/logo_goxt.png"
                                     alt="GOXT"
                                     width={120}
                                     height={40}

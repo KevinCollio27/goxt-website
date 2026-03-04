@@ -53,7 +53,7 @@ export default function ProductosPage() {
                     </h1>
                     <p className="text-xl text-[var(--goxt-gray-600)] max-w-3xl mx-auto leading-relaxed">
                         Herramientas diseñadas para la realidad de tu industria.
-                        Desde la primera cotización hasta la entrega final, <Image src="/assets/Logo_FondoBlanco.png" alt="GOxT" width={100} height={40} className="inline-block h-8 w-auto align-middle" /> está contigo.
+                        Desde la primera cotización hasta la entrega final, <Image src="/assets/logo_goxt.png" alt="GOxT" width={100} height={40} className="inline-block h-8 w-auto align-middle" /> está contigo.
                     </p>
                 </div>
             </section>
