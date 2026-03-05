@@ -60,19 +60,19 @@ export const metadata: Metadata = {
       "Impulsa tu empresa con tecnología de vanguardia. CRM y gestión logística diseñados para optimizar tus procesos.",
     images: [
       {
-        url: "https://goxt.io/assets/logo_goxt.png",
-        width: 1200,
-        height: 630,
+        url: "https://goxt.io/assets/logo_central_negro.png",
+        width: 256,
+        height: 256,
         alt: "GOxT Logo",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "GOxT | Tecnología al servicio de tu negocio.",
     description:
       "Impulsa tu empresa con tecnología de vanguardia. CRM y gestión logística diseñados para optimizar tus procesos.",
-    images: ["https://goxt.io/assets/logo_goxt.png"],
+    images: ["https://goxt.io/assets/logo_central_negro.png"],
   },
   robots: {
     index: true,
