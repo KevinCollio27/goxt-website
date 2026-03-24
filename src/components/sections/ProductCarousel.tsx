@@ -10,12 +10,15 @@ import {
     Map,
     ShieldCheck,
     ArrowRight,
-    CheckCircle2
+    CheckCircle2,
+    Network,
+    Activity,
+    Globe
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-type ProductType = "crm" | "cargo";
+type ProductType = "crm" | "cargo" | "network";
 
 const products = {
     crm: {
@@ -75,6 +78,35 @@ const products = {
         bgAccent: "bg-blue-50",
         href: "/productos/cargo",
         image: "/assets/DashboardCargo.png"
+    },
+    network: {
+        id: "network",
+        name: "NETWORK",
+        title: "Red Logística Inteligente",
+        tagline: "Conectamos transportistas y generadores de carga en una red eficiente.",
+        description: "TMS Go Network integra a proveedores y demandantes en una plataforma única para la administración de activos, validación documental y asignación de servicios.",
+        features: [
+            {
+                icon: <Network className="w-6 h-6" />,
+                title: "Ecosistema Colaborativo",
+                desc: "Integra transportistas y generadores de carga para una administración de registros y perfiles centralizada."
+            },
+            {
+                icon: <ShieldCheck className="w-6 h-6" />,
+                title: "Validación en Línea",
+                desc: "Verificación instantánea de documentos y vencimientos de conductores, camiones y remolques."
+            },
+            {
+                icon: <Activity className="w-6 h-6" />,
+                title: "Gestión de Solicitudes",
+                desc: "Crea y asigna requerimientos a tu red interna o ábrelos al marketplace ampliado de Camión Go."
+            }
+        ],
+        color: "from-emerald-500 to-teal-700",
+        accent: "text-emerald-600",
+        bgAccent: "bg-emerald-50",
+        href: "/productos/tms-network",
+        image: "/assets/DashboardCargo.png"
     }
 };
 
@@ -85,22 +117,22 @@ export default function ProductCarousel() {
         <div className="w-full max-w-7xl mx-auto px-4 py-12">
             {/* Tabs Switcher */}
             <div className="flex justify-center mb-16">
-                <div className="bg-white p-1.5 rounded-full shadow-lg border border-gray-100 inline-flex relative">
+                <div className="bg-white p-1.5 rounded-full shadow-lg border border-gray-100 inline-flex relative w-full max-w-2xl">
                     <motion.div
                         className="absolute top-1.5 bottom-1.5 rounded-full z-0 shadow-sm"
                         style={{ background: 'var(--goxt-gradient-accent)' }}
                         initial={false}
                         animate={{
-                            left: activeTab === "crm" ? "6px" : "50%",
-                            width: "calc(50% - 9px)",
-                            x: activeTab === "cargo" ? "3px" : "0px"
+                            left: activeTab === "crm" ? "6px" : activeTab === "cargo" ? "33.33%" : "66.66%",
+                            width: "calc(33.33% - 9px)",
+                            x: activeTab === "crm" ? "0px" : activeTab === "cargo" ? "3px" : "6px"
                         }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
 
                     <button
                         onClick={() => setActiveTab("crm")}
-                        className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-200 flex items-center gap-2 ${activeTab === "crm" ? "text-white" : "text-gray-500 hover:text-gray-900"
+                        className={`relative z-10 flex-1 px-4 py-3 rounded-full text-xs md:text-sm font-bold tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 ${activeTab === "crm" ? "text-white" : "text-gray-500 hover:text-gray-900"
                             }`}
                     >
                         <Image
@@ -108,14 +140,14 @@ export default function ProductCarousel() {
                             alt="CRM"
                             width={20}
                             height={20}
-                            className="w-5 h-5 object-contain"
+                            className="w-4 h-4 md:w-5 md:h-5 object-contain"
                         />
-                        GOXT CRM
+                        CRM
                     </button>
 
                     <button
                         onClick={() => setActiveTab("cargo")}
-                        className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-200 flex items-center gap-2 ${activeTab === "cargo" ? "text-white" : "text-gray-500 hover:text-gray-900"
+                        className={`relative z-10 flex-1 px-4 py-3 rounded-full text-xs md:text-sm font-bold tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 ${activeTab === "cargo" ? "text-white" : "text-gray-500 hover:text-gray-900"
                             }`}
                     >
                         <Image
@@ -123,12 +155,28 @@ export default function ProductCarousel() {
                             alt="Cargo"
                             width={20}
                             height={20}
-                            className="w-5 h-5 object-contain"
+                            className="w-4 h-4 md:w-5 md:h-5 object-contain"
                         />
-                        GOXT TMS CARGO
+                        TMS CARGO
+                    </button>
+
+                    <button
+                        onClick={() => setActiveTab("network")}
+                        className={`relative z-10 flex-1 px-4 py-3 rounded-full text-xs md:text-sm font-bold tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 ${activeTab === "network" ? "text-white" : "text-gray-500 hover:text-gray-900"
+                            }`}
+                    >
+                        <Image
+                            src={activeTab === "network" ? "/assets/logo_central.png" : "/assets/logo_central_negro.png"}
+                            alt="Network"
+                            width={20}
+                            height={20}
+                            className="w-4 h-4 md:w-5 md:h-5 object-contain"
+                        />
+                        TMS NETWORK
                     </button>
                 </div>
             </div>
+
 
             {/* Content Area */}
             <div className="relative min-h-[600px]">

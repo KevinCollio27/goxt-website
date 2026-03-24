@@ -54,6 +54,24 @@ const products: Product[] = [
         ],
         screenshot: "/assets/LoginCARGO.png",
     },
+    {
+        id: "network",
+        name: "TMS NETWORK",
+        tagline: "Red colaborativa para transportistas y generadores",
+        description:
+            "Plataforma que integra a todos los actores de la cadena logística. Administra activos, valida documentos en línea y accede a un marketplace de carga eficiente.",
+        href: "/productos/tms-network",
+        appUrl: "https://network.goxt.io",
+        features: [
+            "Integración transportista-generador",
+            "Validación documental online",
+            "Gestión de conductores y flota",
+            "Geolocalización con apodos",
+            "Marketplace de servicios",
+            "Flujos de activación por APP",
+        ],
+        screenshot: "/assets/Login-network.png",
+    },
 ];
 
 export function ProductsSection() {
@@ -238,7 +256,7 @@ export function ProductsSection() {
 
                                         {/* CTAs */}
                                         <div className="flex flex-wrap gap-4">
-                                            {currentProduct.id === "crm" && (
+                                            {(currentProduct.id === "crm" || currentProduct.id === "network") && (
                                                 <a
                                                     href={currentProduct.appUrl}
                                                     target="_blank"
@@ -250,7 +268,7 @@ export function ProductsSection() {
                                             )}
                                             <Link
                                                 href="/contacto"
-                                                className={currentProduct.id === "crm" ? "goxt-btn-secondary" : "goxt-btn-primary"}
+                                                className={(currentProduct.id === "crm" || currentProduct.id === "network") ? "goxt-btn-secondary" : "goxt-btn-primary"}
                                                 data-location="Seccion de Productos"
                                             >
                                                 Solicitar Demo

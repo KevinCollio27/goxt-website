@@ -24,6 +24,19 @@ const navigation = [
                     />
                 ),
             },
+            {
+                name: "TMS Network",
+                href: "/productos/tms-network",
+                icon: (
+                    <Image
+                        src="/assets/logo_central_negro.png"
+                        alt="Network"
+                        width={30}
+                        height={30}
+                        className="w-12 h-6 object-contain"
+                    />
+                ),
+            },
         ],
     },
     //{ name: "Precios", href: "/precios" },

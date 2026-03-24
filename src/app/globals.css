@@ -144,6 +144,18 @@
   --goxt-shadow-glow: 0 20px 50px -12px rgba(212, 185, 150, 0.35);
 }
 
+.theme-tms-network {
+  --network-primary: #10B981;
+  --network-secondary: #059669;
+  --network-dark: #047857;
+  --network-deep: #064E3B;
+  --network-light: #ECFDF5;
+  --network-border: #D1FAE5;
+  --network-teal: #0D9488;
+  --network-blue: #3B82F6;
+  --network-shadow: rgba(16, 185, 129, 0.2);
+}
+
 /* ==========================================
    Base Styles
    ========================================== */
