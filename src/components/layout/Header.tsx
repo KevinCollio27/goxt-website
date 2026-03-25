@@ -24,6 +24,19 @@ const navigation = [
                     />
                 ),
             },
+            {
+                name: "TMS Network",
+                href: "/productos/tms-network",
+                icon: (
+                    <Image
+                        src="/assets/logo_central_negro.png"
+                        alt="Network"
+                        width={30}
+                        height={30}
+                        className="w-12 h-6 object-contain"
+                    />
+                ),
+            },
         ],
     },
     //{ name: "Precios", href: "/precios" },
@@ -36,6 +49,7 @@ const navigation = [
 export function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+    const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 goxt-glass">
@@ -118,12 +132,61 @@ export function Header() {
 
                 {/* CTA Buttons */}
                 <div className="hidden lg:flex items-center gap-4">
-                    <a href="https://crm.goxt.io" target="_blank" rel="noopener noreferrer" className="goxt-btn-primary" data-location="header_sesion_desktop">
-                        Iniciar Sesión
-                    </a>
                     <Link href="/contacto" className="goxt-btn-secondary" data-location="header_desktop">
                         Solicitar Demo
                     </Link>
+                    <div
+                        className="relative"
+                        onMouseEnter={() => setLoginDropdownOpen(true)}
+                        onMouseLeave={() => setLoginDropdownOpen(false)}
+                    >
+                        <button
+                            className="goxt-btn-primary flex items-center gap-2"
+                            data-location="header_sesion_desktop"
+                        >
+                            Iniciar Sesión
+                            <svg
+                                className={`w-4 h-4 transition-transform ${loginDropdownOpen ? "rotate-180" : ""}`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <AnimatePresence>
+                            {loginDropdownOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden"
+                                >
+                                    <div className="p-2">
+                                        <a
+                                            href="https://crm.goxt.io/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                            data-location="header_sesion_crm_desktop"
+                                        >
+                                            <span className="font-medium text-gray-900">CRM</span>
+                                        </a>
+                                        <a
+                                            href="https://network.goxt.io/login"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                            data-location="header_sesion_tms_desktop"
+                                        >
+                                            <span className="font-medium text-gray-900">TMS Network</span>
+                                        </a>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -202,16 +265,6 @@ export function Header() {
                                 </div>
                             ))}
                             <div className="pt-4 space-y-3 border-t border-gray-100">
-                                <a
-                                    href="https://crm.goxt.io"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block goxt-btn-accent text-center"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    data-location="header_sesion_mobile"
-                                >
-                                    Iniciar Sesión
-                                </a>
                                 <Link
                                     href="/contacto"
                                     className="block goxt-btn-secondary text-center"
@@ -220,6 +273,27 @@ export function Header() {
                                 >
                                     Solicitar Demo
                                 </Link>
+                                <p className="text-sm font-medium text-gray-500 px-1">Iniciar Sesión</p>
+                                <a
+                                    href="https://crm.goxt.io/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block goxt-btn-accent text-center"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    data-location="header_sesion_crm_mobile"
+                                >
+                                    CRM
+                                </a>
+                                <a
+                                    href="https://network.goxt.io/login"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block goxt-btn-primary text-center"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    data-location="header_sesion_tms_mobile"
+                                >
+                                    TMS Network
+                                </a>
                             </div>
                         </div>
                     </motion.div>

@@ -43,23 +43,42 @@ export function ContactSection() {
                             <h3 className="text-xl font-bold mb-6" style={{ fontFamily: "var(--font-handwritten), cursive", color: 'var(--goxt-midnight)' }}>
                                 No esperes más. Empieza gratis:
                             </h3>
-                            <a
-                                href="https://crm.goxt.io"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="goxt-btn-primary flex items-center justify-center gap-4 py-4 px-6 w-full group transform transition-all hover:scale-[1.02]"
-                                data-location="Contact Section CRM"
-                            >
-                                <div className="p-1 rounded-md">
-                                    <Image
-                                        src="/assets/logo_central.png"
-                                        alt="GOxT"
-                                        width={24}
-                                        height={24}
-                                    />
-                                </div>
-                                <span className="font-bold">GOxT CRM</span>
-                            </a>
+                            <div className="flex flex-col gap-4">
+                                <a
+                                    href="https://crm.goxt.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="goxt-btn-primary flex items-center justify-center gap-4 py-4 px-6 w-full group transform transition-all hover:scale-[1.02]"
+                                    data-location="Contact Section CRM"
+                                >
+                                    <div className="p-1 rounded-md">
+                                        <Image
+                                            src="/assets/logo_central.png"
+                                            alt="GOxT"
+                                            width={24}
+                                            height={24}
+                                        />
+                                    </div>
+                                    <span className="font-bold">GOxT CRM</span>
+                                </a>
+                                <a
+                                    href="https://network.goxt.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="goxt-btn-primary flex items-center justify-center gap-4 py-4 px-6 w-full group transform transition-all hover:scale-[1.02]"
+                                    data-location="Contact Section Network"
+                                >
+                                    <div className="p-1 rounded-md">
+                                        <Image
+                                            src="/assets/logo_central.png"
+                                            alt="GOxT"
+                                            width={24}
+                                            height={24}
+                                        />
+                                    </div>
+                                    <span className="font-bold">GOxT TMS Network</span>
+                                </a>
+                            </div>
                         </div>
 
                         {/* Why choose us */}

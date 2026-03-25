@@ -5,6 +5,7 @@ const footerLinks = {
     productos: [
         { name: "GOxT CRM", href: "/productos/crm" },
         { name: "GOxT Cargo", href: "/productos/cargo" },
+        { name: "TMS Network", href: "/productos/tms-network" },
         //{ name: "Precios", href: "/precios" },
     ],
     empresa: [
@@ -21,6 +22,7 @@ const footerLinks = {
 const aplicaciones = [
     { name: "CRM", href: "https://crm.goxt.io" },
     { name: "Cargo", href: "https://cargo.goxt.io" },
+    { name: "Network", href: "https://wwweng.com" },
 ];
 
 const socialLinks = [
