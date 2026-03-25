@@ -184,7 +184,7 @@ export default function TMSNetworkPage() {
                                     Solicitar Demo
                                 </Link>
                                 <a
-                                    href="https://wwweng.com"
+                                    href="https://network.goxt.io/login"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="goxt-btn-secondary text-xl px-12 py-5 border-[var(--network-border)] text-[var(--network-secondary)] hover:bg-[var(--network-light)]"
