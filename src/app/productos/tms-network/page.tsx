@@ -165,7 +165,10 @@ export default function TMSNetworkPage() {
                                 <span className="text-sm font-semibold text-[var(--network-dark)] uppercase tracking-wider">Ecosistema Logístico 4.0</span>
                             </div>
 
-                            <h1 className="text-5xl md:text-6xl lg:text-8xl font-black mb-8 leading-[1.05] text-[var(--goxt-midnight)] tracking-tighter">
+                            <h1 
+                                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] text-[var(--goxt-midnight)] tracking-tight"
+                                style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                            >
                                 Conecta tu <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--network-primary)] to-[var(--network-teal)]">
                                     Red Logística
@@ -178,18 +181,18 @@ export default function TMSNetworkPage() {
 
                             <div className="flex flex-col sm:flex-row gap-5 mb-12">
                                 <Link
-                                    href="/contacto"
-                                    className="goxt-btn-primary bg-gradient-to-r from-[var(--network-secondary)] to-[var(--network-dark)] text-xl px-12 py-5 shadow-[var(--network-shadow)] hover:shadow-[var(--network-shadow)] transform hover:-translate-y-1"
-                                >
-                                    Solicitar Demo
-                                </Link>
-                                <a
                                     href="https://network.goxt.io/login"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="goxt-btn-secondary text-xl px-12 py-5 border-[var(--network-border)] text-[var(--network-secondary)] hover:bg-[var(--network-light)]"
+                                    className="goxt-btn-primary bg-gradient-to-r from-[var(--network-secondary)] to-[var(--network-dark)] text-xl px-12 py-5 shadow-[var(--network-shadow)] hover:shadow-[var(--network-shadow)] transform hover:-translate-y-1"
                                 >
                                     Acceder a la Red
+                                </Link>
+                                <a
+                                    href="/contacto"
+                                    className="goxt-btn-secondary text-xl px-12 py-5 border-[var(--network-border)] text-[var(--network-secondary)] hover:bg-[var(--network-light)]"
+                                >
+                                    Solicitar Demo
                                 </a>
                             </div>
 
@@ -280,7 +283,10 @@ export default function TMSNetworkPage() {
                         >
                             Core Infrastructure
                         </motion.span>
-                        <h2 className="text-4xl md:text-6xl font-black !text-slate-900 mb-8 tracking-tight leading-[1.1]">
+                        <h2 
+                            className="text-4xl md:text-6xl font-bold !text-slate-900 mb-8 tracking-tight leading-[1.1]"
+                            style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                        >
                             Potencia tu red con <br />
                             <span className="text-[var(--network-secondary)]">tecnología de punta</span>
                         </h2>
@@ -302,7 +308,10 @@ export default function TMSNetworkPage() {
                                     </div>
                                     <div className="absolute top-2 left-2 w-16 h-16 bg-[var(--network-primary)]/20 rounded-3xl -z-0 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
-                                <h3 className="text-xl font-bold !text-slate-900 mb-4 tracking-tight group-hover:!text-[var(--network-dark)] transition-colors">
+                                <h3 
+                                    className="text-xl font-bold !text-slate-900 mb-4 tracking-tight group-hover:!text-[var(--network-dark)] transition-colors"
+                                    style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                                >
                                     {feature.title}
                                 </h3>
                                 <p className="text-slate-500 leading-relaxed text-sm lg:text-base">
@@ -325,7 +334,10 @@ export default function TMSNetworkPage() {
 
                 <div className="goxt-container relative z-10">
                     <div className="text-center mb-24">
-                        <h2 className="text-4xl md:text-7xl font-black !text-white mb-8 tracking-tighter">
+                        <h2 
+                            className="text-4xl md:text-7xl font-bold !text-white mb-8 tracking-tighter"
+                            style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                        >
                             Un Sistema, <span className="text-[var(--network-primary)]">Múltiples Roles</span>
                         </h2>
                         <p className="text-[var(--network-light)]/60 text-xl max-w-2xl mx-auto font-light">
@@ -346,7 +358,12 @@ export default function TMSNetworkPage() {
                                 <div className="mb-10 inline-flex p-5 rounded-[2rem] bg-[var(--network-primary)]/10 text-[var(--network-primary)] group-hover:bg-[var(--network-primary)] group-hover:text-white transition-all duration-300">
                                     <cap.Icon className="w-10 h-10" />
                                 </div>
-                                <h3 className="text-3xl font-bold !text-white mb-8 tracking-tight">{cap.title}</h3>
+                                <h3 
+                                    className="text-3xl font-bold !text-white mb-8 tracking-tight"
+                                    style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                                >
+                                    {cap.title}
+                                </h3>
                                 <ul className="space-y-6">
                                     {cap.items.map((item) => (
                                         <li key={item.text} className="flex flex-col gap-2">
@@ -388,7 +405,10 @@ export default function TMSNetworkPage() {
                         <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-teal-500/30 rounded-full blur-[60px]" />
 
                         <div className="relative z-10">
-                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black !text-white mb-8 tracking-tight">
+                            <h2 
+                                className="text-4xl md:text-6xl lg:text-7xl font-bold !text-white mb-8 tracking-tight"
+                                style={{ fontFamily: "var(--font-handwritten), cursive" }}
+                            >
                                 Lleva tu red al <br /> <span className="text-[var(--network-light)]">siguiente nivel</span>
                             </h2>
                             <p className="text-[var(--network-light)] text-xl md:text-2xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">
