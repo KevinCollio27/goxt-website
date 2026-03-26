@@ -22,7 +22,7 @@ const footerLinks = {
 const aplicaciones = [
     { name: "CRM", href: "https://crm.goxt.io" },
     { name: "Cargo", href: "https://cargo.goxt.io" },
-    { name: "Network", href: "https://wwweng.com" },
+    { name: "Network", href: "https://network.goxt.io" },
 ];
 
 const socialLinks = [

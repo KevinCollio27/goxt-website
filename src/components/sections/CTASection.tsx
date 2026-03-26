@@ -1,9 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export function CTASection() {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     return (
         <section className="goxt-section pt-0" style={{ background: 'var(--goxt-surface-alt)' }}>
             <div className="goxt-container">
@@ -33,14 +36,56 @@ export function CTASection() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a
-                                href="https://crm.goxt.io"
-                                className="goxt-btn-primary text-xl px-10 py-5"
-                                style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
-                                data-location="CTA Section CRM"
+                            <div
+                                className="relative"
+                                onMouseEnter={() => setDropdownOpen(true)}
+                                onMouseLeave={() => setDropdownOpen(false)}
                             >
-                                Empieza gratis CRM
-                            </a>
+                                <button
+                                    className="goxt-btn-primary text-xl px-10 py-5 flex items-center gap-2"
+                                    style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
+                                    data-location="CTA Section CRM"
+                                >
+                                    Empieza gratis
+                                    <ChevronDown className={`w-6 h-6 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                                </button>
+                                <AnimatePresence>
+                                    {dropdownOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 10 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-20"
+                                        >
+                                            <div className="p-2">
+                                                <a
+                                                    href="https://crm.goxt.io"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-50 transition-colors group text-left"
+                                                    data-location="CTA Section Dropdown CRM"
+                                                >
+                                                    <div className="flex flex-col">
+                                                        <span className="font-bold text-slate-900 group-hover:text-[var(--goxt-primary)] text-base font-sans">CRM</span>
+                                                    </div>
+                                                </a>
+                                                <a
+                                                    href="https://network.goxt.io/register"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-gray-50 transition-colors group text-left"
+                                                    data-location="CTA Section Dropdown TMS"
+                                                >
+                                                    <div className="flex flex-col">
+                                                        <span className="font-bold text-slate-900 group-hover:text-[var(--goxt-primary)] text-base font-sans">TMS Network</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
                             <Link
                                 href="/contacto"
                                 className="goxt-btn-secondary text-xl px-10 py-5 border-white text-white hover:bg-white/10"

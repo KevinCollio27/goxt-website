@@ -67,7 +67,7 @@ const products: Product[] = [
             "Validación documental online",
             "Gestión de conductores y flota",
             "Geolocalización con apodos",
-            "Marketplace de servicios",
+            "Marcado de servicios",
             "Flujos de activación por APP",
         ],
         screenshot: "/assets/Login-network.png",

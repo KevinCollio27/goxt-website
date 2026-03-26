@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User, ArrowUp } from "lucide-react";
+import { Building2, DollarSign, Clock, HeadphonesIcon, Send, Loader2, Bot, User, ArrowUp, ChevronDown } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import InteractiveParticles from "@/components/ui/InteractiveParticles";
 import { useState, useRef, useEffect } from "react";
@@ -53,6 +53,7 @@ const stats: Stat[] = [
 
 export function HeroSection() {
     const [input, setInput] = useState("");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -195,15 +196,55 @@ export function HeroSection() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row gap-6 justify-center mb-24"
                     >
-                        <a
-                            href="https://crm.goxt.io"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white"
-                            data-location="Hero Section CRM"
+                        <div
+                            className="relative"
+                            onMouseEnter={() => setDropdownOpen(true)}
+                            onMouseLeave={() => setDropdownOpen(false)}
                         >
-                            Empieza gratis
-                        </a>
+                            <button
+                                className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white flex items-center gap-2"
+                                data-location="Hero Section CRM"
+                            >
+                                Empieza gratis
+                                <ChevronDown className={`w-5 h-5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                            </button>
+                            <AnimatePresence>
+                                {dropdownOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-20"
+                                    >
+                                        <div className="p-2">
+                                            <a
+                                                href="https://crm.goxt.io"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+                                                data-location="Hero Section Dropdown CRM"
+                                            >
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-slate-900 group-hover:text-[var(--goxt-primary)]">CRM</span>
+                                                </div>
+                                            </a>
+                                            <a
+                                                href="https://network.goxt.io/register"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+                                                data-location="Hero Section Dropdown TMS"
+                                            >
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-slate-900 group-hover:text-[var(--goxt-primary)]">TMS Network</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                         <Link
                             href="/contacto"
                             className="goxt-btn-secondary text-lg px-8 py-4 bg-white border-slate-200 hover:bg-slate-50"
