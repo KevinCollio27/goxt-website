@@ -64,7 +64,7 @@ const alianzas = [
 export function Footer() {
     return (
         <footer className="bg-[#0f172a] text-white">
-            <div className="goxt-container py-24">
+            <div className="goxt-container py-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {/* Logo y descripción */}
                     <div className="lg:col-span-2">
@@ -110,25 +110,22 @@ export function Footer() {
                                     href={app.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 bg-white/5 hover:bg-white/10 text-white p-4 rounded-xl transition-all duration-300 border border-white/10 w-[280px] hover:scale-[1.02] hover:border-white/20"
+                                    className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white py-2 px-3 rounded-xl transition-all duration-300 border border-white/10 w-[200px] hover:scale-[1.02] hover:border-white/20"
                                 >
-                                    <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0">
                                         <Image
                                             src="/assets/logo_central_negro.png"
                                             alt="GOxT"
-                                            width={24}
-                                            height={24}
-                                            className="w-6 h-6 object-contain brightness-0 invert"
+                                            width={16}
+                                            height={16}
+                                            className="w-4 h-4 object-contain brightness-0 invert"
                                         />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <div className="text-[10px] uppercase tracking-wider text-blue-200/50 font-medium">
-                                            Plataforma
-                                        </div>
-                                        <div className="font-semibold truncate">GOxT {app.name}</div>
+                                        <div className="font-semibold truncate text-xs">GOxT {app.name}</div>
                                     </div>
                                     <svg
-                                        className="w-4 h-4 text-white/50 flex-shrink-0"
+                                        className="w-3 h-3 text-white/50 flex-shrink-0"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"

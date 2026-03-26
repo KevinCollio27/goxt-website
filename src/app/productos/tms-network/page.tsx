@@ -63,8 +63,8 @@ const features = [
         Icon: MapPin,
     },
     {
-        title: "Marketplace de Carga",
-        description: "Asigna solicitudes a tu red interna de confianza o abre requerimientos al marketplace ampliado de Camión Go.",
+        title: "Mercado de Carga",
+        description: "Asigna solicitudes a tu red interna de confianza o abre requerimientos al mercado.",
         Icon: Activity,
     },
     {
@@ -114,8 +114,8 @@ const capabilities = [
         title: "Integración Tecnológica",
         items: [
             "Conexión nativa con sistemas GPS y validación en línea de activos.",
-            "Asignación algorítmica por proximidad, tarifa o histórico de servicio.",
-            "API abierta para conectar tus flujos logísticos existentes.",
+            "Asignación algorítmica por proximidad, tarifa o histórico de servicio. Próximamente (con otro diseño)",
+            "API abierta para conectar tus flujos logísticos existentes. Próximamente (con otro diseño)",
         ],
         Icon: Layers,
         color: "blue"
@@ -173,7 +173,7 @@ export default function TMSNetworkPage() {
                             </h1>
 
                             <p className="text-xl text-slate-500 mb-10 max-w-xl leading-relaxed text-balance">
-                                TMS Go Network es la red que integra transportistas y generadores de carga en un solo lugar. <span className="text-slate-800 font-semibold">Validación online, marketplace y control total de activos</span> para una operación sin fricciones.
+                                TMS GONetwork es la red que integra transportistas y generadores de carga en un solo lugar. <span className="text-slate-800 font-semibold">Validación online, mercado y control total de activos</span> para una operación sin fricciones.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-5 mb-12">
@@ -383,7 +383,7 @@ export default function TMSNetworkPage() {
                                 Lleva tu red al <br /> <span className="text-[var(--network-light)]">siguiente nivel</span>
                             </h2>
                             <p className="text-[var(--network-light)] text-xl md:text-2xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                                Únete a las empresas que ya están transformando su logística operativa con GOxT TMS Network.
+                                Únete a las empresas que ya están transformando su logística operativa con GOxT TMS GO Network.
                             </p>
                             <div className="flex flex-wrap gap-6 justify-center">
                                 <Link
