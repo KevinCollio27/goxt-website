@@ -93,9 +93,9 @@ const capabilities = [
     {
         title: "Para Transportistas",
         items: [
-            "Registro centralizado de conductores, camiones y remolques.",
-            "Gestión de documentación con alertas de vencimiento automáticas.",
-            "Publicación de tarifas y capacidad disponible en una red integrada.",
+            { text: "Registro centralizado de conductores, camiones y remolques.", isComingSoon: false },
+            { text: "Gestión de documentación con alertas de vencimiento automáticas.", isComingSoon: false },
+            { text: "Publicación de tarifas y capacidad disponible en una red integrada.", isComingSoon: false },
         ],
         Icon: Truck,
         color: "emerald"
@@ -103,9 +103,9 @@ const capabilities = [
     {
         title: "Para Generadores de Carga",
         items: [
-            "Acceso directo a una red de proveedores validados y activos.",
-            "Creación y duplicación rápida de solicitudes de transporte terrestre.",
-            "Seguimiento documental y de prefacturación en tiempo real.",
+            { text: "Acceso directo a una red de proveedores validados y activos.", isComingSoon: false },
+            { text: "Creación y duplicación rápida de solicitudes de transporte terrestre.", isComingSoon: false },
+            { text: "Seguimiento documental y de prefacturación en tiempo real.", isComingSoon: false },
         ],
         Icon: Users,
         color: "teal"
@@ -113,9 +113,9 @@ const capabilities = [
     {
         title: "Integración Tecnológica",
         items: [
-            "Conexión nativa con sistemas GPS y validación en línea de activos.",
-            "Asignación algorítmica por proximidad, tarifa o histórico de servicio. Próximamente (con otro diseño)",
-            "API abierta para conectar tus flujos logísticos existentes. Próximamente (con otro diseño)",
+            { text: "Conexión nativa con sistemas GPS y validación en línea de activos.", isComingSoon: false },
+            { text: "Asignación algorítmica por proximidad, tarifa o histórico de servicio.", isComingSoon: true },
+            { text: "API abierta para conectar tus flujos logísticos existentes.", isComingSoon: true },
         ],
         Icon: Layers,
         color: "blue"
@@ -240,7 +240,7 @@ export default function TMSNetworkPage() {
                                                 <Activity className="w-6 h-6 text-white" />
                                             </div>
                                             <div className="whitespace-nowrap">
-                                                <div className="text-black font-bold">Marketplace Live</div>
+                                                <div className="text-black font-bold">Servicios en Vivo</div>
                                                 <div className="text-[var(--network-primary)] text-xs font-mono">+12 Solicitudes hoy</div>
                                             </div>
                                         </div>
@@ -349,13 +349,22 @@ export default function TMSNetworkPage() {
                                 <h3 className="text-3xl font-bold !text-white mb-8 tracking-tight">{cap.title}</h3>
                                 <ul className="space-y-6">
                                     {cap.items.map((item) => (
-                                        <li key={item} className="flex items-start gap-4">
-                                            <div className="mt-1.5 w-5 h-5 rounded-full border border-[var(--network-primary)]/50 flex items-center justify-center flex-shrink-0 group-hover:border-[var(--network-primary)] transition-colors">
-                                                <Check className="w-3 h-3 text-[var(--network-primary)]" strokeWidth={3} />
+                                        <li key={item.text} className="flex flex-col gap-2">
+                                            <div className="flex items-start gap-4">
+                                                <div className="mt-1.5 w-5 h-5 rounded-full border border-[var(--network-primary)]/50 flex items-center justify-center flex-shrink-0 group-hover:border-[var(--network-primary)] transition-colors">
+                                                    <Check className="w-3 h-3 text-[var(--network-primary)]" strokeWidth={3} />
+                                                </div>
+                                                <span className="text-[var(--network-light)]/70 text-base leading-relaxed group-hover:text-white transition-colors">
+                                                    {item.text}
+                                                </span>
                                             </div>
-                                            <span className="text-[var(--network-light)]/70 text-base leading-relaxed group-hover:text-white transition-colors">
-                                                {item}
-                                            </span>
+                                            {item.isComingSoon && (
+                                                <div className="ml-9">
+                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/10 text-[var(--network-primary)] border border-[var(--network-primary)]/30 backdrop-blur-sm self-start">
+                                                        Próximamente
+                                                    </span>
+                                                </div>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
