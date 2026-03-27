@@ -202,6 +202,7 @@ export function HeroSection() {
                             onMouseLeave={() => setDropdownOpen(false)}
                         >
                             <button
+                                onClick={() => window.location.href = "/acceder"}
                                 className="goxt-btn-primary text-lg px-8 py-4 bg-[#011627] hover:bg-[#022030] shadow-xl shadow-blue-900/20 text-white flex items-center gap-2"
                                 data-location="Hero Section CRM"
                             >

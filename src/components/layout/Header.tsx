@@ -9,7 +9,7 @@ const navigation = [
     { name: "Inicio", href: "/" },
     {
         name: "Productos",
-        href: "/productos",
+        href: "#",
         submenu: [
             {
                 name: "CRM",
@@ -140,8 +140,9 @@ export function Header() {
                         onMouseEnter={() => setLoginDropdownOpen(true)}
                         onMouseLeave={() => setLoginDropdownOpen(false)}
                     >
-                        <button
-                            className="goxt-btn-primary flex items-center gap-2"
+                        <Link
+                            href="/acceder"
+                            className="goxt-btn-primary flex items-center gap-2 px-6"
                             data-location="header_sesion_desktop"
                         >
                             Iniciar Sesión
@@ -153,7 +154,7 @@ export function Header() {
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
-                        </button>
+                        </Link>
                         <AnimatePresence>
                             {loginDropdownOpen && (
                                 <motion.div
@@ -168,19 +169,19 @@ export function Header() {
                                             href="https://crm.goxt.io/"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                                             data-location="header_sesion_crm_desktop"
                                         >
-                                            <span className="font-medium text-gray-900">CRM</span>
+                                            <span className="font-medium text-gray-900 group-hover:text-[var(--goxt-primary)] transition-colors">CRM</span>
                                         </a>
                                         <a
                                             href="https://network.goxt.io/login"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                                             data-location="header_sesion_tms_desktop"
                                         >
-                                            <span className="font-medium text-gray-900">TMS Network</span>
+                                            <span className="font-medium text-gray-900 group-hover:text-[var(--goxt-primary)] transition-colors">TMS Network</span>
                                         </a>
                                     </div>
                                 </motion.div>
@@ -273,7 +274,13 @@ export function Header() {
                                 >
                                     Solicitar Demo
                                 </Link>
-                                <p className="text-sm font-medium text-gray-500 px-1">Iniciar Sesión</p>
+                                <Link
+                                    href="/acceder"
+                                    className="block text-sm font-medium text-gray-800 hover:text-[var(--goxt-primary)] px-1 transition-colors"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    Iniciar Sesión
+                                </Link>
                                 <a
                                     href="https://crm.goxt.io/"
                                     target="_blank"
@@ -294,6 +301,11 @@ export function Header() {
                                 >
                                     TMS Network
                                 </a>
+                                <div
+                                    className="block py-2 text-center text-gray-400 border border-gray-100 rounded-full text-sm font-semibold"
+                                >
+                                    Business Intelligence (Próximamente)
+                                </div>
                             </div>
                         </div>
                     </motion.div>
