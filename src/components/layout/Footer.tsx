@@ -10,8 +10,8 @@ const footerLinks = {
     ],
     empresa: [
         //{ name: "Nosotros", href: "/nosotros" },
-        //{ name: "Contacto", href: "/contacto" },
-        //{ name: "Blog", href: "/blog" }
+        { name: "Contacto", href: "/contacto" },
+        { name: "Blog", href: "/blog" }
     ],
     legal: [
         { name: "Política de privacidad", href: "" },
@@ -21,8 +21,8 @@ const footerLinks = {
 
 const aplicaciones = [
     { name: "CRM", href: "https://crm.goxt.io" },
-    { name: "Cargo", href: "https://cargo.goxt.io" },
     { name: "Network", href: "https://network.goxt.io" },
+    { name: "Cargo", href: "https://cargo.goxt.io" },
 ];
 
 const socialLinks = [
@@ -100,39 +100,45 @@ export function Footer() {
                     </div>
                     {/* Enlaces rápidos */}
                     <div>
-                        <h3 className="text-white font-medium mb-4 flex items-center gap-1">
-                            Acceso Directo
+                        <h3
+                            className="text-white font-medium mb-4 flex items-center gap-1"
+                            style={{ fontFamily: 'var(--font-body), sans-serif' }}
+                        >
+                            Plataformas
                         </h3>
                         <ul className="space-y-3">
                             {aplicaciones.map((app) => (
-                                <a
-                                    key={app.name}
-                                    href={app.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white py-2 px-3 rounded-xl transition-all duration-300 border border-white/10 w-[200px] hover:scale-[1.02] hover:border-white/20"
-                                >
-                                    <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <Image
-                                            src="/assets/logo_central_negro.png"
-                                            alt="GOxT"
-                                            width={16}
-                                            height={16}
-                                            className="w-4 h-4 object-contain brightness-0 invert"
-                                        />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="font-semibold truncate text-xs">GOxT {app.name}</div>
-                                    </div>
-                                    <svg
-                                        className="w-3 h-3 text-white/50 flex-shrink-0"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
+                                <li key={app.name}>
+                                    <a
+                                        href={app.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-white/60 hover:text-white transition-colors text-sm"
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                </a>
+                                        GOxT {app.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    {/* Columna Empresa */}
+                    <div>
+                        <h3
+                            className="text-white font-medium mb-4"
+                            style={{ fontFamily: 'var(--font-body), sans-serif' }}
+                        >
+                            Empresa
+                        </h3>
+                        <ul className="space-y-3">
+                            {footerLinks.empresa.map((link) => (
+                                <li key={link.name}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-white/60 hover:text-white transition-colors text-sm"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
