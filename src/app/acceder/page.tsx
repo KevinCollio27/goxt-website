@@ -2,29 +2,29 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Users, Share2, BarChart3, ArrowRight } from "lucide-react";
+import { Users, Share2, BarChart3, ArrowRight, Info, Box } from "lucide-react";
 import Image from "next/image";
 
 const platforms = [
   {
     id: "crm",
     name: "CRM",
-    description: "Gestiona leads, cotizaciones e integra tu operación comercial en un solo lugar.",
+    description: "Gestiona leads, cotizaciones e integra tu operación comercial en un solo lugar. Inicia sesión para potenciar tu seguimiento de ventas.",
     icon: Users,
-    iconBg: "bg-blue-500/20 text-blue-400",
-    loginUrl: "https://crm.goxt.io/login",
-    signupUrl: "https://crm.goxt.io/register",
+    iconBg: "bg-amber-500/20 text-amber-300",
+    loginUrl: "https://crm.goxt.io/",
     color: "blue",
+    productUrl: "/productos/crm",
   },
   {
     id: "tms",
     name: "TMS GONetwork",
-    description: "La red colaborativa que conecta transportistas y generadores de carga.",
+    description: "La red colaborativa que conecta transportistas y generadores de carga. Accede para optimizar tu red logística con visibilidad total.",
     icon: Share2,
     iconBg: "bg-emerald-500/20 text-emerald-400",
-    loginUrl: "https://network.goxt.io/login",
-    signupUrl: "https://network.goxt.io/register",
+    loginUrl: "https://network.goxt.io/",
     color: "emerald",
+    productUrl: "/productos/tms-network",
   },
   {
     id: "bi",
@@ -33,8 +33,17 @@ const platforms = [
     icon: BarChart3,
     iconBg: "bg-purple-500/20 text-purple-400",
     loginUrl: "#",
-    signupUrl: "#",
     color: "purple",
+    isComingSoon: true,
+  },
+  {
+    id: "cargo",
+    name: "TMS Cargo",
+    description: "Software especializado para dadores de carga. Digitaliza y optimiza tu proceso de contratación de transporte.",
+    icon: Box,
+    iconBg: "bg-blue-500/20 text-blue-400",
+    loginUrl: "#",
+    color: "blue",
     isComingSoon: true,
   },
 ];
@@ -74,7 +83,7 @@ export default function AccederPage() {
         </motion.p>
       </div>
 
-      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+      <div className="max-w-4xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
         {platforms.map((platform, index) => (
           <motion.div
             key={platform.id}
@@ -83,23 +92,38 @@ export default function AccederPage() {
             transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
             className="group"
           >
-            <div className={`h-full bg-[#0A1A2B]/60 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 flex flex-col transition-all duration-300 ${!platform.isComingSoon ? 'hover:border-white/10 hover:bg-[#0E253A]/80 hover:translate-y-[-8px] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]' : 'opacity-80'}`}>
-              {/* Icon Container */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-10 ${platform.iconBg}`}>
-                <platform.icon className="w-7 h-7" />
-              </div>
+            <div className={`h-full relative bg-[#0A1A2B]/60 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 flex flex-col transition-all duration-300 ${platform.isComingSoon ? 'opacity-80' : ''}`}>
+              {/* Product Info Link */}
+              {platform.productUrl && (
+                <Link
+                  href={platform.productUrl}
+                  className="absolute top-8 right-8 p-2.5 rounded-xl bg-white/5 text-white/40 hover:bg-white/10 hover:text-white transition-all border border-white/5 group/info"
+                  title="Ver detalles del producto"
+                >
+                  <Info className="w-5 h-5 transition-transform group-hover/info:scale-110" />
+                </Link>
+              )}
 
               {/* Tag for Coming Soon */}
               {platform.isComingSoon && (
-                <div className="mb-4">
-                  <span className="bg-purple-500/10 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/20 uppercase tracking-wider">
+                <div className="absolute top-8 right-8">
+                  <span className="bg-purple-500/10 text-purple-400 text-[10px] font-bold px-3 py-1.5 rounded-lg border border-purple-500/20 uppercase tracking-wider backdrop-blur-md">
                     Próximamente
                   </span>
                 </div>
               )}
 
+              {/* Icon Container */}
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-10 ${platform.iconBg}`}>
+                <platform.icon className="w-7 h-7" />
+              </div>
+
+
               {/* Content */}
-              <h3 className="text-2xl font-display font-semibold mb-4 text-white group-hover:text-blue-200 transition-colors">
+              <h3
+                className="text-2xl font-semibold mb-4 text-white group-hover:text-blue-200 transition-colors"
+                style={{ fontFamily: 'var(--font-body), sans-serif' }}
+              >
                 {platform.name}
               </h3>
 
@@ -126,15 +150,6 @@ export default function AccederPage() {
                     >
                       Iniciar Sesión
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </a>
-
-                    <a
-                      href={platform.signupUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center bg-white/5 text-white/80 py-3.5 px-6 rounded-xl font-semibold hover:bg-white/10 hover:text-white border border-white/5 transition-all"
-                    >
-                      Empieza gratis
                     </a>
                   </>
                 )}
