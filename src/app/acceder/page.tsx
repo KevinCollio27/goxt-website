@@ -138,7 +138,7 @@ export default function AccederPage() {
                     href="/contacto"
                     className="w-full flex items-center justify-center gap-2 bg-white/5 text-white/50 py-3.5 px-6 rounded-xl font-semibold border border-white/5 cursor-pointer hover:bg-white/10 hover:text-white transition-all"
                   >
-                    Me interesa saber más
+                    Solicitar más información
                   </Link>
                 ) : (
                   <>

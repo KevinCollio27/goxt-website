@@ -146,16 +146,16 @@ export function Header() {
                             data-location="header_sesion_desktop"
                         >
                             Iniciar Sesión
-                            <svg
+                            {/*<svg
                                 className={`w-4 h-4 transition-transform ${loginDropdownOpen ? "rotate-180" : ""}`}
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
+                            </svg>*/}
                         </Link>
-                        <AnimatePresence>
+                        {/*<AnimatePresence>
                             {loginDropdownOpen && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
@@ -186,7 +186,7 @@ export function Header() {
                                     </div>
                                 </motion.div>
                             )}
-                        </AnimatePresence>
+                        </AnimatePresence>*/}
                     </div>
                 </div>
 

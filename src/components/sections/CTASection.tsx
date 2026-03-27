@@ -45,11 +45,12 @@ export function CTASection() {
                                     className="goxt-btn-primary text-xl px-10 py-5 flex items-center gap-2"
                                     style={{ background: 'var(--goxt-cream)', color: 'var(--goxt-midnight)' }}
                                     data-location="CTA Section CRM"
+                                    onClick={() => window.open('/acceder', '_self')}
                                 >
                                     Empieza gratis
-                                    <ChevronDown className={`w-6 h-6 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                                    {/*<ChevronDown className={`w-6 h-6 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />*/}
                                 </button>
-                                <AnimatePresence>
+                                {/*<AnimatePresence>
                                     {dropdownOpen && (
                                         <motion.div
                                             initial={{ opacity: 0, y: 10 }}
@@ -84,7 +85,7 @@ export function CTASection() {
                                             </div>
                                         </motion.div>
                                     )}
-                                </AnimatePresence>
+                                </AnimatePresence>*/}
                             </div>
                             <Link
                                 href="/contacto"

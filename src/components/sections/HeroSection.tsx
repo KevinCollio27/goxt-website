@@ -207,9 +207,9 @@ export function HeroSection() {
                                 data-location="Hero Section CRM"
                             >
                                 Empieza gratis
-                                <ChevronDown className={`w-5 h-5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                                {/*<ChevronDown className={`w-5 h-5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />*/}
                             </button>
-                            <AnimatePresence>
+                            {/*<AnimatePresence>
                                 {dropdownOpen && (
                                     <motion.div
                                         initial={{ opacity: 0, y: 10 }}
@@ -244,7 +244,7 @@ export function HeroSection() {
                                         </div>
                                     </motion.div>
                                 )}
-                            </AnimatePresence>
+                            </AnimatePresence>*/}
                         </div>
                         <Link
                             href="/contacto"
