@@ -40,7 +40,7 @@ const navigation = [
         ],
     },
     //{ name: "Precios", href: "/precios" },
-    //{ name: "Blog", href: "/blog" },
+    { name: "Blog", href: "/blog" },
     //{ name: "Chat IA", href: "/chat-ia" },
     //{ name: "Nosotros", href: "/nosotros" },
     { name: "Contacto", href: "/contacto" },
