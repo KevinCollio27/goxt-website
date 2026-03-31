@@ -425,11 +425,11 @@ export default function CRMPage() {
                                     Iniciar Sesión
                                 </a>
                                 <Link
-                                    href="/contacto"
+                                    href="/landing/crm"
                                     className="goxt-btn-secondary text-2xl px-12 py-6"
                                     data-location="Seccion de Productos CRM"
                                 >
-                                    Solicitar Demo CRM
+                                    Ir a Landing CRM
                                 </Link>
                             </div>
                         </div>
