@@ -165,7 +165,7 @@ export default function TMSNetworkPage() {
                                 <span className="text-sm font-semibold text-[var(--network-dark)] uppercase tracking-wider">Ecosistema Logístico 4.0</span>
                             </div>
 
-                            <h1 
+                            <h1
                                 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] text-[var(--goxt-midnight)] tracking-tight"
                                 style={{ fontFamily: "var(--font-handwritten), cursive" }}
                             >
@@ -283,7 +283,7 @@ export default function TMSNetworkPage() {
                         >
                             Core Infrastructure
                         </motion.span>
-                        <h2 
+                        <h2
                             className="text-4xl md:text-6xl font-bold !text-slate-900 mb-8 tracking-tight leading-[1.1]"
                             style={{ fontFamily: "var(--font-handwritten), cursive" }}
                         >
@@ -308,7 +308,7 @@ export default function TMSNetworkPage() {
                                     </div>
                                     <div className="absolute top-2 left-2 w-16 h-16 bg-[var(--network-primary)]/20 rounded-3xl -z-0 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
-                                <h3 
+                                <h3
                                     className="text-xl font-bold !text-slate-900 mb-4 tracking-tight group-hover:!text-[var(--network-dark)] transition-colors"
                                     style={{ fontFamily: "var(--font-handwritten), cursive" }}
                                 >
@@ -334,7 +334,7 @@ export default function TMSNetworkPage() {
 
                 <div className="goxt-container relative z-10">
                     <div className="text-center mb-24">
-                        <h2 
+                        <h2
                             className="text-4xl md:text-7xl font-bold !text-white mb-8 tracking-tighter"
                             style={{ fontFamily: "var(--font-handwritten), cursive" }}
                         >
@@ -358,7 +358,7 @@ export default function TMSNetworkPage() {
                                 <div className="mb-10 inline-flex p-5 rounded-[2rem] bg-[var(--network-primary)]/10 text-[var(--network-primary)] group-hover:bg-[var(--network-primary)] group-hover:text-white transition-all duration-300">
                                     <cap.Icon className="w-10 h-10" />
                                 </div>
-                                <h3 
+                                <h3
                                     className="text-3xl font-bold !text-white mb-8 tracking-tight"
                                     style={{ fontFamily: "var(--font-handwritten), cursive" }}
                                 >
@@ -405,7 +405,7 @@ export default function TMSNetworkPage() {
                         <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-teal-500/30 rounded-full blur-[60px]" />
 
                         <div className="relative z-10">
-                            <h2 
+                            <h2
                                 className="text-4xl md:text-6xl lg:text-7xl font-bold !text-white mb-8 tracking-tight"
                                 style={{ fontFamily: "var(--font-handwritten), cursive" }}
                             >
@@ -416,10 +416,10 @@ export default function TMSNetworkPage() {
                             </p>
                             <div className="flex flex-wrap gap-6 justify-center">
                                 <Link
-                                    href="/contacto"
+                                    href="/landing/tms-network"
                                     className="px-12 py-6 bg-white text-[var(--network-dark)] rounded-full text-2xl font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
                                 >
-                                    Agendar Demo
+                                    Ir a Landing Page
                                 </Link>
                                 <a
                                     href="https://network.goxt.io"
