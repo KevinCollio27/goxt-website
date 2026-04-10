@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const footerLinks = {
     productos: [
@@ -62,6 +65,10 @@ const alianzas = [
     },
 ];
 export function Footer() {
+    const pathname = usePathname();
+
+    if (pathname === "/landing/crm/demo") return null;
+
     return (
         <footer className="bg-[#0f172a] text-white">
             <div className="goxt-container py-6">

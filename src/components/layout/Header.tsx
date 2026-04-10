@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const navigation = [
     { name: "Inicio", href: "/" },
@@ -47,9 +48,13 @@ const navigation = [
 ];
 
 export function Header() {
+    const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
     const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+
+    // No renderizar el header en la landing de demo CRM
+    if (pathname === "/landing/crm/demo") return null;
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 goxt-glass">

@@ -11,12 +11,11 @@ import {
     ArrowRight,
     CheckCircle2,
     Users,
-    Mail,
     FileSearch,
-    Coins,
     Layout,
     Activity,
-    Lock
+    Lock,
+    Package
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -28,23 +27,23 @@ import Image from "next/image";
 const CRM_FEATURES = [
     {
         icon: Users,
-        title: "Captura Inteligente",
-        desc: "Tus leads de LinkedIn, Web y Email entran automáticamente a la neurona de GOxT."
+        title: "Crea tu Cuenta",
+        desc: "Inicia en segundos y configura tu primer espacio de trabajo para centralizar toda tu operación."
     },
     {
         icon: FileSearch,
-        title: "Análisis Operativo",
-        desc: "El sistema verifica capacidad y tarifas automáticamente antes de sugerir el precio."
+        title: "Carga tus Contactos",
+        desc: "Importa tu base de datos o deja que la IA capture automáticamente tus leads desde LinkedIn y Email."
     },
     {
         icon: MousePointer2,
-        title: "Cotización Express",
-        desc: "Genera un PDF profesional con un clic, basado en datos reales de tu stock/capacidad."
+        title: "Define tu Producto",
+        desc: "Configura tus rutas, tipos de contenedores y servicios específicos de logística en un clic."
     },
     {
         icon: CheckCircle2,
-        title: "Sincronización Total",
-        desc: "Al ganar el negocio, los datos viajan al TMS sin que nadie tenga que escribir nada."
+        title: "Cierra Negocios",
+        desc: "Genera propuestas profesionales y sincroniza tus ventas con la operación real sin fricción."
     }
 ];
 
@@ -135,15 +134,15 @@ const FlowMonitor = ({ activeStep }: { activeStep: number }) => {
                                 className="absolute inset-0 border-2 border-dashed border-[var(--goxt-accent)]/40 rounded-full"
                             />
                             <div className="absolute inset-2 bg-gradient-to-br from-[var(--goxt-midnight)] to-slate-800 rounded-full flex items-center justify-center shadow-2xl">
-                                <Users className="w-12 h-12 text-[var(--goxt-accent)]" />
+                                <Layout className="w-12 h-12 text-[var(--goxt-accent)]" />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="text-2xl font-black text-white tracking-widest uppercase">CAPTURA DE DATOS</div>
-                            <div className="text-[var(--goxt-accent)] font-mono text-xs animate-pulse font-bold">ESCANEO DE CANALES...</div>
+                            <div className="text-2xl font-black text-white tracking-widest uppercase">ESPACIO DE TRABAJO</div>
+                            <div className="text-[var(--goxt-accent)] font-mono text-xs animate-pulse font-bold">CONFIGURANDO ENTORNO...</div>
                         </div>
                         <div className="flex justify-center gap-3">
-                            {['LINKEDIN', 'WEB', 'EMAIL'].map((t) => (
+                            {['ADMIN', 'VENTAS', 'LOGÍSTICA'].map((t) => (
                                 <div key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-slate-400 font-bold">{t}</div>
                             ))}
                         </div>
@@ -151,87 +150,134 @@ const FlowMonitor = ({ activeStep }: { activeStep: number }) => {
                 );
             case 1:
                 return (
-                    <div className="space-y-6">
-                        <div className="flex justify-between items-center px-6">
-                            <div className="text-left">
-                                <div className="text-[10px] text-slate-400 font-bold uppercase">Capacidad de Fuente</div>
-                                <div className="text-xl font-black text-white">94%</div>
+                    <div className="px-8 py-8 space-y-6 text-left">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Contactos Identificados</div>
+                                <div className="text-4xl font-black text-white">124</div>
                             </div>
-                            <Activity className="text-[var(--goxt-accent)] animate-pulse" />
-                            <div className="text-right">
-                                <div className="text-[10px] text-slate-400 font-bold uppercase">Margen Dinámico</div>
-                                <div className="text-xl font-black text-green-400">+18.5%</div>
+                            <div className="w-14 h-14 bg-[var(--goxt-accent)]/10 rounded-2xl flex items-center justify-center border border-[var(--goxt-accent)]/20">
+                                <Users className="w-7 h-7 text-[var(--goxt-accent)]" />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 px-6">
-                            <div className="bg-white/5 p-4 rounded-2xl border border-white/10 text-left group-hover:border-[var(--goxt-accent)]/30 transition-colors">
-                                <Globe className="w-5 h-5 text-blue-400 mb-2" />
-                                <div className="text-[9px] text-slate-500 font-bold">RUTA OPTIMIZADA</div>
-                                <div className="text-xs text-white font-bold">MX - Laredo - TX</div>
-                            </div>
-                            <div className="bg-white/5 p-4 rounded-2xl border border-white/10 text-left">
-                                <Coins className="w-5 h-5 text-yellow-400 mb-2" />
-                                <div className="text-[9px] text-slate-500 font-bold">FORECAST DE INGRESOS</div>
-                                <div className="text-xs text-white font-bold">$12,450.00</div>
-                            </div>
+
+                        <div className="space-y-3">
+                            {[
+                                { name: "LinkedIn Sales Nav", status: "SINCRO ACTIVA", color: "bg-blue-500", progress: "80%" },
+                                { name: "Website Leads", status: "COMPLETADO", color: "bg-green-500", progress: "100%" },
+                                { name: "Excel Database", status: "PROCESANDO", color: "bg-yellow-500", progress: "45%" }
+                            ].map((source, i) => (
+                                <div key={i} className="bg-white/5 p-4 rounded-2xl border border-white/5 relative overflow-hidden group">
+                                    <div className="flex justify-between items-center relative z-10">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-2 h-2 rounded-full ${source.color} animate-pulse`} />
+                                            <span className="text-[10px] text-white font-black tracking-widest uppercase">{source.name}</span>
+                                        </div>
+                                        <span className="text-[8px] text-slate-500 font-bold">{source.status}</span>
+                                    </div>
+                                    <div className="mt-3 h-1 bg-white/5 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: source.progress }}
+                                            transition={{ duration: 1, delay: i * 0.2 }}
+                                            className={`h-full ${source.color} opacity-50`}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="pt-2 flex items-center gap-2 text-[9px] text-[var(--goxt-accent)] font-bold animate-pulse">
+                            <Activity className="w-3 h-3" />
+                            IA ENGINE: ANALIZANDO PERFILES...
                         </div>
                     </div>
                 );
             case 2:
+                return (
+                    <div className="px-8 py-6 space-y-6 text-left">
+                        <div className="flex justify-between items-center mb-4">
+                            <div>
+                                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Configurador de Producto</div>
+                                <div className="text-2xl font-black text-white">SERVICIO LOGÍSTICO</div>
+                            </div>
+                            <div className="flex gap-2">
+                                {[1, 2, 3].map((n) => (
+                                    <div key={n} className={`w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold ${n === 2 ? 'bg-[var(--goxt-accent)] text-[var(--goxt-midnight)]' : 'bg-white/10 text-slate-500'}`}>
+                                        {n === 1 ? '✓' : n}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-white/5 border border-white/10 rounded-[2rem] p-6 space-y-5 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-[var(--goxt-accent)]/5 blur-2xl" />
+                            
+                            <div className="flex justify-between items-center">
+                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Añade campos dinámicos</div>
+                                <Activity className="w-3 h-3 text-[var(--goxt-accent)] animate-pulse" />
+                            </div>
+
+                            <div className="space-y-3">
+                                {[
+                                    { label: "Origen de Carga", type: "DIRECCIÓN (GOOGLE)", icon: Globe },
+                                    { label: "Tipo Contenedor", type: "SELECTOR", icon: Layout },
+                                    { label: "Peso Estimado", type: "NÚMERO", icon: Cpu }
+                                ].map((attr, i) => (
+                                    <motion.div 
+                                        key={i} 
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: i * 0.1 }}
+                                        className="flex gap-2 items-center"
+                                    >
+                                        <div className="flex-[1.5] bg-[var(--goxt-midnight)] border border-white/5 rounded-xl p-3 text-[10px] text-white font-medium">
+                                            {attr.label}
+                                        </div>
+                                        <div className="flex-1 bg-white/5 border border-white/10 rounded-xl p-3 text-[8px] text-[var(--goxt-accent)] font-black flex items-center justify-between group-hover:border-[var(--goxt-accent)]/30 transition-colors">
+                                            <span className="truncate mr-2">{attr.type}</span>
+                                            <attr.icon className="w-2.5 h-2.5 opacity-50 shrink-0" />
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            <motion.div 
+                                whileHover={{ scale: 1.02 }}
+                                className="pt-2"
+                            >
+                                <div className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl flex items-center justify-center gap-3 text-[10px] text-slate-500 font-bold hover:border-[var(--goxt-accent)]/30 hover:text-slate-300 transition-all cursor-default">
+                                    <div className="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center text-xs">+</div>
+                                    <span>AGREGAR ATRIBUTO PERSONALIZADO</span>
+                                </div>
+                            </motion.div>
+                        </div>
+                        
+                        <div className="text-[9px] text-slate-600 font-medium italic">
+                            * Los campos se adaptarán automáticamente a tus PDFs de cotización.
+                        </div>
+                    </div>
+                );
+            case 3:
                 return (
                     <div className="px-10 py-4">
                         <div className="bg-slate-900 rounded-[2rem] p-6 border border-white/10 shadow-2xl relative overflow-hidden text-left">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--goxt-accent)]/10 blur-3xl" />
                             <div className="flex justify-between items-start mb-6">
                                 <div>
-                                    <h4 className="text-white font-black text-lg">CONSTRUCTOR DE PROPUESTAS</h4>
-                                    <p className="text-[10px] text-slate-500">CLIENTE: LOGISTIC PRO GLOBAL</p>
+                                    <h4 className="text-white font-black text-lg">PROPUESTA COMERCIAL</h4>
+                                    <p className="text-[10px] text-slate-500">CLIENTE: IMPORTADORA GLOBAL S.A.</p>
                                 </div>
-                                <div className="bg-[var(--goxt-accent)] text-[var(--goxt-midnight)] px-2 py-1 rounded text-[9px] font-black">GENERADO POR IA</div>
+                                <div className="bg-[var(--goxt-accent)] text-[var(--goxt-midnight)] px-2 py-1 rounded text-[9px] font-black">NEGOCIO GANADO</div>
                             </div>
                             <div className="space-y-3 mb-8">
-                                <div className="h-2 bg-white/5 rounded w-full" />
-                                <div className="h-2 bg-white/5 rounded w-full" />
-                                <div className="h-2 bg-white/10 rounded w-2/3" />
+                                <div className="h-2 bg-green-500/20 rounded w-full" />
+                                <div className="h-2 bg-green-500/20 rounded w-full" />
+                                <div className="h-2 bg-green-500/40 rounded w-2/3" />
                             </div>
                             <button className="w-full py-3 bg-[var(--goxt-accent)] text-[var(--goxt-midnight)] font-black text-xs rounded-xl shadow-[0_0_20px_rgba(212,185,150,0.5)]">
-                                ENVIAR PROPUESTA POR WHATSAPP / EMAIL
+                                SINCRONIZAR CON OPERACIONES (TMS)
                             </button>
-                        </div>
-                    </div>
-                );
-            case 3:
-                return (
-                    <div className="flex flex-col items-center py-10">
-                        <div className="relative">
-                            <motion.div
-                                animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="absolute -inset-8 bg-[var(--goxt-accent)] rounded-full blur-3xl -z-10"
-                            />
-                            <div className="flex gap-10 items-center">
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/50 font-bold">CRM</div>
-                                    <div className="text-[8px] text-slate-500 font-black">NÚCLEO DE VENTAS</div>
-                                </div>
-                                <div className="relative">
-                                    <ArrowRight className="w-10 h-10 text-[var(--goxt-accent)] animate-pulse" />
-                                    <motion.div
-                                        className="absolute top-1/2 left-0 w-full h-[2px] bg-[var(--goxt-accent)]"
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: 1 }}
-                                        transition={{ duration: 1, repeat: Infinity }}
-                                    />
-                                </div>
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className="w-20 h-20 bg-[var(--goxt-midnight)] border border-[var(--goxt-accent)] rounded-2xl flex items-center justify-center text-[var(--goxt-accent)] font-bold shadow-[0_0_30px_rgba(212,185,150,0.3)]">TMS</div>
-                                    <div className="text-[8px] text-[var(--goxt-accent)] font-black">OPERACIONES</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-12 py-2 px-6 bg-green-500/10 border border-green-500/30 rounded-full text-green-400 text-xs font-black tracking-widest uppercase flex items-center gap-2">
-                            <span className="w-2 h-2 bg-green-400 rounded-full animate-ping" />
-                            INTEGRIDAD DE DATOS VERIFICADA // ORDEN CREADA
                         </div>
                     </div>
                 );
@@ -372,7 +418,7 @@ export default function CRMLanding() {
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveStep((prev) => (prev + 1) % CRM_FEATURES.length);
-        }, 7000); // 7 segundos para lectura profunda
+        }, 5000); // 5 segundos para lectura profunda
         return () => clearInterval(interval);
     }, []);
 
@@ -403,15 +449,16 @@ export default function CRMLanding() {
                         </p>
 
                         <div className="flex flex-wrap gap-5">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                            <a
+                                href="https://crm.goxt.io"
+                                target="_blank"
+                                rel="noopener"
                                 className="px-8 py-5 bg-[var(--goxt-midnight)] text-[var(--goxt-accent)] rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-3"
                             >
-                                <Zap className="w-5 h-5 fill-current" /> Probar Gratis Ahora
-                            </motion.button>
-                            <Link href="/contacto" className="px-8 py-5 bg-white border border-slate-200 rounded-full font-bold text-lg hover:bg-slate-50 transition-all text-slate-900 shadow-sm">
-                                Agendar Demo
+                                <Zap className="w-5 h-5 fill-current" /> Empezar Gratis Ahora
+                            </a>
+                            <Link href="/acceder" className="px-8 py-5 bg-white border border-slate-200 rounded-full font-bold text-lg hover:bg-slate-50 transition-all text-slate-900 shadow-sm">
+                                Iniciar Sesión
                             </Link>
                         </div>
 
@@ -437,7 +484,7 @@ export default function CRMLanding() {
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div>
                             <h2 className="text-4xl lg:text-6xl font-bold mb-10 leading-relaxed pr-12 overflow-visible" style={{ color: "var(--goxt-midnight)", fontFamily: "var(--font-handwritten), cursive" }}>
-                                ¿Cómo lo hacemos <br /> <span className="goxt-gradient-accent-text pb-2 pr-10 overflow-visible">más inteligente?&nbsp;</span>
+                                Configura tu éxito en <br /> <span className="goxt-gradient-accent-text pb-2 pr-10 overflow-visible">pocos minutos&nbsp;</span>
                             </h2>
                             <div className="space-y-12 relative">
                                 <div className="absolute left-[30px] top-6 bottom-6 w-[2px] bg-slate-200" />
@@ -512,7 +559,7 @@ export default function CRMLanding() {
                             <ul className="space-y-6">
                                 {[
                                     "Campos dinámicos ilimitados (Origen, Destino, Naves, etc.)",
-                                    "Integración nativa con TMS Cargo",
+                                    "Integración con TMS Cargo, Google Calendar y n8n automation",
                                     "Generación de PDF profesional en un solo clic",
                                     "Soporte Multi-Workspace para empresas globales"
                                 ].map((item, i) => (
@@ -591,16 +638,17 @@ export default function CRMLanding() {
                             Únete a las empresas que ya están transformando su gestión comercial con GOxT Digital Ecosystem.
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-6 relative z-10">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                            <a
+                                href="https://crm.goxt.io"
+                                target="_blank"
+                                rel="noopener"
                                 className="px-12 py-6 bg-[var(--goxt-midnight)] text-[var(--goxt-accent)] rounded-full font-bold text-2xl shadow-xl hover:shadow-2xl transition-all"
                             >
-                                Agendar Demo Ahora
-                            </motion.button>
-                            <a href="https://crm.goxt.io" target="_blank" rel="noopener" className="px-12 py-6 border-2 border-slate-200 bg-white rounded-full font-bold text-2xl hover:bg-slate-50 transition-all text-slate-900 shadow-sm">
-                                Probar v2.0 Gratis
+                                Crear Mi Cuenta Gratis
                             </a>
+                            <Link href="/acceder" className="px-12 py-6 border-2 border-slate-200 bg-white rounded-full font-bold text-2xl hover:bg-slate-50 transition-all text-slate-900 shadow-sm">
+                                Acceder al Sistema
+                            </Link>
                         </div>
                         <div className="mt-20 flex items-center justify-center gap-2 text-slate-400 relative z-10">
                             <Shield className="w-4 h-4" />
