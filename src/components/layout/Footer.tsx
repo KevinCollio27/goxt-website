@@ -17,8 +17,8 @@ const footerLinks = {
         { name: "Blog", href: "/blog" }
     ],
     legal: [
-        { name: "Política de privacidad", href: "" },
-        { name: "Términos de servicio", href: "" },
+        { name: "Política de privacidad", href: "/privacidad" },
+        { name: "Términos de servicio", href: "/terminos" },
     ]
 };
 
